@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "style_guide": {
+      "type": "tk-style-guide",
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "style_guide"
+  ]
+}

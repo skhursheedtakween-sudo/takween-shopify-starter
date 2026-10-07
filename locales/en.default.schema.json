@@ -3397,5 +3397,107 @@
         }
       }
     }
+  },
+  "tk": {
+    "settings": {
+      "layout_group": {
+        "name": "Takween — Layout & spacing",
+        "spacing_scale": {
+          "label": "Section spacing scale",
+          "compact": "Compact (×0.67)",
+          "default": "Default",
+          "spacious": "Spacious (×1.33)"
+        },
+        "container_width": {
+          "label": "Container maximum width (px)"
+        },
+        "grid_gap": {
+          "label": "Grid gap (px)"
+        }
+      },
+      "shape_group": {
+        "name": "Takween — Shape",
+        "button_radius": {
+          "label": "Button corner radius (px)"
+        },
+        "card_radius": {
+          "label": "Card & image corner radius (px)"
+        },
+        "input_radius": {
+          "label": "Input field corner radius (px)"
+        },
+        "button_style": {
+          "label": "Primary button style",
+          "solid": "Solid fill",
+          "outline": "Outline"
+        },
+        "button_text_transform": {
+          "label": "Button text case",
+          "none": "Normal (none)",
+          "uppercase": "UPPERCASE"
+        }
+      },
+      "status_group": {
+        "name": "Takween — Status colours",
+        "color_sale": {
+          "label": "Sale colour",
+          "info": "Used for sale badges and sale prices"
+        },
+        "color_success": {
+          "label": "Success colour",
+          "info": "Used for in-stock text, checkmarks and success alerts"
+        },
+        "color_low_stock": {
+          "label": "Low stock colour",
+          "info": "Used when inventory is below low-stock threshold"
+        },
+        "color_sold_out": {
+          "label": "Sold-out badge background",
+          "info": "Used for sold-out badges"
+        }
+      },
+      "cards_group": {
+        "name": "Takween — Product cards",
+        "image_ratio": {
+          "label": "Card image ratio",
+          "square": "Square (1:1)",
+          "portrait": "Portrait (4:5)",
+          "natural": "Natural (adapt to image)"
+        },
+        "secondary_image": {
+          "label": "Show secondary image on hover"
+        },
+        "show_vendor": {
+          "label": "Show vendor / brand"
+        },
+        "show_sale_badge": {
+          "label": "Show sale badge"
+        },
+        "sale_badge_style": {
+          "label": "Sale badge display",
+          "text": "Text (\"Sale\")",
+          "percentage": "Percentage discount (\"-X%\")"
+        },
+        "show_sold_out_badge": {
+          "label": "Show sold-out badge"
+        },
+        "show_custom_badge": {
+          "label": "Show custom badge (from metafield custom.badge_text)"
+        },
+        "show_swatches": {
+          "label": "Show colour swatches on card"
+        },
+        "show_quick_add": {
+          "label": "Show quick add button"
+        }
+      },
+      "motion_group": {
+        "name": "Takween — Motion",
+        "enable_motion": {
+          "label": "Enable subtle reveal animations",
+          "info": "Respects user prefers-reduced-motion setting"
+        }
+      }
+    }
   }
 }

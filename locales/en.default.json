@@ -528,5 +528,22 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "tk": {
+    "general": {
+      "sale": "Sale",
+      "sold_out": "Sold out",
+      "in_stock": "In stock",
+      "low_stock": "Only {{ count }} left",
+      "from_price": "From {{ price }}",
+      "view_all": "View all",
+      "loading": "Loading...",
+      "close": "Close"
+    },
+    "style_guide": {
+      "title": "Takween Design System & Style Guide",
+      "subtitle": "Internal review & developer QA preview for design tokens, typography, components, and colour schemes.",
+      "note": "This page is rendered using `templates/page.tk-style-guide.json` and `sections/tk-style-guide.liquid` for QA only."
+    }
   }
 }

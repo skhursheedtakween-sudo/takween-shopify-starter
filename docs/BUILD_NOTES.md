@@ -49,14 +49,61 @@
 
 ## 3. Design System (tokens & global settings)
 
-> ⏳ **Placeholder — filled in Phase 03.**
+### Core Colours & Presets
+Configured in `config/settings_data.json` presets mapping directly to Dawn's 5 OS 2.0 colour schemes:
+- **scheme-1 (Light / Default):** Background `#F6F5F2`, Text `#16181B`, Button `#1F4FD8`, Button Label `#FFFFFF`, Secondary Button `#16181B`, Shadow `#16181B`
+- **scheme-2 (White surface):** Background `#FFFFFF`, Text `#16181B`, Button `#16181B`, Button Label `#FFFFFF`, Secondary Button `#16181B`
+- **scheme-3 (Dark):** Background `#16181B`, Text `#F6F5F2`, Button `#F6F5F2`, Button Label `#16181B`, Secondary Button `#F6F5F2`
+- **scheme-4 (Accent):** Background `#1F4FD8`, Text `#FFFFFF`, Button `#16181B`, Button Label `#FFFFFF`, Secondary Button `#FFFFFF`
+- **scheme-5 (Tint):** Background `#ECEAE5`, Text `#16181B`, Button `#1F4FD8`, Button Label `#FFFFFF`, Secondary Button `#16181B`
 
-Will document:
-- Spacing scale (`--tk-space-1` … `--tk-space-9`)
-- Fluid type scale (`--tk-text-xs` … `--tk-text-5xl`)
-- Container, gap, border radius, shadow, z-index tokens
-- Global settings groups added to `config/settings_schema.json`
-- "How to rebrand for a new client" checklist
+Status tokens (in `config/settings_schema.json` under *Takween — Status colours*):
+- `--tk-color-sale`: `#B42318` (Sale badge and discounted prices)
+- `--tk-color-success`: `#1F7A4D` (In stock indicator, checkmarks, success alerts)
+- `--tk-color-low-stock`: `#9A3412` (Low stock alert text and indicator)
+- `--tk-color-soldout`: `#3D4148` (Sold-out badge background)
+
+### Typography
+- Primary font: **Manrope** (`manrope_n4` body 400, `manrope_n8` heading 800) set as default in `settings_data.json`.
+- Fluid clamp typography tokens:
+  - `--tk-text-5xl` (H1): `clamp(2.125rem, 1.6rem + 2.2vw, 3.25rem)` (52px &rarr; 34px, 800 weight, 1.04 line-height, -0.03em tracking)
+  - `--tk-text-4xl` (H2): `clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem)` (36px &rarr; 26px, 800 weight, 1.15 line-height, -0.02em tracking)
+  - `--tk-text-3xl` (H3): `clamp(1.125rem, 1rem + 0.6vw, 1.375rem)` (22px &rarr; 18px, 700 weight, 1.25 line-height)
+  - `--tk-card-title-size`: `1rem` (16px, 700 weight, 1.35 line-height)
+  - `--tk-text-base` (Body): `1rem` (16px, 1.6 line-height)
+  - `--tk-eyebrow-size`: `0.8125rem` (13px, 700 weight, uppercase, 0.1em tracking, accent colour)
+
+### Shape, Spacing & Container Tokens
+- `--tk-container`: `1280px` (adjustable 1000–1600px via Theme Settings)
+- `--tk-gap`: `clamp(12px, 2.5vw, 24px)`
+- `--tk-gutter`: `clamp(16px, 4vw, 24px)`
+- Spacing scale multiplier: `--tk-spacing-mult` (compact = 0.67, default = 1.0, spacious = 1.33)
+  - `--tk-space-1`: `calc(4px * mult)`
+  - `--tk-space-2`: `calc(8px * mult)`
+  - `--tk-space-3`: `calc(12px * mult)`
+  - `--tk-space-4`: `calc(16px * mult)`
+  - `--tk-space-5`: `calc(24px * mult)`
+  - `--tk-space-6`: `calc(32px * mult)`
+  - `--tk-space-7`: `calc(48px * mult)`
+  - `--tk-space-8`: `calc(64px * mult)`
+  - `--tk-space-9`: `calc(96px * mult)`
+- Corner radii:
+  - `--tk-radius-button`: `8px`
+  - `--tk-radius-card`: `12px`
+  - `--tk-radius-input`: `8px`
+  - `--tk-radius-badge`: `999px` (pill)
+- Button min-height: `48px`, padding `0 28px`, touch target min `44×44px`.
+- Keyboard focus outline: `2px solid var(--tk-color-accent)` with `3px` offset.
+
+### "How to Rebrand for a Client" Checklist
+When adapting the Takween Starter Theme for a new client project:
+1. **Typography:** In Theme Settings &rarr; Typography, select client brand fonts for headings and body.
+2. **Colours:** In Theme Settings &rarr; Colors, adjust Scheme 1–5 backgrounds, text, and button colours to match client brand palette.
+3. **Status Colours:** In Theme Settings &rarr; Takween — Status colours, adjust sale/success/low-stock/sold-out tones if client brand guides dictate.
+4. **Corner Radii:** In Theme Settings &rarr; Takween — Shape, tune button, card, and input radii (e.g. 0px for sharp editorial luxury, 16px for playful consumer tech).
+5. **Button Style:** Choose solid fill or outline, and regular or uppercase text transform.
+6. **Card Presentation:** In Theme Settings &rarr; Takween — Product cards, set default image ratio (portrait 4:5, square 1:1, natural), toggle vendor display, swatches, and badge types.
+7. **Spacing Scale:** In Theme Settings &rarr; Takween — Layout & spacing, switch between compact, default, and spacious to match brand density.
 
 ---
 
@@ -248,3 +295,4 @@ No other apps are used. All core functionality is built natively.
 | 1 | Shopify `theme dev` login expired during setup session — needs re-auth before Phase 03 preview | Open |
 | 2 | `config/settings_data.json` and `templates/*.json` merge conflict protocol — always stop and ask; never auto-resolve | Standing rule |
 | 3 | `snippets/quick-order-product-row.liquid` — Dawn 16 orphan (Theme Check warning) — do not reference or remove; leave in place | Accepted / no fix |
+| 4 | Pending Admin data: images + metafields for 11 products, collections, pages, menus, Search & Discovery filters | In progress (Admin tasks) |
