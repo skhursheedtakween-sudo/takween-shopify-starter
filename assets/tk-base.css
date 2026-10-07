@@ -5,14 +5,20 @@
  * Loaded in layout/theme.liquid immediately following Dawn's base.css.
  * All styling references --tk-* custom properties and Dawn's color scheme classes.
  *
+ * NOTE ON ROOT FONT SIZE:
+ * Dawn sets `html { font-size: calc(var(--font-body-scale) * 62.5%) }` (1rem = 10px).
+ * To guarantee accurate computed styles across viewports, all Takween rules use
+ * explicit pixel values or the defined --tk-* variables.
+ *
  * BREAKPOINTS (aligned with Dawn):
  * - Mobile:  < 750px
  * - Tablet:  750px - 989px
  * - Desktop: >= 990px
  *
- * ACCESSIBILITY & MOTION:
+ * ACCESSIBILITY & INTERACTION STATES:
  * - Focus ring: 2px solid accent with 3px offset for :focus-visible.
- * - Reduced motion: All animations and transitions disabled under prefers-reduced-motion: reduce.
+ * - Transitions: var(--tk-transition) (180ms ease).
+ * - Reduced motion: All transforms/animations removed, colour shifts preserved.
  */
 
 /* ==========================================================================
@@ -25,7 +31,7 @@
   outline-offset: var(--tk-focus-offset) !important;
 }
 
-/* Reduced motion preference */
+/* Reduced motion preference: Keep colour changes, remove all transforms and animations */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -33,6 +39,7 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transform: none !important;
     scroll-behavior: auto !important;
   }
 }
@@ -183,17 +190,19 @@
 }
 
 .tk-rte a {
-  color: var(--tk-color-accent);
+  color: rgb(var(--color-foreground));
   text-decoration: underline;
   text-underline-offset: 3px;
+  transition: color var(--tk-transition), text-decoration-color var(--tk-transition);
 }
 
 .tk-rte a:hover {
-  text-decoration-thickness: 2px;
+  color: var(--tk-color-accent);
+  text-decoration-color: var(--tk-color-accent);
 }
 
 /* ==========================================================================
-   3. BUTTONS
+   3. BUTTONS & INTERACTION STATES
    ========================================================================== */
 
 .tk-btn {
@@ -204,7 +213,7 @@
   min-width: var(--tk-touch-target);
   padding: 0 28px;
   font-family: var(--font-body-family);
-  font-size: var(--tk-text-base);
+  font-size: var(--tk-btn-text-size);
   font-weight: 700;
   text-align: center;
   text-decoration: none;
@@ -212,15 +221,13 @@
   border-radius: var(--tk-radius-button);
   border: 1.5px solid transparent;
   cursor: pointer;
-  transition: background-color var(--tk-transition-fast),
-              color var(--tk-transition-fast),
-              border-color var(--tk-transition-fast),
-              transform var(--tk-transition-fast);
+  box-shadow: none;
+  transition: background-color var(--tk-transition),
+              color var(--tk-transition),
+              border-color var(--tk-transition),
+              transform var(--tk-transition),
+              box-shadow var(--tk-transition);
   box-sizing: border-box;
-}
-
-.tk-btn:active {
-  transform: scale(0.98);
 }
 
 /* Primary Button (Accent background) */
@@ -230,10 +237,20 @@
   border-color: var(--tk-color-accent);
 }
 
-.tk-btn--primary:hover {
-  background-color: #173db3;
-  border-color: #173db3;
+.tk-btn--primary:hover,
+.tk-btn--primary.is-hover {
+  background-color: #1A43B8;
+  background-color: color-mix(in srgb, var(--tk-color-accent) 88%, black);
+  border-color: #1A43B8;
+  border-color: color-mix(in srgb, var(--tk-color-accent) 88%, black);
   color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: var(--tk-shadow-sm);
+}
+
+.tk-btn--primary:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 /* Secondary Button (Ink background) */
@@ -243,10 +260,18 @@
   border-color: var(--tk-color-ink);
 }
 
-.tk-btn--secondary:hover {
-  background-color: #272a2e;
-  border-color: #272a2e;
+.tk-btn--secondary:hover,
+.tk-btn--secondary.is-hover {
+  background-color: #2A2D32;
+  border-color: #2A2D32;
   color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: var(--tk-shadow-sm);
+}
+
+.tk-btn--secondary:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 /* Outline Button */
@@ -256,24 +281,38 @@
   border-color: var(--tk-color-ink);
 }
 
-.tk-btn--outline:hover {
+.tk-btn--outline:hover,
+.tk-btn--outline.is-hover {
   background-color: var(--tk-color-ink);
+  border-color: var(--tk-color-ink);
   color: #FFFFFF;
+  transform: translateY(-1px);
+  box-shadow: var(--tk-shadow-sm);
+}
+
+.tk-btn--outline:active {
+  transform: translateY(0);
+  box-shadow: none;
 }
 
 /* Link Button */
 .tk-btn--link {
   min-height: auto;
+  min-width: auto;
   padding: 0;
   background: none;
   border: none;
   color: var(--tk-color-accent);
   text-decoration: underline;
   text-underline-offset: 4px;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
-.tk-btn--link:hover {
-  color: #173db3;
+.tk-btn--link:hover,
+.tk-btn--link.is-hover {
+  color: #1A43B8;
+  color: color-mix(in srgb, var(--tk-color-accent) 88%, black);
   text-decoration-thickness: 2px;
 }
 
@@ -284,10 +323,13 @@
 
 /* Disabled State */
 .tk-btn:disabled,
-.tk-btn[aria-disabled="true"] {
-  opacity: 0.5;
+.tk-btn[aria-disabled="true"],
+.tk-btn.is-disabled {
+  opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 /* ==========================================================================
@@ -324,7 +366,7 @@
 }
 
 /* ==========================================================================
-   5. FORM FIELDS
+   5. FORM FIELDS, INPUTS & PILLS
    ========================================================================== */
 
 .tk-field {
@@ -340,24 +382,30 @@
   color: rgb(var(--color-foreground));
 }
 
+/* Input (minimum 16px to prevent iOS auto-zoom) */
 .tk-input {
   width: 100%;
   min-height: var(--tk-button-height);
-  padding: 10px 16px;
+  padding: 12px 16px;
   font-family: var(--font-body-family);
-  font-size: var(--tk-text-base);
+  font-size: 16px;
+  line-height: 1.4;
   color: rgb(var(--color-foreground));
   background-color: var(--tk-color-surface);
   border: 1px solid var(--tk-color-input-border);
   border-radius: var(--tk-radius-input);
   box-sizing: border-box;
-  transition: border-color var(--tk-transition-fast), box-shadow var(--tk-transition-fast);
+  transition: border-color var(--tk-transition), box-shadow var(--tk-transition);
 }
 
-.tk-input:focus {
+.tk-input:hover {
+  border-color: var(--tk-color-ink);
+}
+
+.tk-input:focus-visible {
   border-color: var(--tk-color-accent);
-  outline: none;
-  box-shadow: 0 0 0 1px var(--tk-color-accent);
+  outline: var(--tk-focus-ring) !important;
+  outline-offset: var(--tk-focus-offset) !important;
 }
 
 .tk-field--error .tk-input {
@@ -379,6 +427,25 @@
   font-size: var(--tk-text-sm);
   font-weight: 600;
   border: 1px solid rgba(31, 122, 77, 0.2);
+}
+
+/* Pills & Swatches hover / active styles */
+.tk-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: var(--tk-text-sm);
+  font-weight: 600;
+  border: 1px solid var(--tk-color-input-border);
+  border-radius: var(--tk-radius-badge);
+  background-color: var(--tk-color-surface);
+  cursor: pointer;
+  transition: border-color var(--tk-transition), color var(--tk-transition);
+}
+
+.tk-pill:hover {
+  border-color: var(--tk-color-ink);
 }
 
 /* ==========================================================================
@@ -423,7 +490,7 @@
 }
 
 /* ==========================================================================
-   7. PRODUCT CARDS & ELEMENTS PREVIEWS
+   7. PRODUCT CARDS & MEDIA HOVER (Phase 04 preparation)
    ========================================================================== */
 
 .tk-card-box {
@@ -432,4 +499,27 @@
   border-radius: var(--tk-radius-card);
   padding: var(--tk-space-4);
   box-shadow: var(--tk-shadow-sm);
+}
+
+.tk-card__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--tk-radius-card);
+}
+
+.tk-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.tk-card__media:hover img {
+  transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-card__media:hover img {
+    transform: none !important;
+  }
 }

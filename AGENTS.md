@@ -30,6 +30,7 @@ All agents and contributors working in this repository must strictly follow thes
 ## 4. Design System & Theming
 - **Colors, typography, and spacing** must strictly reference theme settings and CSS custom properties (e.g., `var(--font-body-family)`, `var(--color-base-accent-1)`).
 - **Never hard-code one-off values** (hex colors, arbitrary pixel paddings) in section styles or inline styles.
+- **Dawn root font size rule (1rem = 10px):** Dawn sets `html { font-size: calc(var(--font-body-scale) * 62.5%) }`, which makes 1rem equal to 10px (not 16px). When writing custom CSS, use explicit `px` values inside `clamp()` or reference `--tk-*` tokens. If using `rem`, remember that `1.6rem = 16px` and `1.4rem = 14px`. Never write `1rem` expecting 16px. Form inputs must always be at least 16px to prevent iOS auto-zoom.
 
 ---
 

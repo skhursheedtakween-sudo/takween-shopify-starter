@@ -65,13 +65,17 @@ Status tokens (in `config/settings_schema.json` under *Takween — Status colour
 
 ### Typography
 - Primary font: **Manrope** (`manrope_n4` body 400, `manrope_n8` heading 800) set as default in `settings_data.json`.
+- **Root Font Size Rule (1rem = 10px):** Dawn sets `html { font-size: calc(var(--font-body-scale) * 62.5%) }`, which makes 1rem equal to 10px rather than 16px. All Takween fluid typography tokens use explicit `px` targets inside `clamp()` so computed sizes are never halved or skewed.
 - Fluid clamp typography tokens:
-  - `--tk-text-5xl` (H1): `clamp(2.125rem, 1.6rem + 2.2vw, 3.25rem)` (52px &rarr; 34px, 800 weight, 1.04 line-height, -0.03em tracking)
-  - `--tk-text-4xl` (H2): `clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem)` (36px &rarr; 26px, 800 weight, 1.15 line-height, -0.02em tracking)
-  - `--tk-text-3xl` (H3): `clamp(1.125rem, 1rem + 0.6vw, 1.375rem)` (22px &rarr; 18px, 700 weight, 1.25 line-height)
-  - `--tk-card-title-size`: `1rem` (16px, 700 weight, 1.35 line-height)
-  - `--tk-text-base` (Body): `1rem` (16px, 1.6 line-height)
-  - `--tk-eyebrow-size`: `0.8125rem` (13px, 700 weight, uppercase, 0.1em tracking, accent colour)
+  - `--tk-text-5xl` (H1): `clamp(34px, 27.5px + 1.73vw, 52px)` (52px desktop &rarr; 34px mobile 375px, 800 weight, 1.04 line-height, -0.03em tracking)
+  - `--tk-text-4xl` (H2): `clamp(26px, 22.4px + 0.96vw, 36px)` (36px desktop &rarr; 26px mobile 375px, 800 weight, 1.15 line-height, -0.02em tracking)
+  - `--tk-text-3xl` (H3): `clamp(18px, 16.5px + 0.38vw, 22px)` (22px desktop &rarr; 18px mobile 375px, 700 weight, 1.25 line-height)
+  - `--tk-card-title-size`: `clamp(15px, 14.6px + 0.1vw, 16px)` (16px desktop &rarr; 15px mobile, 700 weight, 1.35 line-height)
+  - `--tk-text-base` (Body): `16px` (never below 14px, 1.6 line-height)
+  - `--tk-text-sm`: `14px` (small text)
+  - `--tk-eyebrow-size`: `clamp(12px, 11.6px + 0.1vw, 13px)` (13px desktop &rarr; 12px mobile, 700 weight, uppercase, 0.1em tracking, accent colour)
+  - `--tk-btn-text-size`: `15px` (button text)
+  - Form inputs: strictly `16px` minimum to prevent iOS automatic Safari zooming on focus.
 
 ### Shape, Spacing & Container Tokens
 - `--tk-container`: `1280px` (adjustable 1000–1600px via Theme Settings)

@@ -1,7 +1,7 @@
 {%- comment -%}
   sections/tk-style-guide.liquid
   Internal Developer QA Style Guide section.
-  Previews all 5 colour schemes, status tokens, typography, buttons, badges, forms, and cards.
+  Previews all 5 colour schemes, status tokens, typography, buttons, interaction states, badges, forms, and cards.
   No preset included so it cannot be accidentally added to production templates by merchants.
 {%- endcomment -%}
 
@@ -57,57 +57,88 @@
       <div class="tk-grid" style="--tk-grid-cols-desktop: 4; --tk-grid-cols-tablet: 2; --tk-grid-cols-mobile: 1;">
         <div class="tk-card-box">
           <span class="tk-badge tk-badge--sale" style="margin-bottom: var(--tk-space-2);">Sale Badge</span>
-          <div style="color: var(--tk-color-sale); font-weight: 700;">Sale Price Token: {{ settings.tk_color_sale }}</div>
+          <div style="color: var(--tk-color-sale); font-weight: 700;">Sale Price: {{ settings.tk_color_sale }}</div>
         </div>
         <div class="tk-card-box">
           <div class="tk-stock tk-stock--in" style="margin-bottom: var(--tk-space-2);">
             <span class="tk-stock__dot"></span> In stock status
           </div>
-          <div style="color: var(--tk-color-success); font-weight: 600;">Success Token: {{ settings.tk_color_success }}</div>
+          <div style="color: var(--tk-color-success); font-weight: 600;">Success: {{ settings.tk_color_success }}</div>
         </div>
         <div class="tk-card-box">
           <div class="tk-stock tk-stock--low" style="margin-bottom: var(--tk-space-2);">
             <span class="tk-stock__dot"></span> Low stock (Only 3 left)
           </div>
-          <div style="color: var(--tk-color-low-stock); font-weight: 600;">Low Stock Token: {{ settings.tk_color_low_stock }}</div>
+          <div style="color: var(--tk-color-low-stock); font-weight: 600;">Low Stock: {{ settings.tk_color_low_stock }}</div>
         </div>
         <div class="tk-card-box">
           <span class="tk-badge tk-badge--soldout" style="margin-bottom: var(--tk-space-2);">Sold Out Badge</span>
-          <div style="color: var(--tk-color-soldout); font-weight: 700;">Sold Out Token: {{ settings.tk_color_sold_out }}</div>
+          <div style="color: var(--tk-color-soldout); font-weight: 700;">Sold Out: {{ settings.tk_color_sold_out }}</div>
         </div>
       </div>
     </section>
 
     <!-- SECTION 3: TYPOGRAPHY SCALE -->
     <section style="margin-bottom: var(--tk-space-8);">
-      <h2 class="tk-h2">3. Typography Scale (Fluid Clamp)</h2>
-      <div class="tk-card-box tk-stack" style="--tk-stack-gap: var(--tk-space-4);">
+      <h2 class="tk-h2">3. Typography Scale (Fluid Clamp & Explicit Targets)</h2>
+      <p class="tk-text-muted" style="margin-bottom: var(--tk-space-4);">
+        Each sample displays its token name and target desktop &rarr; mobile computed pixel size:
+      </p>
+      <div class="tk-card-box tk-stack" style="--tk-stack-gap: var(--tk-space-5);">
         <div>
-          <span class="tk-eyebrow">Eyebrow (13px, Bold, Uppercase, 0.1em tracking)</span>
-          <h1 class="tk-h1" style="margin-bottom: 0;">Heading 1 (52px &rarr; 34px, 800)</h1>
+          <span class="tk-eyebrow">Eyebrow &middot; 13px (Mobile 12px)</span>
+          <h1 class="tk-h1" style="margin-bottom: 0;">Heading 1 &middot; 52px (Mobile 34px)</h1>
         </div>
-        <h2 class="tk-h2" style="margin-bottom: 0;">Heading 2 (36px &rarr; 26px, 800)</h2>
-        <h3 class="tk-h3" style="margin-bottom: 0;">Heading 3 (22px &rarr; 18px, 700)</h3>
-        <p class="tk-card-title">Card Title (16px, 700, 1.35 line-height)</p>
-        <p class="tk-rte">Body text (16px, line-height 1.6). This text demonstrates standard paragraph styling, neutral legibility, and contrast against the default page background.</p>
-        <small class="tk-text-muted">Small text / Secondary description (13–14px)</small>
+        <div>
+          <h2 class="tk-h2" style="margin-bottom: 0;">Heading 2 &middot; 36px (Mobile 26px)</h2>
+        </div>
+        <div>
+          <h3 class="tk-h3" style="margin-bottom: 0;">Heading 3 &middot; 22px (Mobile 18px)</h3>
+        </div>
+        <div>
+          <p class="tk-card-title">Card title &middot; 16px (Mobile 15px)</p>
+        </div>
+        <div>
+          <p class="tk-rte" style="margin-bottom: var(--tk-space-1);">
+            Body text &middot; 16px (Mobile 16px) &mdash; This paragraph demonstrates default body copy scale, line-height 1.6, and link interaction: <a href="#test-link">Sample link with hover accent</a>.
+          </p>
+        </div>
+        <div>
+          <small class="tk-text-muted">Small text &middot; 14px (Mobile 14px)</small>
+        </div>
       </div>
     </section>
 
-    <!-- SECTION 4: BUTTONS & BADGES -->
+    <!-- SECTION 4: BUTTONS & INTERACTION STATES -->
     <section style="margin-bottom: var(--tk-space-8);">
-      <h2 class="tk-h2">4. Buttons & Badges</h2>
+      <h2 class="tk-h2">4. Buttons & Interaction States</h2>
+      <p class="tk-text-muted" style="margin-bottom: var(--tk-space-3);">
+        <em>Hover or focus buttons below to preview live interaction states (translateY(-1px), shadow-sm, darken):</em>
+      </p>
+
       <div class="tk-card-box tk-stack" style="--tk-stack-gap: var(--tk-space-5);">
         <div>
-          <h3 class="tk-h3">Button Styles</h3>
+          <h3 class="tk-h3">Interactive Buttons (Hover / Focus / Active)</h3>
           <div class="tk-cluster" style="margin-top: var(--tk-space-3);">
-            <button type="button" class="tk-btn tk-btn--primary">Primary Button</button>
-            <button type="button" class="tk-btn tk-btn--secondary">Secondary Button</button>
-            <button type="button" class="tk-btn tk-btn--outline">Outline Button</button>
-            <button type="button" class="tk-btn tk-btn--link">Text Link Button</button>
-            <button type="button" class="tk-btn tk-btn--primary" disabled>Disabled Button</button>
+            <button type="button" class="tk-btn tk-btn--primary">Primary &middot; 15px</button>
+            <button type="button" class="tk-btn tk-btn--secondary">Secondary &middot; 15px</button>
+            <button type="button" class="tk-btn tk-btn--outline">Outline &middot; 15px</button>
+            <button type="button" class="tk-btn tk-btn--link">Text Link &middot; 15px</button>
+            <button type="button" class="tk-btn tk-btn--primary" disabled>Disabled State</button>
           </div>
         </div>
+
+        <div>
+          <h3 class="tk-h3">Static State Previews for Comparison</h3>
+          <div class="tk-cluster" style="margin-top: var(--tk-space-3);">
+            <button type="button" class="tk-btn tk-btn--primary is-hover">Primary (Simulated Hover)</button>
+            <button type="button" class="tk-btn tk-btn--secondary is-hover">Secondary (Simulated Hover)</button>
+            <button type="button" class="tk-btn tk-btn--outline is-hover">Outline (Simulated Hover)</button>
+            <button type="button" class="tk-btn tk-btn--link is-hover">Link (Simulated Hover)</button>
+            <button type="button" class="tk-btn tk-btn--primary is-disabled">Primary (Disabled 0.6)</button>
+          </div>
+        </div>
+
         <div>
           <h3 class="tk-h3">Badge Variants</h3>
           <div class="tk-cluster" style="margin-top: var(--tk-space-3);">
@@ -121,22 +152,32 @@
       </div>
     </section>
 
-    <!-- SECTION 5: FORM CONTROLS -->
+    <!-- SECTION 5: FORM CONTROLS & PILLS -->
     <section style="margin-bottom: var(--tk-space-8);">
-      <h2 class="tk-h2">5. Form Fields & Feedback</h2>
-      <div class="tk-card-box">
+      <h2 class="tk-h2">5. Form Fields, Inputs & Pills (Hover & Focus)</h2>
+      <div class="tk-card-box tk-stack" style="--tk-stack-gap: var(--tk-space-4);">
         <div class="tk-grid" style="--tk-grid-cols-desktop: 2; --tk-grid-cols-tablet: 2; --tk-grid-cols-mobile: 1;">
           <div class="tk-field">
-            <label for="sample-input-normal" class="tk-label">Default Input Field</label>
+            <label for="sample-input-normal" class="tk-label">Default Input (16px minimum &mdash; prevents iOS zoom)</label>
             <input type="text" id="sample-input-normal" class="tk-input" placeholder="e.g. John Doe">
           </div>
           <div class="tk-field tk-field--error">
-            <label for="sample-input-error" class="tk-label">Error State Input Field</label>
+            <label for="sample-input-error" class="tk-label">Error State Input (Hover border ink / error red)</label>
             <input type="email" id="sample-input-error" class="tk-input" value="invalid-email" aria-invalid="true" aria-describedby="sample-error-msg">
             <span id="sample-error-msg" class="tk-field__error-msg">Please enter a valid email address.</span>
           </div>
         </div>
-        <div style="margin-top: var(--tk-space-4);">
+
+        <div>
+          <span class="tk-label" style="display: block; margin-bottom: var(--tk-space-2);">Option Pills / Swatches (Hover border turns ink)</span>
+          <div class="tk-cluster">
+            <button type="button" class="tk-pill">Small</button>
+            <button type="button" class="tk-pill">Medium</button>
+            <button type="button" class="tk-pill">Large</button>
+          </div>
+        </div>
+
+        <div>
           <div class="tk-alert--success" role="status">
             &check; Success alert: Item added or form submitted successfully.
           </div>
@@ -162,7 +203,7 @@
           <div>
             <strong>Button height:</strong> 48px<br>
             <strong>Touch target min:</strong> 44&times;44px<br>
-            <strong>Focus ring:</strong> 2px solid accent
+            <strong>Focus ring:</strong> 2px solid accent (offset 3px)
           </div>
         </div>
       </div>
