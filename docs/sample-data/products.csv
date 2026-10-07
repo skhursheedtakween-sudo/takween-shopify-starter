@@ -1,0 +1,60 @@
+Handle,Title,Body (HTML),Vendor,Type,Tags,Published,Option1 Name,Option1 Value,Option2 Name,Option2 Value,Variant SKU,Variant Inventory Tracker,Variant Inventory Qty,Variant Inventory Policy,Variant Fulfillment Service,Variant Price,Variant Compare At Price,Variant Requires Shipping,Variant Taxable,Image Src,Status
+sample-classic-tee,Sample Classic Tee,"<p>A versatile everyday crew-neck t-shirt. Sample product for Takween Starter Theme development only.</p>",Takween Sample Co.,Apparel,"apparel,sample",TRUE,Size,S,Colour,Black,SCT-S-BLK,shopify,10,deny,manual,35.00,,TRUE,TRUE,,active
+sample-classic-tee,,,,,,,Size,S,Colour,White,SCT-S-WHT,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-classic-tee,,,,,,,Size,S,Colour,Navy,SCT-S-NVY,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-classic-tee,,,,,,,Size,M,Colour,Black,SCT-M-BLK,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-classic-tee,,,,,,,Size,M,Colour,White,SCT-M-WHT,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-classic-tee,,,,,,,Size,M,Colour,Navy,SCT-M-NVY,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-classic-tee,,,,,,,Size,L,Colour,Black,SCT-L-BLK,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-classic-tee,,,,,,,Size,L,Colour,White,SCT-L-WHT,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-classic-tee,,,,,,,Size,L,Colour,Navy,SCT-L-NVY,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-classic-tee,,,,,,,Size,XL,Colour,Black,SCT-XL-BLK,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-classic-tee,,,,,,,Size,XL,Colour,White,SCT-XL-WHT,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-classic-tee,,,,,,,Size,XL,Colour,Navy,SCT-XL-NVY,shopify,10,deny,manual,35.00,,TRUE,TRUE,,
+sample-slim-chinos,Sample Slim Chinos,"<p>A tailored slim-fit chino in a durable cotton-blend. Sample product for Takween Starter Theme development only.</p>",Takween Sample Co.,Apparel,"apparel,sample",TRUE,Size,30,Colour,Khaki,SSC-30-KHK,shopify,8,deny,manual,65.00,,TRUE,TRUE,,active
+sample-slim-chinos,,,,,,,Size,30,Colour,Black,SSC-30-BLK,shopify,8,deny,manual,65.00,,TRUE,TRUE,,
+sample-slim-chinos,,,,,,,Size,32,Colour,Khaki,SSC-32-KHK,shopify,8,deny,manual,65.00,,TRUE,TRUE,,
+sample-slim-chinos,,,,,,,Size,32,Colour,Black,SSC-32-BLK,shopify,0,deny,manual,65.00,,TRUE,TRUE,,
+sample-slim-chinos,,,,,,,Size,34,Colour,Khaki,SSC-34-KHK,shopify,8,deny,manual,65.00,,TRUE,TRUE,,
+sample-slim-chinos,,,,,,,Size,34,Colour,Black,SSC-34-BLK,shopify,8,deny,manual,65.00,,TRUE,TRUE,,
+sample-slim-chinos,,,,,,,Size,36,Colour,Khaki,SSC-36-KHK,shopify,8,deny,manual,65.00,,TRUE,TRUE,,
+sample-slim-chinos,,,,,,,Size,36,Colour,Black,SSC-36-BLK,shopify,8,deny,manual,65.00,,TRUE,TRUE,,
+sample-relaxed-hoodie,Sample Relaxed Hoodie,"<p>An oversized pullover hoodie in a soft brushed fleece. Sample product for Takween Starter Theme development only — fully sold out state.</p>",Takween Sample Co.,Apparel,"apparel,sample",TRUE,Size,S,Colour,Grey,SRH-S-GRY,shopify,0,deny,manual,55.00,,TRUE,TRUE,,active
+sample-relaxed-hoodie,,,,,,,Size,S,Colour,Charcoal,SRH-S-CHA,shopify,0,deny,manual,55.00,,TRUE,TRUE,,
+sample-relaxed-hoodie,,,,,,,Size,M,Colour,Grey,SRH-M-GRY,shopify,0,deny,manual,55.00,,TRUE,TRUE,,
+sample-relaxed-hoodie,,,,,,,Size,M,Colour,Charcoal,SRH-M-CHA,shopify,0,deny,manual,55.00,,TRUE,TRUE,,
+sample-relaxed-hoodie,,,,,,,Size,L,Colour,Grey,SRH-L-GRY,shopify,0,deny,manual,55.00,,TRUE,TRUE,,
+sample-relaxed-hoodie,,,,,,,Size,L,Colour,Charcoal,SRH-L-CHA,shopify,0,deny,manual,55.00,,TRUE,TRUE,,
+sample-relaxed-hoodie,,,,,,,Size,XL,Colour,Grey,SRH-XL-GRY,shopify,0,deny,manual,55.00,,TRUE,TRUE,,
+sample-relaxed-hoodie,,,,,,,Size,XL,Colour,Charcoal,SRH-XL-CHA,shopify,0,deny,manual,55.00,,TRUE,TRUE,,
+sample-oxford-shirt,Sample Oxford Shirt,"<p>A classic button-down Oxford shirt for smart-casual occasions. Sample product — on sale state for Takween Starter Theme development.</p>",Takween Sample Co.,Apparel,"apparel,sample,sale",TRUE,Size,S,Colour,White,SOS-S-WHT,shopify,10,deny,manual,45.00,60.00,TRUE,TRUE,,active
+sample-oxford-shirt,,,,,,,Size,S,Colour,Blue,SOS-S-BLU,shopify,10,deny,manual,45.00,60.00,TRUE,TRUE,,
+sample-oxford-shirt,,,,,,,Size,M,Colour,White,SOS-M-WHT,shopify,10,deny,manual,45.00,60.00,TRUE,TRUE,,
+sample-oxford-shirt,,,,,,,Size,M,Colour,Blue,SOS-M-BLU,shopify,10,deny,manual,45.00,60.00,TRUE,TRUE,,
+sample-oxford-shirt,,,,,,,Size,L,Colour,White,SOS-L-WHT,shopify,10,deny,manual,45.00,60.00,TRUE,TRUE,,
+sample-oxford-shirt,,,,,,,Size,L,Colour,Blue,SOS-L-BLU,shopify,10,deny,manual,45.00,60.00,TRUE,TRUE,,
+sample-oxford-shirt,,,,,,,Size,XL,Colour,White,SOS-XL-WHT,shopify,10,deny,manual,45.00,60.00,TRUE,TRUE,,
+sample-oxford-shirt,,,,,,,Size,XL,Colour,Blue,SOS-XL-BLU,shopify,10,deny,manual,45.00,60.00,TRUE,TRUE,,
+sample-jogger-pants,Sample Jogger Pants,"<p>Relaxed jogger trousers with an elasticated waistband and tapered leg. Sample product — low stock state for Takween Starter Theme development.</p>",Takween Sample Co.,Apparel,"apparel,sample",TRUE,Size,S,Colour,Black,SJP-S-BLK,shopify,3,deny,manual,40.00,,TRUE,TRUE,,active
+sample-jogger-pants,,,,,,,Size,S,Colour,Olive,SJP-S-OLV,shopify,10,deny,manual,40.00,,TRUE,TRUE,,
+sample-jogger-pants,,,,,,,Size,M,Colour,Black,SJP-M-BLK,shopify,3,deny,manual,40.00,,TRUE,TRUE,,
+sample-jogger-pants,,,,,,,Size,M,Colour,Olive,SJP-M-OLV,shopify,10,deny,manual,40.00,,TRUE,TRUE,,
+sample-jogger-pants,,,,,,,Size,L,Colour,Black,SJP-L-BLK,shopify,10,deny,manual,40.00,,TRUE,TRUE,,
+sample-jogger-pants,,,,,,,Size,L,Colour,Olive,SJP-L-OLV,shopify,10,deny,manual,40.00,,TRUE,TRUE,,
+sample-ceramic-mug,Sample Ceramic Mug,"<p>A heavyweight ceramic mug with a generous 350ml capacity. Microwave and dishwasher safe. Sample product for Takween Starter Theme development only.</p>",Takween Sample Co.,Home & Living,"home-living,sample",TRUE,Title,Default Title,,,SMG-001,shopify,25,deny,manual,18.00,,TRUE,TRUE,,active
+sample-linen-cushion-cover,Sample Linen Cushion Cover,"<p>A natural linen cushion cover in a relaxed slub weave. 50cm x 50cm. Sample product — on sale state for Takween Starter Theme development.</p>",Takween Sample Co.,Home & Living,"home-living,sample,sale",TRUE,Colour,Ivory,,,,SLC-IVY,shopify,12,deny,manual,28.00,35.00,TRUE,TRUE,,active
+sample-linen-cushion-cover,,,,,,,Colour,Sage,,,SLC-SGE,shopify,12,deny,manual,28.00,35.00,TRUE,TRUE,,
+sample-linen-cushion-cover,,,,,,,Colour,Terracotta,,,SLC-TRR,shopify,12,deny,manual,28.00,35.00,TRUE,TRUE,,
+sample-wooden-serving-board,Sample Wooden Serving Board,"<p>A solid acacia wood serving board with a carved handle. Suitable for cheeseboards and light serving. Sample product — on sale state for Takween Starter Theme development.</p>",Takween Sample Co.,Home & Living,"home-living,sample,sale",TRUE,Title,Default Title,,,SWB-001,shopify,15,deny,manual,42.00,55.00,TRUE,TRUE,,active
+sample-scented-candle,Sample Scented Candle,"<p>A hand-poured soy wax candle in a glass jar with a 40-hour burn time. Sample product for Takween Starter Theme development only.</p>",Takween Sample Co.,Home & Living,"home-living,sample",TRUE,Scent,Lavender,,,SSC-LAV,shopify,20,deny,manual,22.00,,TRUE,TRUE,,active
+sample-scented-candle,,,,,,,Scent,Cedar,,,SSC-CED,shopify,20,deny,manual,22.00,,TRUE,TRUE,,
+sample-scented-candle,,,,,,,Scent,Citrus,,,SSC-CIT,shopify,20,deny,manual,22.00,,TRUE,TRUE,,
+sample-canvas-tote-bag,Sample Canvas Tote Bag,"<p>A sturdy natural canvas tote bag with short handles and a flat base. Sample product — on sale state for Takween Starter Theme development.</p>",Takween Sample Co.,Accessories,"accessories,sample,sale",TRUE,Colour,Black,,,STB-BLK,shopify,15,deny,manual,15.00,20.00,TRUE,TRUE,,active
+sample-canvas-tote-bag,,,,,,,Colour,Natural,,,STB-NAT,shopify,15,deny,manual,15.00,20.00,TRUE,TRUE,,
+sample-canvas-tote-bag,,,,,,,Colour,Olive,,,STB-OLV,shopify,15,deny,manual,15.00,20.00,TRUE,TRUE,,
+sample-leather-card-holder,Sample Leather Card Holder,"<p>A slim full-grain leather card holder with three card slots and a central cash pocket. Sample product for Takween Starter Theme development only.</p>",Takween Sample Co.,Accessories,"accessories,sample",TRUE,Colour,Black,,,SCH-BLK,shopify,20,deny,manual,25.00,,TRUE,TRUE,,active
+sample-leather-card-holder,,,,,,,Colour,Tan,,,SCH-TAN,shopify,20,deny,manual,25.00,,TRUE,TRUE,,
+sample-leather-card-holder,,,,,,,Colour,Burgundy,,,SCH-BRG,shopify,20,deny,manual,25.00,,TRUE,TRUE,,
+sample-knit-beanie,Sample Knit Beanie,"<p>A soft ribbed knit beanie in a one-size-fits-most cut. Sample product for Takween Starter Theme development only.</p>",Takween Sample Co.,Accessories,"accessories,sample",TRUE,Colour,Charcoal,,,SKB-CHA,shopify,18,deny,manual,20.00,,TRUE,TRUE,,active
+sample-knit-beanie,,,,,,,Colour,Cream,,,SKB-CRM,shopify,18,deny,manual,20.00,,TRUE,TRUE,,
+sample-knit-beanie,,,,,,,Colour,Forest Green,,,SKB-FGR,shopify,18,deny,manual,20.00,,TRUE,TRUE,,

@@ -151,19 +151,27 @@ Will document:
 
 ## 7. Metafields & Metaobjects
 
-> ⏳ **Placeholder — filled in Phase 02.**
+**Full spec:** `docs/DATA_MODEL.md` | **Admin setup guide:** `docs/SAMPLE_DATA_SETUP.md`
 
-Will document:
+### Metaobject definitions (namespace `custom`)
 
-| Type | Namespace.key | Field type | Used in | Example |
+| API handle | Display name | Fields | Storefront access | Used in |
 |---|---|---|---|---|
-| Metaobject def | `specification` | label (text), value (text) | `tk_details_accordion` | `{ label: "Material", value: "100% Cotton" }` |
-| Metaobject def | `faq_item` | question (text), answer (rich text) | `tk-faq`, `tk_details_accordion` | — |
-| Product metafield | `custom.highlights` | List of single line text | `tk_highlights` block | `["Free UK delivery", "Ethically made"]` |
-| Product metafield | `custom.care_instructions` | Rich text | `tk_details_accordion` | `<p>Machine wash 30°C</p>` |
-| Product metafield | `custom.specifications` | List → `specification` metaobjects | `tk_details_accordion` | — |
-| Product metafield | `custom.faqs` | List → `faq_item` metaobjects | `tk_details_accordion`, `tk-faq` | — |
-| Product metafield | `custom.badge_text` | Single line text (max 20 chars) | `tk-badge`, `tk-product-card` | `"Best seller"` |
+| `specification` | Specification | `label` (single line text, required), `value` (single line text, required) | ✅ ON | `tk_details_accordion` block → Specifications tab |
+| `faq_item` | FAQ Item | `question` (single line text, required), `answer` (rich text, required) | ✅ ON | `tk-faq` section (metaobject source mode); `tk_details_accordion` block → FAQs tab |
+
+### Product metafield definitions (namespace `custom`)
+
+| Display name | Namespace.key | Type | Validation | Storefront access | Used in | Hidden when |
+|---|---|---|---|---|---|---|
+| Highlights | `custom.highlights` | List of: Single line text | 3–5 items recommended | ✅ ON | `tk_highlights` block in `main-product` | Blank |
+| Care Instructions | `custom.care_instructions` | Rich text | — | ✅ ON | `tk_details_accordion` → Care tab | Blank |
+| Specifications | `custom.specifications` | List of: Metaobject ref → `specification` | — | ✅ ON | `tk_details_accordion` → Specifications tab | Empty list |
+| Product FAQs | `custom.faqs` | List of: Metaobject ref → `faq_item` | — | ✅ ON | `tk_details_accordion` → FAQs tab; `tk-faq` section | Empty list |
+| Custom Badge | `custom.badge_text` | Single line text | Max 20 characters | ✅ ON | `tk-badge`, `tk-product-card` | Blank or global setting OFF |
+
+### Why metafields/metaobjects?
+Product-specific structured data varies per product and cannot be hard-coded into theme files. Shopify metafields and metaobjects let content editors manage this data in Admin without touching code, keep the data type-safe and validated, and make the theme genuinely data-driven. Metaobjects (like `specification`) also allow reuse across multiple products and centralised editing — fulfilling brief §6's requirement to avoid hard-coding product-specific content into theme files.
 
 ---
 
