@@ -13,7 +13,7 @@
 | Base theme | Shopify Dawn |
 | Base version | 16.0.0 (tag `v16.0.0`, commit `bc39a7d`) |
 | Source | https://github.com/Shopify/dawn |
-| Approach | **Extend Dawn, custom `tk-` layer.** Dawn handles all core e-commerce JS (cart, variants, facets, search, quick-add). All new sections, snippets and CSS are prefixed `tk-`. Dawn files are modified only where hooking into existing custom elements is the only clean path (header, main-product, collection grid, search, cart drawer). |
+| Approach | **Extend Dawn, custom `tk-` layer.** Dawn handles all core e-commerce JS (cart, variants, facets, search, quick-add). All new sections, snippets and CSS are prefixed `tk-`. **18 NEW `tk-` sections/templates** are built from scratch. **15 Dawn files are EXTEND** (modified minimally, documented in §9) where hooking into existing custom elements is the only clean path. |
 | Goal | A reusable, rebrandable Shopify OS 2.0 framework for future Takween client builds. |
 
 ---
@@ -91,6 +91,22 @@ Will document:
 | `sections/tk-contact.liquid` | **NEW** | Brief §4: Contact page | Form + business info layout | Dawn has `contact-form.liquid` — tk version for split layout + richer a11y |
 | `sections/tk-404.liquid` | **NEW** | Brief §4: 404 page | Search form, popular collections, featured products | Replaces Dawn's `main-404.liquid` in 404.json |
 | `sections/tk-style-guide.liquid` | **NEW** | (Developer QA) | Headings, buttons, badges, form fields, product card preview | No preset — invisible to merchants; removed before submission |
+
+### Templates requirements map
+
+| Template file | Decision | Composed from | Phase |
+|---|---|---|---|
+| `templates/index.json` | **COMPOSE** | tk-hero → tk-multicolumn → tk-featured-collection → tk-image-with-text → tk-featured-products → tk-promo-split → tk-testimonials → tk-logo-strip → tk-faq → tk-newsletter | Phase 07 |
+| `templates/product.json` | **COMPOSE** | main-product (extended) → tk-multicolumn → related-products (extended) → tk-faq | Phase 08 |
+| `templates/collection.json` | **COMPOSE** | tk-collection-header → main-collection-product-grid (extended, with facets) → tk-multicolumn → tk-newsletter | Phase 09 |
+| `templates/search.json` | **COMPOSE** | main-search (extended) | Phase 10 |
+| `templates/cart.json` | **COMPOSE** | main-cart-items (extended) → main-cart-footer (extended) | Phase 11 |
+| `templates/page.json` | **COMPOSE** | tk-page-header → main-page (extended) → tk-rich-text (CTA) | Phase 12 |
+| `templates/page.faq.json` | **COMPOSE** | tk-page-header → tk-faq → tk-rich-text | Phase 12 |
+| `templates/page.about.json` | **COMPOSE** | tk-page-header → tk-image-with-text ×2 → tk-multicolumn → tk-logo-strip → tk-rich-text | Phase 12 |
+| `templates/page.contact.json` | **COMPOSE** | tk-page-header → tk-contact | Phase 12 |
+| `templates/404.json` | **COMPOSE** | tk-404 | Phase 12 |
+| `templates/page.tk-style-guide.json` | **NEW** | tk-style-guide | Phase 03 (dev QA only) |
 
 ---
 
@@ -179,6 +195,8 @@ Will document:
 | `sections/main-cart-items.liquid` | Add per-line loading states, live region for cart feedback | Keeps `cart-items` |
 | `sections/main-cart-footer.liquid` | Add empty state, `tk-free-shipping-bar`, cart note toggle | Keeps Dawn cart structure |
 | `sections/main-page.liquid` | Add `.tk-rte` wrapper class for rich text styling | Minimal: one class, no JS changes |
+| `snippets/facets.liquid` | **Minimal markup only:** add wrapper `<div>` for the mobile drawer's sticky "Show X results" footer and `data-` attribute for active chip container. No new Liquid logic or loops added. | Required to position the sticky footer inside the filter drawer (Phase 09); all JS stays in Dawn's `facets.js` |
+| `sections/predictive-search.liquid` | CSS token restyle: product result rows show image + title + price using `tk-price` snippet; no markup restructure | Keeps `predictive-search` custom element and all its JS intact |
 | `config/settings_schema.json` | Append Takween setting groups (Layout, Shape, Product cards, Motion) | Extension only — Dawn groups untouched |
 | `locales/en.default.json` | Add `"tk": {}` block for all custom user-facing strings | Namespace avoids collisions |
 | `locales/en.default.schema.json` | Add `"tk": {}` block for schema labels | Same namespace |
