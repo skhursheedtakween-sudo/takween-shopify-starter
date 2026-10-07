@@ -1,0 +1,224 @@
+# Build Notes — Takween Shopify Starter Theme
+
+**Developer:** Sheikh M. Khursheed  
+**Project:** Takween Digital Services — Project 04  
+**Last updated:** 2026-10-07
+
+---
+
+## 1. Overview
+
+| Field | Detail |
+|---|---|
+| Base theme | Shopify Dawn |
+| Base version | 16.0.0 (tag `v16.0.0`, commit `bc39a7d`) |
+| Source | https://github.com/Shopify/dawn |
+| Approach | **Extend Dawn, custom `tk-` layer.** Dawn handles all core e-commerce JS (cart, variants, facets, search, quick-add). All new sections, snippets and CSS are prefixed `tk-`. Dawn files are modified only where hooking into existing custom elements is the only clean path (header, main-product, collection grid, search, cart drawer). |
+| Goal | A reusable, rebrandable Shopify OS 2.0 framework for future Takween client builds. |
+
+---
+
+## 2. Architecture
+
+### Folder conventions
+| Folder | Purpose |
+|---|---|
+| `assets/` | All CSS and JS. Custom files: `tk-<name>.css` / `tk-<name>.js`. Dawn files untouched unless documented in §9. |
+| `config/` | `settings_schema.json` — Takween groups appended at the end; never modify Dawn groups inline. `settings_data.json` — never manually edited; owned by Shopify. |
+| `layout/` | `theme.liquid` — `tk-css-variables.liquid` and `tk-base.css` injected here. Minimal changes; documented in §9. |
+| `locales/` | Translation keys added to `en.default.json` under a `"tk"` top-level key. Schema labels added to `en.default.schema.json` under `"tk"`. |
+| `sections/` | New sections: `tk-<name>.liquid`. EXTEND decisions modify existing Dawn files only. |
+| `snippets/` | New components: `tk-<name>.liquid`. |
+| `templates/` | New alternates: `page.tk-<name>.json`. Existing templates replaced with `tk-` section composition. |
+| `docs/` | Documentation only — Shopify ignores this folder. Not synced to the storefront. |
+
+### CSS loading
+- Dawn's `base.css` is loaded globally from `layout/theme.liquid`.
+- `assets/tk-base.css` loaded globally after `base.css` — utilities, tokens, shared components.
+- Section-specific CSS (`assets/tk-<name>.css`) loaded **inside each section file** via `{{ 'tk-<name>.css' | asset_url | stylesheet_tag }}`. Only loaded on pages that render the section.
+
+### JS loading
+- All `tk-` custom elements: loaded inside the section that needs them via `<script src="{{ 'tk-<name>.js' | asset_url }}" defer></script>`.
+- Dawn's JS is loaded by `layout/theme.liquid` as-is — do not move or defer it differently.
+
+### Token system
+- `snippets/tk-css-variables.liquid` rendered in `<head>` (Phase 03) outputs `:root` CSS custom properties for spacing, type scale, radii, shadows, z-index.
+- All `tk-` CSS reads from `--tk-*` variables — never hard-coded values.
+
+---
+
+## 3. Design System (tokens & global settings)
+
+> ⏳ **Placeholder — filled in Phase 03.**
+
+Will document:
+- Spacing scale (`--tk-space-1` … `--tk-space-9`)
+- Fluid type scale (`--tk-text-xs` … `--tk-text-5xl`)
+- Container, gap, border radius, shadow, z-index tokens
+- Global settings groups added to `config/settings_schema.json`
+- "How to rebrand for a new client" checklist
+
+---
+
+## 4. Custom Sections
+
+| Section file | Decision | Brief requirement | Key settings | Notes |
+|---|---|---|---|---|
+| `sections/tk-announcement-bar.liquid` | **NEW** | Brief §5: Announcement bar | Colour scheme, auto-rotate, dismissible, visibility | Replaces Dawn's `announcement-bar` in header-group.json |
+| `sections/header.liquid` | **EXTEND** | Brief §5: Header/navigation | Logo position, menu type, search, utility CTA | Dawn's `header-drawer`, `header-menu`, predictive-search must stay working |
+| `sections/tk-hero.liquid` | **NEW** | Brief §5: Hero/banner | Desktop+mobile image, overlay, height, content position, eager/lazy load | First-section detection for `fetchpriority="high"` |
+| `sections/tk-rich-text.liquid` | **NEW** | Brief §5: Rich text/content intro | Alignment, content width, colour scheme | Dawn has `rich-text.liquid` — new tk version for clear custom attribution |
+| `sections/tk-featured-collection.liquid` | **NEW** | Brief §5: Featured collection | Collection picker, product count, columns, mobile slider | Uses `tk-product-grid` + `tk-product-card` |
+| `sections/tk-featured-products.liquid` | **NEW** | Brief §5: Featured products | Product list picker, columns, layout | Uses same grid/card system |
+| `sections/tk-image-with-text.liquid` | **NEW** | Brief §5: Image with text, reversible | Image width, reverse toggle, mobile order | Dawn has `image-with-text.liquid` — tk version for custom control |
+| `sections/tk-multicolumn.liquid` | **NEW** | Brief §5: Multicolumn benefits/trust | Columns desktop/mobile, card style, icon or image per block | Dawn has `multicolumn.liquid` — new version for icon support + tk styling |
+| `sections/tk-logo-strip.liquid` | **NEW** | Brief §5: Logo/trust-mark strip | Grayscale toggle, marquee option, logos per row | New section — Dawn has no equivalent |
+| `sections/tk-testimonials.liquid` | **NEW** | Brief §5: Testimonials/reviews | Grid or slider layout, star rating block | New section — Dawn has no equivalent |
+| `sections/tk-faq.liquid` | **NEW** | Brief §5: FAQ accordion | Blocks or metaobject source, single/multi open, JSON-LD toggle | New section — Dawn has `collapsible-content` but no metaobject source |
+| `sections/tk-promo-split.liquid` | **NEW** | Brief §5: Promotional split banner | Split ratio, height, 2-panel blocks with per-panel colour scheme | New section — Dawn has no equivalent |
+| `sections/tk-newsletter.liquid` | **NEW** | Brief §5: Newsletter/lead capture | Layout centered/split, privacy note, success/error feedback | Dawn has `newsletter.liquid` — tk version for richer layout + a11y |
+| `sections/tk-footer.liquid` | **NEW** | Brief §5: Footer | Menu, business info, newsletter, social blocks; accordion on mobile | Replaces Dawn's `footer.liquid` in footer-group.json |
+| `sections/main-collection-product-grid.liquid` | **EXTEND** | Brief §4: Collection | Use `tk-product-card`, columns settings | Must keep `facet-filters-form`, Section Rendering API calls |
+| `sections/main-collection-banner.liquid` → `sections/tk-collection-header.liquid` | **NEW** | Brief §4: Collection header | Title h1, description clamp, breadcrumb, image | New section replaces banner; keeps clean separation |
+| `sections/main-product.liquid` | **EXTEND** | Brief §4: Product | Add `tk_` blocks for stock, highlights, accordion, trust badges, sticky ATC | Dawn's `product-form`, `variant-selects`, `product-info`, media-gallery must stay |
+| `sections/related-products.liquid` | **EXTEND** | Brief §4: Product recommendations | Use `tk-product-card` + `tk-product-grid` | Keep `product-recommendations` custom element |
+| `sections/main-search.liquid` | **EXTEND** | Brief §4: Search | No-results state, empty query state, tk card grid | Must keep `main-search`, `facet-filters-form` |
+| `sections/cart-drawer.liquid` | **EXTEND** | Brief §4: Cart drawer | Free-shipping bar, empty state, live region | Must keep `cart-drawer`, `cart-drawer-items` custom elements |
+| `sections/main-cart-items.liquid` | **EXTEND** | Brief §4: Cart page | Line item feedback, live region | Must keep `cart-items` custom element |
+| `sections/main-cart-footer.liquid` | **EXTEND** | Brief §4: Cart page | Subtotal, empty state, `tk-free-shipping-bar` | Keep Dawn cart footer structure |
+| `sections/main-page.liquid` | **EXTEND** | Brief §4: Standard content page | Apply `.tk-rte` class for styled rich text | Minimal change — just a class addition |
+| `sections/tk-page-header.liquid` | **NEW** | Brief §4: Content pages | Title, intro, breadcrumb, optional image | Used by page/faq/about/contact templates |
+| `sections/tk-contact.liquid` | **NEW** | Brief §4: Contact page | Form + business info layout | Dawn has `contact-form.liquid` — tk version for split layout + richer a11y |
+| `sections/tk-404.liquid` | **NEW** | Brief §4: 404 page | Search form, popular collections, featured products | Replaces Dawn's `main-404.liquid` in 404.json |
+| `sections/tk-style-guide.liquid` | **NEW** | (Developer QA) | Headings, buttons, badges, form fields, product card preview | No preset — invisible to merchants; removed before submission |
+
+---
+
+## 5. Custom Snippets
+
+| Snippet file | Decision | Purpose | Parameters / example |
+|---|---|---|---|
+| `snippets/tk-css-variables.liquid` | **NEW** | Outputs `:root` CSS custom property tokens | No params; `{% render 'tk-css-variables' %}` in `<head>` |
+| `snippets/tk-icon.liquid` | **NEW** | Inline SVG icon set | `icon`, `size`, `class`; `{% render 'tk-icon', icon: 'cart', size: 20 %}` |
+| `snippets/tk-button.liquid` | **NEW** | Accessible button/link component | `label`, `url`, `style`, `size`, `full_width`, `icon`, `attributes` |
+| `snippets/tk-section-heading.liquid` | **NEW** | Eyebrow + heading + subheading + "view all" link | `eyebrow`, `heading`, `subheading`, `alignment`, `tag`, `link_label`, `link_url` |
+| `snippets/tk-image.liquid` | **NEW** | Responsive image wrapper with placeholder SVG | `image`, `widths`, `sizes`, `ratio`, `lazy`, `fetchpriority`, `alt` |
+| `snippets/tk-price.liquid` | **NEW** | Price + compare-at + unit price + "From" | `product`, `variant`, `show_from` |
+| `snippets/tk-badge.liquid` | **NEW** | Sale / sold-out / custom badge | `product`, `variant`; reads global settings for sale style |
+| `snippets/tk-rating.liquid` | **NEW** | Static star display | `rating` (0–5), `aria_label` |
+| `snippets/tk-product-card.liquid` | **NEW** | Primary product card component | `product`, `show_vendor`, `image_ratio`, `show_secondary_image`, `heading_tag`, `lazy_load`, `section_id` |
+| `snippets/tk-product-grid.liquid` | **NEW** | Responsive product grid / slider | `products`, `columns_desktop`, `columns_tablet`, `columns_mobile`, `enable_slider`, `section_id` |
+| `snippets/tk-free-shipping-bar.liquid` | **NEW** | Progress bar toward free shipping threshold | `cart_total`; threshold from theme settings |
+| `snippets/tk-sticky-atc.liquid` | **NEW** | Mobile sticky Add to Cart strip | Rendered inside `main-product`; no standalone params |
+
+---
+
+## 6. Custom Blocks
+
+| Block | Parent section | Purpose |
+|---|---|---|
+| `announcement` (block in `tk-announcement-bar`) | `tk-announcement-bar` | Message text + link + optional icon |
+| `message` (block types: eyebrow, heading, text, buttons) | `tk-hero` | Composable hero content |
+| `column` | `tk-multicolumn` | Icon/image + heading + text + link per benefit |
+| `logo` | `tk-logo-strip` | Logo image + link |
+| `testimonial` | `tk-testimonials` | Quote + author + rating + image |
+| `question` / `metaobject` | `tk-faq` | FAQ accordion row or metaobject source |
+| `panel` | `tk-promo-split` | Per-panel image + colour scheme + content |
+| `menu` / `business_info` / `text` / `newsletter` / `social` | `tk-footer` | Footer column blocks |
+| `tk_stock_indicator` | `main-product` (EXTEND) | Live stock status; updates on variant change |
+| `tk_highlights` | `main-product` (EXTEND) | Renders `custom.highlights` metafield as list |
+| `tk_details_accordion` | `main-product` (EXTEND) | Specs / Care / FAQs via metafields |
+| `tk_trust_badges` | `main-product` (EXTEND) | 4 icon+text trust items |
+| `tk_delivery_note` | `main-product` (EXTEND) | Short editable delivery note |
+
+---
+
+## 7. Metafields & Metaobjects
+
+> ⏳ **Placeholder — filled in Phase 02.**
+
+Will document:
+
+| Type | Namespace.key | Field type | Used in | Example |
+|---|---|---|---|---|
+| Metaobject def | `specification` | label (text), value (text) | `tk_details_accordion` | `{ label: "Material", value: "100% Cotton" }` |
+| Metaobject def | `faq_item` | question (text), answer (rich text) | `tk-faq`, `tk_details_accordion` | — |
+| Product metafield | `custom.highlights` | List of single line text | `tk_highlights` block | `["Free UK delivery", "Ethically made"]` |
+| Product metafield | `custom.care_instructions` | Rich text | `tk_details_accordion` | `<p>Machine wash 30°C</p>` |
+| Product metafield | `custom.specifications` | List → `specification` metaobjects | `tk_details_accordion` | — |
+| Product metafield | `custom.faqs` | List → `faq_item` metaobjects | `tk_details_accordion`, `tk-faq` | — |
+| Product metafield | `custom.badge_text` | Single line text (max 20 chars) | `tk-badge`, `tk-product-card` | `"Best seller"` |
+
+---
+
+## 8. Custom JavaScript
+
+| File | Purpose | Dawn events used |
+|---|---|---|
+| `assets/tk-announcement-bar.js` | Custom element `<tk-announcement-bar>`: auto-rotate, pause/play, dismissal, Theme Editor block-select | None (standalone) |
+| `assets/tk-sticky-atc.js` | Mobile sticky ATC: IntersectionObserver on main ATC button, syncs variant/price via pub/sub | `PUB_SUB_EVENTS.variantChange` (subscribe) |
+| `assets/tk-load-more.js` | Progressive load-more for collection/search: Section Rendering API fetch, focus management | None (uses `fetch` + DOM) |
+| `assets/tk-faq.js` | Single-open accordion mode; smooth open/close | None (standalone) |
+| `assets/tk-product-card.js` | Colour swatch hover (swap image src), secondary image preload | None (standalone) |
+
+---
+
+## 9. Modified Dawn Files
+
+| File | What changed | Why |
+|---|---|---|
+| `layout/theme.liquid` | Add `{% render 'tk-css-variables' %}` + `{{ 'tk-base.css' \| asset_url \| stylesheet_tag }}` in `<head>` | Global token output and base CSS |
+| `sections/header-group.json` | Replace `announcement-bar` type with `tk-announcement-bar` | Use new custom bar |
+| `sections/footer-group.json` | Replace `footer` type with `tk-footer` | Use new custom footer |
+| `sections/header.liquid` | Add logo position options, utility CTA, mobile drawer footer, restyle with tk tokens | Extend rather than replace — keeps Dawn's header-drawer/header-menu JS |
+| `sections/main-product.liquid` | Add `tk_stock_indicator`, `tk_highlights`, `tk_details_accordion`, `tk_trust_badges`, `tk_delivery_note` block types; add sticky ATC snippet; restyle variant picker with pills/swatches | Extend Dawn's variant/cart JS; new blocks integrate via existing schema |
+| `sections/main-collection-product-grid.liquid` | Use `tk-product-card` instead of `card-product`, add column count settings | Keeps `facet-filters-form` JS intact; only template markup changed |
+| `sections/related-products.liquid` | Use `tk-product-grid` + `tk-product-card`, add heading/columns settings | Keeps `product-recommendations` custom element |
+| `sections/main-search.liquid` | Add no-results and empty-query states, use `tk-product-card`, pages/articles separate list | Keeps `main-search`, `facet-filters-form` |
+| `sections/cart-drawer.liquid` | Add `tk-free-shipping-bar`, empty state, live region announcements | Keeps `cart-drawer`, `cart-drawer-items` |
+| `sections/main-cart-items.liquid` | Add per-line loading states, live region for cart feedback | Keeps `cart-items` |
+| `sections/main-cart-footer.liquid` | Add empty state, `tk-free-shipping-bar`, cart note toggle | Keeps Dawn cart structure |
+| `sections/main-page.liquid` | Add `.tk-rte` wrapper class for rich text styling | Minimal: one class, no JS changes |
+| `config/settings_schema.json` | Append Takween setting groups (Layout, Shape, Product cards, Motion) | Extension only — Dawn groups untouched |
+| `locales/en.default.json` | Add `"tk": {}` block for all custom user-facing strings | Namespace avoids collisions |
+| `locales/en.default.schema.json` | Add `"tk": {}` block for schema labels | Same namespace |
+
+---
+
+## 10. Apps Used
+
+| App | Why needed | Paid? |
+|---|---|---|
+| Shopify Search & Discovery | Enables storefront filter configuration (availability, price, type, size, colour) for collection and search pages. Native to Shopify; no custom code required. | Free (official Shopify app) |
+
+No other apps are used. All core functionality is built natively.
+
+---
+
+## 11. Known Limitations & Future Enhancements
+
+### Known limitations
+- **Free-shipping bar** uses the store's default currency; does not adapt automatically in multi-currency storefronts. A note is shown in the section schema.
+- **Filters** depend on Search & Discovery app configuration in Shopify Admin. Without setup, filter panel will be empty.
+- **Checkout** is not customised — subject to Shopify plan/Checkout Extensibility limitations (out of scope, brief §4).
+- **Testimonials JSON-LD** is intentionally omitted — sample reviews must not be marked up as real reviews (brief §5).
+- **`custom.badge_text` metafield** max 20 chars is enforced by documentation only (Shopify metafield validation may need to be set in Admin).
+- **Quick-add on product cards** requires Dawn's `quick-add.js` and `quick-add` modal to be present — already in Dawn 16.
+
+### Future enhancements
+- Subscription / recurring orders section (requires paid app — out of scope).
+- Advanced mega-menu with image columns.
+- Product comparison tool.
+- Age verification gate.
+- Back-in-stock notification form.
+- Multi-currency free-shipping bar (requires Currency Formatting API).
+
+---
+
+## 12. Open Issues
+
+| # | Issue | Status |
+|---|---|---|
+| 1 | Shopify `theme dev` login expired during setup session — needs re-auth before Phase 03 preview | Open |
+| 2 | `config/settings_data.json` and `templates/*.json` merge conflict protocol — always stop and ask; never auto-resolve | Standing rule |
+| 3 | `snippets/quick-order-product-row.liquid` — Dawn 16 orphan (Theme Check warning) — do not reference or remove; leave in place | Accepted / no fix |

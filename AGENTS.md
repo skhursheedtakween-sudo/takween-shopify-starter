@@ -14,6 +14,7 @@ All agents and contributors working in this repository must strictly follow thes
 ## 2. Directory Structure & File Naming
 - Maintain the official Shopify theme folder structure at the repository root:
   - `assets/`, `config/`, `layout/`, `locales/`, `sections/`, `snippets/`, `templates/` (and `blocks/` if present).
+- **One additional top-level folder is permitted:** `docs/` — for documentation only. Shopify ignores any folder it does not recognise. Do **not** create any other non-standard top-level folders.
 - Do **not** rename, move, or delete existing Dawn folders or files.
 - Do **not** create non-standard top-level directories (e.g. no `src/`, `components/`, `css/`, `js/`).
 - **All custom files must use the `tk-` prefix** inside standard theme folders (e.g., `sections/tk-hero.liquid`, `snippets/tk-product-card.liquid`, `assets/tk-base.css`).
@@ -57,3 +58,20 @@ All agents and contributors working in this repository must strictly follow thes
 - **Commit convention:** Commit with clear semantic messages (e.g., `feat(sections): add tk-hero section`, `docs: ...`, `fix: ...`).
 - **Pushing changes:** Run `git push origin main` after completing each task. Never force-push (`git push --force`).
 - **Merge conflict safety:** If `config/settings_data.json` or any `templates/*.json` encounters a merge conflict, stop immediately and ask for user clarification — never blindly overwrite JSON data.
+
+---
+
+## 8. Definition of Done
+
+The following checklist applies to **every future phase** before committing:
+
+- [ ] Code follows the rules in this file (`tk-` prefix, tokens, no apps/CDNs, Dawn JS extended not replaced).
+- [ ] Every new section has: `name`, `tag`, `class`, sensible `settings`, `color_scheme` + `padding_top`/`padding_bottom` settings, `presets`, and works when added/removed/reordered in the Theme Editor (including `shopify:section:load` / `shopify:block:select` events if it has JS).
+- [ ] All user-facing strings use translation keys in `locales/en.default.json` (under the `"tk"` namespace) — no hard-coded English in Liquid markup. Schema labels use `locales/en.default.schema.json`.
+- [ ] Images use `image_url` + `image_tag` with `widths`, `sizes`, explicit `width`/`height`; `loading: 'lazy'` except above-the-fold (hero when first section uses `fetchpriority: 'high'`).
+- [ ] Section CSS lives in `assets/tk-<name>.css` loaded with `{{ 'tk-<name>.css' | asset_url | stylesheet_tag }}` inside the section file. Section JS lives in `assets/tk-<name>.js` loaded with `defer` inside the section file.
+- [ ] Accessibility: semantic headings, visible labels, `:focus-visible` outlines, keyboard support, `aria-*` attributes where needed, `prefers-reduced-motion` respected for all animations.
+- [ ] `shopify theme check` shows **no new errors** introduced by this phase's changes. Pre-existing Dawn warnings are documented in `docs/BUILD_NOTES.md §12` and accepted.
+- [ ] `docs/BUILD_NOTES.md` updated for every new/modified file (sections §4–6, JS §8, Dawn modifications §9).
+- [ ] Commit with a semantic message and push to `main`.
+- [ ] Final report lists: files created/modified, how to test in the Theme Editor, and any 👤 Shopify Admin tasks for the user.
