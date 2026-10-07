@@ -1,0 +1,40 @@
+{%- comment -%}
+  snippets/tk-badge.liquid
+  Renders product badges (Sale, Sold out, Custom from metafield).
+
+  Parameters:
+  - type: {String} 'sale' | 'sold_out' | 'custom'
+  - text: {String} Optional custom badge text. If omitted for 'sale', reads settings.tk_card_sale_badge_style.
+  - product: {Object} Shopify product object (used to compute percentage off if enabled)
+  - class: {String} Additional classes
+
+  Usage:
+  {% render 'tk-badge', type: 'sale', product: product %}
+  {% render 'tk-badge', type: 'custom', text: 'Best seller' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign badge_type = type | default: 'sale'
+  assign badge_text = text
+
+  if badge_type == 'sale'
+    if badge_text == blank
+      if settings.tk_card_sale_badge_style == 'percentage' and product.compare_at_price > product.price
+        assign savings = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round
+        assign badge_text = '-' | append: savings | append: '%'
+      else
+        assign badge_text = 'tk.general.sale' | t
+      endif
+    endif
+  elsif badge_type == 'sold_out'
+    if badge_text == blank
+      assign badge_text = 'tk.general.sold_out' | t
+    endif
+  endif
+-%}
+
+{%- if badge_text != blank -%}
+  <span class="tk-badge tk-badge--{{ badge_type }}{% if class %} {{ class }}{% endif %}">
+    {{ badge_text }}
+  </span>
+{%- endif -%}

@@ -186,7 +186,8 @@
     </section>
 
     <!-- SECTION 6: TOKENS OVERVIEW -->
-    <section>
+    <!-- SECTION 6: TOKENS OVERVIEW -->
+    <section style="margin-bottom: var(--tk-space-8);">
       <h2 class="tk-h2">6. Shape, Spacing & Container Tokens</h2>
       <div class="tk-card-box">
         <div class="tk-grid" style="--tk-grid-cols-desktop: 3; --tk-grid-cols-tablet: 2; --tk-grid-cols-mobile: 1;">
@@ -208,6 +209,69 @@
         </div>
       </div>
     </section>
+
+    <!-- SECTION 7: PRODUCT CARD PREVIEWS (QA) -->
+    <section>
+      <h2 class="tk-h2">7. Product Card Previews (QA Test Cases)</h2>
+      <p class="tk-text-muted" style="margin-bottom: var(--tk-space-4);">
+        Testing: 1) Organic Cotton Tee (images + hover + swatches + custom badge), 2) Relaxed Overshirt (sale + placeholder image), 3) Ceramic Mug Set (sold out single variant), 4) Long title 2-line clamp test.
+      </p>
+
+      <div class="tk-grid" style="--tk-grid-cols-desktop: 4; --tk-grid-cols-tablet: 2; --tk-grid-cols-mobile: 2;">
+        {%- assign test_handles = 'sample-organic-cotton-tee,sample-relaxed-overshirt,sample-ceramic-mug-set,sample-canvas-tote-bag' | split: ',' -%}
+        {%- for handle in test_handles -%}
+          {%- assign card_prod = all_products[handle] -%}
+          {%- if card_prod != blank -%}
+            <div>
+              {% render 'tk-product-card', product: card_prod, section_id: section.id %}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        <!-- Custom block picks if configured via blocks -->
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'product_card_preview' and block.settings.product != blank -%}
+            <div {{ block.shopify_attributes }}>
+              {% render 'tk-product-card', product: block.settings.product, section_id: section.id %}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        <!-- Synthetic Card: 2-line title clamp test -->
+        <div>
+          <div class="tk-product-card">
+            <div class="tk-product-card__media-wrapper tk-product-card__media-wrapper--portrait">
+              <span class="tk-product-card__badge tk-product-card__badge--sale" style="position: absolute; top: 12px; left: 12px; z-index: 2;">
+                Sale
+              </span>
+              {{ 'product-apparel-2' | placeholder_svg_tag: 'tk-placeholder-svg' }}
+            </div>
+            <div class="tk-product-card__content">
+              <div class="tk-product-card__vendor">Takween Sample Co.</div>
+              <h3 class="tk-product-card__title">
+                <a href="#test" class="tk-product-card__link">
+                  Super Extra Long Product Title For QA Checking That The Two-Line Clamping Feature Works Reliably On Desktop And Mobile
+                </a>
+              </h3>
+              <div class="tk-product-card__price-row">
+                <div class="tk-price tk-price--on-sale">
+                  <span class="tk-price__item tk-price__item--sale">£45.00</span>
+                  <s class="tk-price__item tk-price__item--regular">£60.00</s>
+                </div>
+              </div>
+              <div class="tk-product-card__swatches">
+                <div class="tk-swatches__list">
+                  <span class="tk-swatch" style="background-color: #D8CDB8;"></span>
+                  <span class="tk-swatch" style="background-color: #3A3D42;"></span>
+                  <span class="tk-swatch" style="background-color: #6B7A55;"></span>
+                  <span class="tk-swatches__more tk-text-muted">+2</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -222,6 +286,19 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card_preview",
+      "name": "Product Card Preview",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        }
+      ]
     }
   ]
 }

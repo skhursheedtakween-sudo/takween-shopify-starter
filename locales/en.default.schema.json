@@ -3489,6 +3489,10 @@
         },
         "show_quick_add": {
           "label": "Show quick add button"
+        },
+        "color_swatch_map": {
+          "label": "Takween — Colour swatch map",
+          "info": "Fallback hex colours for colour names when option swatch is not defined, one per line (e.g. Stone: #D8CDB8)"
         }
       },
       "motion_group": {

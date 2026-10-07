@@ -1,0 +1,189 @@
+{%- comment -%}
+  snippets/tk-product-card.liquid
+  Primary Takween Product Card component.
+
+  Parameters:
+  - product: {Object} Shopify Product object (required)
+  - show_vendor: {Boolean} Whether to display product vendor. Default: settings.tk_card_show_vendor
+  - image_ratio: {String} 'portrait' | 'square' | 'natural'. Default: settings.tk_card_image_ratio
+  - show_secondary_image: {Boolean} Show 2nd media on hover. Default: settings.tk_card_secondary_image
+  - heading_tag: {String} 'h2' | 'h3' | 'h4' | 'p'. Default: 'h3'
+  - lazy_load: {Boolean} Image lazy loading. Default: true
+  - section_id: {String} Section ID for unique elements/forms
+  - class: {String} Additional classes for card container
+
+  Usage:
+  {% render 'tk-product-card', product: product, image_ratio: 'portrait' %}
+{%- endcomment -%}
+
+{{ 'tk-product-card.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign card_product = product
+  assign display_vendor = show_vendor
+  if display_vendor == null
+    assign display_vendor = settings.tk_card_show_vendor
+  endif
+
+  assign ratio = image_ratio | default: settings.tk_card_image_ratio | default: 'portrait'
+  assign secondary_img = show_secondary_image
+  if secondary_img == null
+    assign secondary_img = settings.tk_card_secondary_image
+  endif
+
+  assign tag = heading_tag | default: 'h3'
+
+  assign is_lazy = lazy_load
+  if is_lazy == null
+    assign is_lazy = true
+  endif
+
+  assign is_sold_out = false
+  unless card_product.available
+    assign is_sold_out = true
+  endunless
+
+  assign is_on_sale = false
+  if card_product.compare_at_price > card_product.price
+    assign is_on_sale = true
+  endif
+
+  assign custom_badge_val = card_product.metafields.custom.badge_text.value
+-%}
+
+<div class="tk-product-card{% if is_sold_out %} tk-product-card--sold-out{% endif %}{% if class %} {{ class }}{% endif %}">
+  <!-- MEDIA CONTAINER -->
+  <div class="tk-product-card__media-wrapper tk-product-card__media-wrapper--{{ ratio }}">
+    <!-- BADGES OVERLAY (Max 2 badges) -->
+    <div class="tk-product-card__badges">
+      {%- assign badge_count = 0 -%}
+
+      {%- if is_sold_out and settings.tk_card_show_sold_out_badge and badge_count < 2 -%}
+        <span class="tk-product-card__badge tk-product-card__badge--soldout">
+          {{ 'tk.general.sold_out' | t }}
+        </span>
+        {%- assign badge_count = badge_count | plus: 1 -%}
+      {%- elsif is_on_sale and settings.tk_card_show_sale_badge and badge_count < 2 -%}
+        {%- liquid
+          if settings.tk_card_sale_badge_style == 'percentage' and card_product.compare_at_price > card_product.price
+            assign savings = card_product.compare_at_price | minus: card_product.price | times: 100.0 | divided_by: card_product.compare_at_price | round
+            assign sale_text = '-' | append: savings | append: '%'
+          else
+            assign sale_text = 'tk.general.sale' | t
+          endif
+        -%}
+        <span class="tk-product-card__badge tk-product-card__badge--sale">
+          {{ sale_text }}
+        </span>
+        {%- assign badge_count = badge_count | plus: 1 -%}
+      {%- endif -%}
+
+      {%- if custom_badge_val != blank and settings.tk_card_show_custom_badge and badge_count < 2 -%}
+        <span class="tk-product-card__badge tk-product-card__badge--custom">
+          {{ custom_badge_val | escape }}
+        </span>
+        {%- assign badge_count = badge_count | plus: 1 -%}
+      {%- endif -%}
+    </div>
+
+    <!-- IMAGES -->
+    {%- if card_product.featured_media != blank -%}
+      {%- assign has_secondary = false -%}
+      {%- if secondary_img and card_product.media.size > 1 -%}
+        {%- assign has_secondary = true -%}
+      {%- endif -%}
+
+      {%- liquid
+        assign img_loading = 'lazy'
+        if is_lazy == false
+          assign img_loading = 'eager'
+        endif
+
+        assign primary_class = 'tk-product-card__image tk-product-card__image--primary'
+        if has_secondary
+          assign primary_class = primary_class | append: ' has-secondary'
+        endif
+      -%}
+
+      {{
+        card_product.featured_media
+        | image_url: width: 1000
+        | image_tag:
+          widths: '240, 360, 480, 600, 720, 1000',
+          sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+          loading: img_loading,
+          class: primary_class
+      }}
+
+      {%- if has_secondary -%}
+        {{
+          card_product.media[1]
+          | image_url: width: 1000
+          | image_tag:
+            widths: '240, 360, 480, 600, 720, 1000',
+            sizes: '(min-width: 990px) 25vw, (min-width: 750px) 33vw, 50vw',
+            loading: 'lazy',
+            class: 'tk-product-card__image tk-product-card__image--secondary'
+        }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-apparel-1' | placeholder_svg_tag: 'tk-placeholder-svg' }}
+    {%- endif -%}
+  </div>
+
+  <!-- CONTENT -->
+  <div class="tk-product-card__content">
+    {%- if display_vendor and card_product.vendor != blank -%}
+      <div class="tk-product-card__vendor">
+        {{ card_product.vendor }}
+      </div>
+    {%- endif -%}
+
+    <{{ tag }} class="tk-product-card__title">
+      <a href="{{ card_product.url }}" class="tk-product-card__link">
+        {{ card_product.title | escape }}
+      </a>
+    </{{ tag }}>
+
+    <div class="tk-product-card__price-row">
+      {% render 'tk-price', product: card_product %}
+    </div>
+
+    {%- if settings.tk_card_show_swatches -%}
+      <div class="tk-product-card__swatches">
+        {% render 'tk-swatch', product: card_product, max_swatches: 5 %}
+      </div>
+    {%- endif -%}
+
+    {%- if settings.tk_card_show_quick_add and card_product.available -%}
+      <div class="tk-product-card__quick-add no-js-hidden">
+        {%- assign quick_add_form_id = 'tk-quick-add-' | append: section_id | append: '-' | append: card_product.id -%}
+        {%- if card_product.variants.size > 1 -%}
+          <button
+            type="button"
+            class="tk-btn tk-btn--outline tk-btn--full"
+            style="min-height: 40px; padding: 0 16px; font-size: 13px;"
+            aria-haspopup="dialog"
+            data-product-url="{{ card_product.url }}"
+          >
+            {{ 'products.product.choose_options' | t }}
+          </button>
+        {%- else -%}
+          <product-form data-section-id="{{ section_id }}">
+            {%- form 'product', card_product, id: quick_add_form_id -%}
+              <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+              <button
+                type="submit"
+                name="add"
+                class="tk-btn tk-btn--outline tk-btn--full"
+                style="min-height: 40px; padding: 0 16px; font-size: 13px;"
+              >
+                {{ 'products.product.add_to_cart' | t }}
+              </button>
+            {%- endform -%}
+          </product-form>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>

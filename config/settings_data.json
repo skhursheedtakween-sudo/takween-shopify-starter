@@ -197,6 +197,7 @@
       "tk_card_show_custom_badge": true,
       "tk_card_show_swatches": true,
       "tk_card_show_quick_add": false,
+      "tk_color_swatch_map": "Stone: #D8CDB8\nCharcoal: #3A3D42\nOlive: #6B7A55\nOat: #E3D7C1\nNavy: #2B3A55\nGrey Marl: #A7ABB0\nWhite: #F2F0EB\nSky: #A9C3DB\nSand: #D9C7A7\nSage: #A3B19A\nNatural: #E9E1CF\nBlack: #26282C\nRust: #A4532E\nTan: #B98552",
       "tk_enable_motion": false,
       "sections": {
         "main-password-header": {

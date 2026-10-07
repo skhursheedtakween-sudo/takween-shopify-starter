@@ -1,0 +1,98 @@
+{%- comment -%}
+  snippets/tk-section-heading.liquid
+  Renders a section header with eyebrow, heading, subheading, and optional "View all" link.
+  Responsive layout: link is right-aligned on desktop, stacked below on mobile.
+
+  Parameters:
+  - eyebrow: {String} Eyebrow text
+  - heading: {String} Main section heading text
+  - subheading: {String} Subheading / intro paragraph text
+  - alignment: {String} 'left' | 'center'. Default: 'left'
+  - heading_tag: {String} 'h1' | 'h2' | 'h3'. Default: 'h2'
+  - link_label: {String} Optional CTA link text
+  - link_url: {String} Optional CTA link destination
+  - class: {String} Additional classes to append
+
+  Usage:
+  {% render 'tk-section-heading',
+    eyebrow: 'New arrivals',
+    heading: 'Featured Collection',
+    subheading: 'Curated organic essentials for everyday living.',
+    link_label: 'View all',
+    link_url: '/collections/all'
+  %}
+{%- endcomment -%}
+
+{%- liquid
+  assign align = alignment | default: 'left'
+  assign tag = heading_tag | default: 'h2'
+-%}
+
+<div class="tk-section-heading tk-section-heading--{{ align }}{% if link_label != blank and link_url != blank %} tk-section-heading--with-link{% endif %}{% if class %} {{ class }}{% endif %}">
+  <div class="tk-section-heading__content">
+    {%- if eyebrow != blank -%}
+      <span class="tk-eyebrow">{{ eyebrow }}</span>
+    {%- endif -%}
+
+    <{{ tag }} class="{% if tag == 'h1' %}tk-h1{% elsif tag == 'h3' %}tk-h3{% else %}tk-h2{% endif %} tk-section-heading__title">
+      {{ heading }}
+    </{{ tag }}>
+
+    {%- if subheading != blank -%}
+      <div class="tk-rte tk-section-heading__subheading tk-text-muted">
+        {{ subheading }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if link_label != blank and link_url != blank -%}
+    <div class="tk-section-heading__link-wrapper">
+      {% render 'tk-button',
+        label: link_label,
+        url: link_url,
+        style: 'link',
+        icon: 'chevron-right'
+      %}
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .tk-section-heading {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--tk-space-6);
+    gap: var(--tk-space-3);
+  }
+
+  .tk-section-heading--center {
+    text-align: center;
+    align-items: center;
+  }
+
+  .tk-section-heading--center .tk-section-heading__content {
+    margin: 0 auto;
+    max-width: 640px;
+  }
+
+  .tk-section-heading__title {
+    margin-bottom: var(--tk-space-2);
+  }
+
+  .tk-section-heading__subheading {
+    max-width: 600px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .tk-section-heading--with-link:not(.tk-section-heading--center) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .tk-section-heading__link-wrapper {
+      flex-shrink: 0;
+      margin-bottom: var(--tk-space-2);
+    }
+  }
+</style>

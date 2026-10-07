@@ -1692,6 +1692,13 @@
         "id": "tk_card_show_quick_add",
         "label": "t:tk.settings.cards_group.show_quick_add.label",
         "default": false
+      },
+      {
+        "type": "textarea",
+        "id": "tk_color_swatch_map",
+        "label": "t:tk.settings.cards_group.color_swatch_map.label",
+        "info": "t:tk.settings.cards_group.color_swatch_map.info",
+        "default": "Stone: #D8CDB8\nCharcoal: #3A3D42\nOlive: #6B7A55\nOat: #E3D7C1\nNavy: #2B3A55\nGrey Marl: #A7ABB0\nWhite: #F2F0EB\nSky: #A9C3DB\nSand: #D9C7A7\nSage: #A3B19A\nNatural: #E9E1CF\nBlack: #26282C\nRust: #A4532E\nTan: #B98552"
       }
     ]
   },

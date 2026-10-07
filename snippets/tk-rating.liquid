@@ -1,0 +1,60 @@
+{%- comment -%}
+  snippets/tk-rating.liquid
+  Renders a static 5-star rating display with accessible label.
+
+  Parameters:
+  - rating: {Number} Decimal or integer rating out of 5 (e.g. 4.5). Default: 5
+  - count: {Number} Optional review count to display next to stars
+  - class: {String} Additional classes
+
+  Usage:
+  {% render 'tk-rating', rating: 4.8, count: 24 %}
+{%- endcomment -%}
+
+{%- liquid
+  assign rating_val = rating | default: 5 | plus: 0.0
+  assign rating_rounded = rating_val | round: 1
+-%}
+
+<div class="tk-rating{% if class %} {{ class }}{% endif %}" role="img" aria-label="Rated {{ rating_rounded }} out of 5 stars">
+  <div class="tk-rating__stars" aria-hidden="true">
+    {%- for i in (1..5) -%}
+      {%- assign star_min = i | minus: 0.75 -%}
+      {%- assign star_mid = i | minus: 0.25 -%}
+      {%- if rating_val >= star_mid -%}
+        {% render 'tk-icon', icon: 'star', size: 14, class: 'tk-rating__star tk-rating__star--full' %}
+      {%- elsif rating_val >= star_min -%}
+        {% render 'tk-icon', icon: 'star-half', size: 14, class: 'tk-rating__star tk-rating__star--half' %}
+      {%- else -%}
+        {% render 'tk-icon', icon: 'star', size: 14, class: 'tk-rating__star tk-rating__star--empty' %}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if count != blank -%}
+    <span class="tk-rating__count tk-text-muted">({{ count }})</span>
+  {%- endif -%}
+</div>
+
+<style>
+  .tk-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--tk-space-2);
+  }
+
+  .tk-rating__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    color: #B7791F;
+  }
+
+  .tk-rating__star--empty {
+    color: #D1D5DB;
+  }
+
+  .tk-rating__count {
+    font-size: 13px;
+  }
+</style>

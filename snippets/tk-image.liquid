@@ -1,0 +1,94 @@
+{%- comment -%}
+  snippets/tk-image.liquid
+  Renders responsive imagery using Shopify's image_url filter and image_tag.
+  Includes placeholder SVG fallback for Theme Editor onboarding.
+
+  Parameters:
+  - image: {Object} Shopify image object
+  - widths: {String} Comma-separated widths. Default: '375, 550, 750, 1100, 1500, 1780'
+  - sizes: {String} CSS sizes attribute. Default: '100vw'
+  - ratio: {String} 'square' | 'portrait' | 'natural'. Default: 'natural'
+  - class: {String} Extra CSS classes for the img element
+  - lazy: {Boolean} Whether to load lazily. Default: true
+  - fetchpriority: {String} 'auto' | 'high' | 'low'. Default: 'auto'
+  - alt: {String} Custom alt text (falls back to image.alt)
+  - placeholder: {String} Name of placeholder SVG if image is blank. Default: 'image'
+
+  Usage:
+  {% render 'tk-image', image: product.featured_media, ratio: 'portrait', sizes: '(min-width: 990px) 25vw, 50vw' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign img_widths = widths | default: '375, 550, 750, 1100, 1500, 1780'
+  assign img_sizes = sizes | default: '100vw'
+  assign is_lazy = lazy
+  if is_lazy == null
+    assign is_lazy = true
+  endif
+
+  if is_lazy
+    assign loading_val = 'lazy'
+  else
+    assign loading_val = 'eager'
+  endif
+
+  assign priority_val = fetchpriority | default: 'auto'
+  assign placeholder_name = placeholder | default: 'image'
+  assign custom_alt = alt | default: image.alt | escape
+
+  assign ratio_class = ''
+  if ratio == 'square'
+    assign ratio_class = 'tk-media--square'
+  elsif ratio == 'portrait'
+    assign ratio_class = 'tk-media--portrait'
+  endif
+-%}
+
+<div class="tk-media {{ ratio_class }}">
+  {%- if image != blank -%}
+    {{
+      image
+      | image_url: width: 1780
+      | image_tag:
+        widths: img_widths,
+        sizes: img_sizes,
+        loading: loading_val,
+        fetchpriority: priority_val,
+        alt: custom_alt,
+        class: class
+    }}
+  {%- else -%}
+    {{ placeholder_name | placeholder_svg_tag: 'tk-placeholder-svg' }}
+  {%- endif -%}
+</div>
+
+<style>
+  .tk-media {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .tk-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tk-media--square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .tk-media--portrait {
+    aspect-ratio: 4 / 5;
+  }
+
+  .tk-placeholder-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: var(--tk-color-tint);
+    fill: var(--tk-color-muted);
+  }
+</style>

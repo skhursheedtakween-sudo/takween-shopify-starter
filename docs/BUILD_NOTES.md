@@ -99,15 +99,35 @@ Status tokens (in `config/settings_schema.json` under *Takween — Status colour
 - Button min-height: `48px`, padding `0 28px`, touch target min `44×44px`.
 - Keyboard focus outline: `2px solid var(--tk-color-accent)` with `3px` offset.
 
+### Colour Swatch Map Setting
+Configured in `config/settings_schema.json` under *Takween — Product cards* (`tk_color_swatch_map`). Provides fallback hex codes for storefront colour swatches whenever Shopify's native Category metafield swatch (`option_value.swatch`) is unpopulated:
+```text
+Stone: #D8CDB8
+Charcoal: #3A3D42
+Olive: #6B7A55
+Oat: #E3D7C1
+Navy: #2B3A55
+Grey Marl: #A7ABB0
+White: #F2F0EB
+Sky: #A9C3DB
+Sand: #D9C7A7
+Sage: #A3B19A
+Natural: #E9E1CF
+Black: #26282C
+Rust: #A4532E
+Tan: #B98552
+```
+
 ### "How to Rebrand for a Client" Checklist
 When adapting the Takween Starter Theme for a new client project:
 1. **Typography:** In Theme Settings &rarr; Typography, select client brand fonts for headings and body.
 2. **Colours:** In Theme Settings &rarr; Colors, adjust Scheme 1–5 backgrounds, text, and button colours to match client brand palette.
 3. **Status Colours:** In Theme Settings &rarr; Takween — Status colours, adjust sale/success/low-stock/sold-out tones if client brand guides dictate.
-4. **Corner Radii:** In Theme Settings &rarr; Takween — Shape, tune button, card, and input radii (e.g. 0px for sharp editorial luxury, 16px for playful consumer tech).
-5. **Button Style:** Choose solid fill or outline, and regular or uppercase text transform.
-6. **Card Presentation:** In Theme Settings &rarr; Takween — Product cards, set default image ratio (portrait 4:5, square 1:1, natural), toggle vendor display, swatches, and badge types.
-7. **Spacing Scale:** In Theme Settings &rarr; Takween — Layout & spacing, switch between compact, default, and spacious to match brand density.
+4. **Colour Swatches:** In Theme Settings &rarr; Takween — Product cards, update the colour swatch map textarea with client-specific colour names and hex codes.
+5. **Corner Radii:** In Theme Settings &rarr; Takween — Shape, tune button, card, and input radii (e.g. 0px for sharp editorial luxury, 16px for playful consumer tech).
+6. **Button Style:** Choose solid fill or outline, and regular or uppercase text transform.
+7. **Card Presentation:** In Theme Settings &rarr; Takween — Product cards, set default image ratio (portrait 4:5, square 1:1, natural), toggle vendor display, swatches, and badge types.
+8. **Spacing Scale:** In Theme Settings &rarr; Takween — Layout & spacing, switch between compact, default, and spacious to match brand density.
 
 ---
 
@@ -165,18 +185,21 @@ When adapting the Takween Starter Theme for a new client project:
 
 | Snippet file | Decision | Purpose | Parameters / example |
 |---|---|---|---|
-| `snippets/tk-css-variables.liquid` | **NEW** | Outputs `:root` CSS custom property tokens | No params; `{% render 'tk-css-variables' %}` in `<head>` |
-| `snippets/tk-icon.liquid` | **NEW** | Inline SVG icon set | `icon`, `size`, `class`; `{% render 'tk-icon', icon: 'cart', size: 20 %}` |
-| `snippets/tk-button.liquid` | **NEW** | Accessible button/link component | `label`, `url`, `style`, `size`, `full_width`, `icon`, `attributes` |
-| `snippets/tk-section-heading.liquid` | **NEW** | Eyebrow + heading + subheading + "view all" link | `eyebrow`, `heading`, `subheading`, `alignment`, `tag`, `link_label`, `link_url` |
-| `snippets/tk-image.liquid` | **NEW** | Responsive image wrapper with placeholder SVG | `image`, `widths`, `sizes`, `ratio`, `lazy`, `fetchpriority`, `alt` |
-| `snippets/tk-price.liquid` | **NEW** | Price + compare-at + unit price + "From" | `product`, `variant`, `show_from` |
-| `snippets/tk-badge.liquid` | **NEW** | Sale / sold-out / custom badge | `product`, `variant`; reads global settings for sale style |
-| `snippets/tk-rating.liquid` | **NEW** | Static star display | `rating` (0–5), `aria_label` |
-| `snippets/tk-product-card.liquid` | **NEW** | Primary product card component | `product`, `show_vendor`, `image_ratio`, `show_secondary_image`, `heading_tag`, `lazy_load`, `section_id` |
-| `snippets/tk-product-grid.liquid` | **NEW** | Responsive product grid / slider | `products`, `columns_desktop`, `columns_tablet`, `columns_mobile`, `enable_slider`, `section_id` |
-| `snippets/tk-free-shipping-bar.liquid` | **NEW** | Progress bar toward free shipping threshold | `cart_total`; threshold from theme settings |
-| `snippets/tk-sticky-atc.liquid` | **NEW** | Mobile sticky Add to Cart strip | Rendered inside `main-product`; no standalone params |
+| Snippet file | Decision | Purpose | Parameters & Render Example |
+|---|---|---|---|
+| `snippets/tk-css-variables.liquid` | **NEW** | Outputs `:root` CSS custom property tokens | No params. `{% render 'tk-css-variables' %}` |
+| `snippets/tk-icon.liquid` | **NEW** | Inline SVG stroke icon set (1.8px, currentColor, a11y defaults) | `icon`, `size`, `class`, `aria_hidden`, `aria_label`. Example: `{% render 'tk-icon', icon: 'cart', size: 20 %}` |
+| `snippets/tk-button.liquid` | **NEW** | Accessible button or link component | `label`, `url`, `style`, `size`, `full_width`, `icon`, `icon_position`, `attributes`, `disabled`, `type`. Example: `{% render 'tk-button', label: 'Shop now', url: '/collections/all', style: 'primary' %}` |
+| `snippets/tk-section-heading.liquid` | **NEW** | Eyebrow + heading + subheading + responsive "View all" link | `eyebrow`, `heading`, `subheading`, `alignment`, `heading_tag`, `link_label`, `link_url`. Example: `{% render 'tk-section-heading', heading: 'Featured', link_label: 'View all', link_url: '/collections/all' %}` |
+| `snippets/tk-image.liquid` | **NEW** | Responsive image wrapper using `image_url` + `image_tag` + placeholder SVG | `image`, `widths`, `sizes`, `ratio`, `class`, `lazy`, `fetchpriority`, `alt`, `placeholder`. Example: `{% render 'tk-image', image: product.featured_media, ratio: 'portrait' %}` |
+| `snippets/tk-price.liquid` | **NEW** | Price, compare-at `<s>`, "From", unit pricing | `product`, `use_variant`, `show_badges`, `class`. Example: `{% render 'tk-price', product: product %}` |
+| `snippets/tk-badge.liquid` | **NEW** | Sale (text / percentage), sold out, custom metafield badge | `type`, `text`, `product`, `class`. Example: `{% render 'tk-badge', type: 'sale', product: product %}` |
+| `snippets/tk-rating.liquid` | **NEW** | Accessible 5-star rating display (#B7791F) | `rating`, `count`, `class`. Example: `{% render 'tk-rating', rating: 4.8, count: 24 %}` |
+| `snippets/tk-swatch.liquid` | **NEW** | Colour swatches with native swatch + global swatch map fallback | `product`, `max_swatches`, `class`. Example: `{% render 'tk-swatch', product: product, max_swatches: 5 %}` |
+| `snippets/tk-product-card.liquid` | **NEW** | Primary product card with badges, swatches, 2-line clamp, stretched-link | `product`, `show_vendor`, `image_ratio`, `show_secondary_image`, `heading_tag`, `lazy_load`, `section_id`, `class`. Example: `{% render 'tk-product-card', product: product, section_id: section.id %}` |
+| `snippets/tk-product-grid.liquid` | **NEW** | Responsive product grid + optional mobile CSS scroll-snap slider | `products`, `columns_desktop`, `columns_tablet`, `columns_mobile`, `enable_slider_mobile`, `image_ratio`, `show_vendor`, `section_id`. Example: `{% render 'tk-product-grid', products: collection.products %}` |
+| `snippets/tk-free-shipping-bar.liquid` | **NEW** | Progress bar toward free shipping threshold | `cart_total`, `threshold`. (Phase 11) |
+| `snippets/tk-sticky-atc.liquid` | **NEW** | Mobile sticky Add to Cart bar | `product`. (Phase 08) |
 
 ---
 

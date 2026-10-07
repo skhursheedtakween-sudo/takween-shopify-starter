@@ -1,0 +1,106 @@
+{%- comment -%}
+  snippets/tk-swatch.liquid
+  Renders colour swatches for product options.
+  Uses Shopify's native option_value.swatch if present, falling back to
+  the settings.tk_color_swatch_map configuration.
+
+  Parameters:
+  - product: {Object} Shopify Product object
+  - max_swatches: {Number} Max count to show before "+N" label. Default: 5
+  - class: {String} Additional classes
+
+  Usage:
+  {% render 'tk-swatch', product: product, max_swatches: 5 %}
+{%- endcomment -%}
+
+{%- liquid
+  assign colour_option_index = -1
+  for option in product.options_with_values
+    assign downcased_opt = option.name | downcase
+    if downcased_opt == 'colour' or downcased_opt == 'color'
+      assign colour_option_index = forloop.index0
+      assign colour_values = option.values
+      break
+    endif
+  endfor
+
+  assign max_display = max_swatches | default: 5
+  assign swatch_map_lines = settings.tk_color_swatch_map | newline_to_br | split: '<br />'
+-%}
+
+{%- if colour_option_index != -1 and colour_values.size > 0 -%}
+  <div class="tk-swatches{% if class %} {{ class }}{% endif %}" aria-label="{{ 'products.product.media.gallery_viewer' | t }}">
+    <div class="tk-swatches__list">
+      {%- for value in colour_values limit: max_display -%}
+        {%- liquid
+          assign swatch_color = ''
+          if value.swatch.color
+            assign swatch_color = value.swatch.color
+          else
+            assign val_trimmed = value | strip | downcase
+            for line in swatch_map_lines
+              assign parts = line | split: ':'
+              if parts.size == 2
+                assign name = parts[0] | strip | downcase
+                if name == val_trimmed
+                  assign swatch_color = parts[1] | strip
+                  break
+                endif
+              endif
+            endfor
+          endif
+        -%}
+
+        <span
+          class="tk-swatch{% if swatch_color == blank %} tk-swatch--unknown{% endif %}"
+          title="{{ value | escape }}"
+          aria-label="{{ value | escape }}"
+          style="{% if swatch_color != blank %}background-color: {{ swatch_color }};{% else %}background-color: #E3E1DC;{% endif %}"
+        >
+          <span class="visually-hidden">{{ value }}</span>
+        </span>
+      {%- endfor -%}
+
+      {%- if colour_values.size > max_display -%}
+        {%- assign remaining = colour_values.size | minus: max_display -%}
+        <span class="tk-swatches__more tk-text-muted">+{{ remaining }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+<style>
+  .tk-swatches {
+    display: block;
+    margin-top: 2px;
+  }
+
+  .tk-swatches__list {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tk-swatch {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+    transition: transform var(--tk-transition), border-color var(--tk-transition);
+  }
+
+  .tk-swatch:hover {
+    transform: scale(1.15);
+    border-color: var(--tk-color-ink);
+  }
+
+  .tk-swatches__more {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    margin-left: 2px;
+  }
+</style>

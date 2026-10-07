@@ -1,0 +1,188 @@
+/**
+ * Takween Product Card Styles
+ * File: assets/tk-product-card.css
+ */
+
+.tk-product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* 1. MEDIA CONTAINER */
+.tk-product-card__media-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--tk-radius-card);
+  background-color: var(--tk-color-surface);
+  box-sizing: border-box;
+}
+
+.tk-product-card__media-wrapper--portrait {
+  aspect-ratio: 4 / 5;
+}
+
+.tk-product-card__media-wrapper--square {
+  aspect-ratio: 1 / 1;
+}
+
+.tk-product-card__media-wrapper--natural {
+  aspect-ratio: auto;
+}
+
+.tk-product-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms cubic-bezier(0.2, 0, 0, 1), opacity var(--tk-transition);
+}
+
+.tk-product-card__image--secondary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms cubic-bezier(0.2, 0, 0, 1), transform 400ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Hover effects (desktop only) */
+@media screen and (min-width: 990px) {
+  .tk-product-card:hover .tk-product-card__image--primary.has-secondary {
+    opacity: 0;
+  }
+
+  .tk-product-card:hover .tk-product-card__image--secondary {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+
+  .tk-product-card:hover .tk-product-card__image:not(.has-secondary) {
+    transform: scale(1.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-product-card__image,
+  .tk-product-card__image--secondary {
+    transform: none !important;
+    transition: opacity var(--tk-transition) !important;
+  }
+}
+
+/* 2. BADGES OVERLAY */
+.tk-product-card__badges {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.tk-product-card__badge {
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  border-radius: var(--tk-radius-badge);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tk-product-card__badge--sale {
+  background-color: var(--tk-color-sale);
+  color: #FFFFFF;
+}
+
+.tk-product-card__badge--soldout {
+  background-color: var(--tk-color-soldout);
+  color: #FFFFFF;
+}
+
+.tk-product-card__badge--custom {
+  background-color: var(--tk-color-surface);
+  color: var(--tk-color-ink);
+  border: 1px solid var(--tk-color-border);
+}
+
+/* 3. CARD CONTENT */
+.tk-product-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 12px;
+  flex-grow: 1;
+}
+
+.tk-product-card__vendor {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--tk-color-muted);
+  line-height: 1.2;
+}
+
+.tk-product-card__title {
+  font-family: var(--font-heading-family);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0;
+  color: rgb(var(--color-foreground));
+
+  /* Clamp to 2 lines */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tk-product-card__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Stretched link pattern: makes entire card clickable */
+.tk-product-card__link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.tk-product-card__price-row {
+  margin-top: 2px;
+}
+
+.tk-product-card__swatches {
+  margin-top: 4px;
+  position: relative;
+  z-index: 2; /* Keep swatches interactive over stretched link */
+}
+
+/* 4. SOLD OUT STATE */
+.tk-product-card--sold-out .tk-product-card__media-wrapper {
+  opacity: 0.75;
+}
+
+/* 5. QUICK ADD OVERLAY / BUTTON */
+.tk-product-card__quick-add {
+  position: relative;
+  z-index: 2; /* Clickable above stretched link */
+  margin-top: 8px;
+}

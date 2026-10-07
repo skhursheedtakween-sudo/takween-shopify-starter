@@ -1,0 +1,153 @@
+{%- comment -%}
+  snippets/tk-product-grid.liquid
+  Renders a responsive product card grid with configurable desktop, tablet, and mobile column counts.
+  Supports optional mobile horizontal slider mode with native CSS scroll-snap and accessible controls.
+
+  Parameters:
+  - products: {Array} Collection or list of Product objects
+  - columns_desktop: {Number} Desktop columns (1–6). Default: 4
+  - columns_tablet: {Number} Tablet columns (1–4). Default: 3
+  - columns_mobile: {Number} Mobile columns (1–2). Default: 2
+  - enable_slider_mobile: {Boolean} Enable horizontal scroll snap on mobile. Default: false
+  - image_ratio: {String} Card image ratio ('portrait' | 'square' | 'natural')
+  - show_vendor: {Boolean} Show vendor on cards
+  - heading_tag: {String} Heading tag for cards. Default: 'h3'
+  - section_id: {String} ID of containing section
+  - class: {String} Additional classes
+
+  Usage:
+  {% render 'tk-product-grid', products: collection.products, columns_desktop: 4 %}
+{%- endcomment -%}
+
+{%- liquid
+  assign cols_desk = columns_desktop | default: 4
+  assign cols_tab = columns_tablet | default: 3
+  assign cols_mob = columns_mobile | default: 2
+  assign is_slider = enable_slider_mobile | default: false
+  assign grid_id = 'tk-grid-' | append: section_id
+-%}
+
+<div
+  id="{{ grid_id }}"
+  class="tk-product-grid{% if is_slider %} tk-product-grid--mobile-slider{% endif %}{% if class %} {{ class }}{% endif %}"
+  style="--tk-grid-cols-desktop: {{ cols_desk }}; --tk-grid-cols-tablet: {{ cols_tab }}; --tk-grid-cols-mobile: {{ cols_mob }};"
+>
+  <div class="tk-product-grid__items">
+    {%- for prod in products -%}
+      {%- liquid
+        assign card_lazy = true
+        if forloop.index <= 4
+          assign card_lazy = false
+        endif
+      -%}
+      <div class="tk-product-grid__item">
+        {% render 'tk-product-card',
+          product: prod,
+          image_ratio: image_ratio,
+          show_vendor: show_vendor,
+          heading_tag: heading_tag,
+          section_id: section_id,
+          lazy_load: card_lazy
+        %}
+      </div>
+    {%- else -%}
+      {%- for i in (1..cols_desk) -%}
+        <div class="tk-product-grid__item">
+          <div class="tk-product-card">
+            <div class="tk-product-card__media-wrapper tk-product-card__media-wrapper--portrait">
+              {{ 'product-apparel-1' | placeholder_svg_tag: 'tk-placeholder-svg' }}
+            </div>
+            <div class="tk-product-card__content">
+              <h3 class="tk-product-card__title">Sample Product Title</h3>
+              <div class="tk-price">£45.00</div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+
+  {%- if is_slider -%}
+    <div class="tk-product-grid__controls no-js-hidden" aria-hidden="true">
+      <button
+        type="button"
+        class="tk-btn tk-btn--outline tk-product-grid__prev"
+        aria-label="Previous products"
+        onclick="const el = document.querySelector('#{{ grid_id }} .tk-product-grid__items'); el.scrollBy({ left: -el.clientWidth * 0.75, behavior: 'smooth' });"
+      >
+        {% render 'tk-icon', icon: 'chevron-left', size: 18 %}
+      </button>
+      <button
+        type="button"
+        class="tk-btn tk-btn--outline tk-product-grid__next"
+        aria-label="Next products"
+        onclick="const el = document.querySelector('#{{ grid_id }} .tk-product-grid__items'); el.scrollBy({ left: el.clientWidth * 0.75, behavior: 'smooth' });"
+      >
+        {% render 'tk-icon', icon: 'chevron-right', size: 18 %}
+      </button>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .tk-product-grid__items {
+    display: grid;
+    gap: var(--tk-gap);
+    grid-template-columns: repeat(var(--tk-grid-cols-mobile, 2), minmax(0, 1fr));
+  }
+
+  @media screen and (min-width: 750px) {
+    .tk-product-grid__items {
+      grid-template-columns: repeat(var(--tk-grid-cols-tablet, 3), minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .tk-product-grid__items {
+      grid-template-columns: repeat(var(--tk-grid-cols-desktop, 4), minmax(0, 1fr));
+    }
+  }
+
+  /* Optional mobile horizontal slider via scroll-snap */
+  @media screen and (max-width: 749px) {
+    .tk-product-grid--mobile-slider .tk-product-grid__items {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: var(--tk-space-3);
+      padding-left: var(--tk-gutter);
+      padding-right: var(--tk-gutter);
+      margin-left: calc(-1 * var(--tk-gutter));
+      margin-right: calc(-1 * var(--tk-gutter));
+      gap: 12px;
+    }
+
+    .tk-product-grid--mobile-slider .tk-product-grid__item {
+      flex: 0 0 calc(75% - 6px);
+      scroll-snap-align: start;
+    }
+
+    .tk-product-grid__controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tk-product-grid__prev,
+    .tk-product-grid__next {
+      min-height: 44px;
+      min-width: 44px;
+      padding: 0;
+      border-radius: 50%;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .tk-product-grid__controls {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,121 @@
+{%- comment -%}
+  snippets/tk-price.liquid
+  Renders product prices, compare-at prices, unit pricing, and "From" prefixes.
+  Respects currency formatting and includes accessible visually hidden labels.
+
+  Parameters:
+  - product: {Object} Shopify Product object
+  - use_variant: {Boolean} If true, uses selected_or_first_available_variant instead of general product prices
+  - show_badges: {Boolean} Whether to render inline sale badge. Default: false
+  - class: {String} Extra classes to append
+
+  Usage:
+  {% render 'tk-price', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  if use_variant
+    assign target = product.selected_or_first_available_variant
+  else
+    assign target = product
+  endif
+
+  assign compare_at_price = target.compare_at_price
+  assign price = target.price | default: 1999
+  assign available = target.available | default: false
+  assign money_price = price | money
+
+  if settings.currency_code_enabled
+    assign money_price = price | money_with_currency
+  endif
+
+  if target == product and product.price_varies
+    assign money_price = 'tk.general.from_price' | t: price: money_price
+  endif
+
+  assign on_sale = false
+  if compare_at_price > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="tk-price{% if on_sale %} tk-price--on-sale{% endif %}{% unless available %} tk-price--sold-out{% endunless %}{% if class %} {{ class }}{% endif %}">
+  <div class="tk-price__container">
+    {%- if on_sale -%}
+      <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+      <span class="tk-price__item tk-price__item--sale">
+        {{ money_price }}
+      </span>
+
+      <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+      <s class="tk-price__item tk-price__item--regular">
+        {% if settings.currency_code_enabled %}
+          {{ compare_at_price | money_with_currency }}
+        {% else %}
+          {{ compare_at_price | money }}
+        {% endif %}
+      </s>
+    {%- else -%}
+      <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+      <span class="tk-price__item tk-price__item--regular">
+        {{ money_price }}
+      </span>
+    {%- endif -%}
+
+    {%- if target.unit_price_measurement -%}
+      <span class="tk-price__unit tk-text-muted">
+        <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
+        <span>
+          {% if settings.currency_code_enabled %}
+            {{ target.unit_price | money_with_currency }}
+          {% else %}
+            {{ target.unit_price | money }}
+          {% endif %}
+        </span>
+        <span aria-hidden="true">/</span>
+        <span class="visually-hidden">&nbsp;{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
+        <span>
+          {%- if target.unit_price_measurement.reference_value != 1 -%}
+            {{- target.unit_price_measurement.reference_value -}}
+          {%- endif -%}
+          {{ target.unit_price_measurement.reference_unit }}
+        </span>
+      </span>
+    {%- endif -%}
+  </div>
+</div>
+
+<style>
+  .tk-price {
+    font-family: var(--font-body-family);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .tk-price__container {
+    display: inline-flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--tk-space-2);
+  }
+
+  .tk-price__item--sale {
+    color: var(--tk-color-sale);
+  }
+
+  .tk-price__item--regular {
+    color: rgb(var(--color-foreground));
+  }
+
+  .tk-price--on-sale .tk-price__item--regular {
+    color: var(--tk-color-muted);
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .tk-price__unit {
+    font-size: 12px;
+    font-weight: 400;
+  }
+</style>
