@@ -17,6 +17,7 @@
         "brand": {
           "type": "brand",
           "settings": {
+            "logo": "shopify://shop_images/logo-light.png",
             "text": "<p>Thoughtfully crafted organic apparel and home essentials.</p>"
           }
         },
@@ -24,21 +25,21 @@
           "type": "menu",
           "settings": {
             "heading": "Shop",
-            "menu": "footer-shop"
+            "menu": ""
           }
         },
         "menu-help": {
           "type": "menu",
           "settings": {
             "heading": "Help",
-            "menu": "footer-help"
+            "menu": ""
           }
         },
         "menu-company": {
           "type": "menu",
           "settings": {
             "heading": "Company",
-            "menu": "footer-company"
+            "menu": ""
           }
         },
         "business-info": {
