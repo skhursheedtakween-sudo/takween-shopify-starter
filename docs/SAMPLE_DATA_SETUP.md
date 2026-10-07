@@ -4,7 +4,7 @@
 **Purpose:** Set up all sample data in Shopify Admin so every theme feature can be tested.  
 **Estimated time:** 60–90 minutes total.
 
-> **⚠️ CSV import note:** If the product import fails with a column header error, go to **Products → Import → Download sample CSV**, compare column headers with `docs/sample-data/products.csv`, and align them. Shopify's column names are case-sensitive.
+> **Note:** `docs/sample-data/products.csv` has already been imported into the development store (74 variant rows across 12 products). Treat that CSV as the single source of truth — **do not re-import**.
 
 > **Sample data only.** All product names, copy and images in this guide are placeholder content for development testing. Remove or replace before any client deployment.
 
@@ -27,7 +27,7 @@ Add two fields:
 | Field name | Field type | Required | Notes |
 |---|---|---|---|
 | Label | Single line text | ✅ Yes | e.g. "Material" |
-| Value | Single line text | ✅ Yes | e.g. "100% Cotton" |
+| Value | Single line text | ✅ Yes | e.g. "100% Organic Cotton" |
 
 Click **Save**.
 
@@ -68,132 +68,125 @@ Create each of the following:
 
 ---
 
-## Step 3 — Import Products CSV
+## Step 3 — Products in Store (Single Source of Truth: `docs/sample-data/products.csv`)
 
-1. Go to: **Shopify Admin → Products → Import**
-2. Click **Add file** and upload `docs/sample-data/products.csv`.
-3. Leave **Overwrite existing products** unchecked (first import).
-4. Click **Upload and preview**, then **Import products**.
-5. Wait for the import email confirmation (usually < 2 minutes).
+The 12 products in the store and their exact options, prices, and variant breakdowns from `products.csv` (Vendor: **Takween Sample Co.**):
 
-After import, verify:
-- 12 products appear in the Products list.
-- Variants are created correctly (e.g. "Sample Classic Tee" has Size + Colour options).
-- Status shows **Active** for all products.
+| Handle | Title | Type | Options | Price | Compare-at | Variants | Notes |
+|---|---|---|---|---|---|---|---|
+| `sample-organic-cotton-tee` | Sample Organic Cotton Tee | Apparel | Colour (Stone, Charcoal, Olive) × Size (XS, S, M, L, XL) | £24 | — | 15 | All 15 variants in stock (qty 15 each) |
+| `sample-relaxed-overshirt` | Sample Relaxed Overshirt | Apparel | Colour (Stone, Charcoal, Olive) × Size (XS, S, M, L, XL) | £45 | £60 | 15 | On sale. Olive all sold out (0); Stone/XL sold out (0); Stone/M low stock (3); all Charcoal in stock (10) |
+| `sample-merino-crew-jumper` | Sample Merino Crew Jumper | Apparel | Colour (Oat, Navy) × Size (XS, S, M, L, XL) | £68 | — | 10 | All in stock (qty 15 each) |
+| `sample-everyday-hoodie` | Sample Everyday Hoodie | Apparel | Colour (Grey Marl, Charcoal) × Size (XS, S, M, L, XL) | £55 | — | 10 | All in stock (qty 15 each) |
+| `sample-linen-shirt` | Sample Linen Shirt | Apparel | Colour (White, Sky) × Size (XS, S, M, L, XL) | £38 | £48 | 10 | On sale. All in stock (qty 15 each) |
+| `sample-ceramic-mug-set` | Sample Ceramic Mug Set | Home & Living | Title (Default Title) | £28 | — | 1 | Single variant. Fully sold out (qty 0) |
+| `sample-linen-cushion-cover` | Sample Linen Cushion Cover | Home & Living | Colour (Sand, Sage) | £26 | — | 2 | All in stock (qty 15 each) |
+| `sample-scented-candle` | Sample Scented Candle | Home & Living | Title (Default Title) | £22 | — | 1 | Single variant. In stock (qty 15) |
+| `sample-cotton-throw-blanket` | Sample Cotton Throw Blanket | Home & Living | Colour (Oat, Charcoal) | £65 | — | 2 | All in stock (qty 15 each) |
+| `sample-canvas-tote-bag` | Sample Canvas Tote Bag | Accessories | Colour (Natural, Black, Olive) | £18 | £22 | 3 | On sale. All in stock (qty 15 each) |
+| `sample-wool-beanie` | Sample Wool Beanie | Accessories | Colour (Charcoal, Rust, Oat) | £16 | — | 3 | All in stock (qty 15 each) |
+| `sample-leather-card-holder` | Sample Leather Card Holder | Accessories | Colour (Tan, Black) | £30 | — | 2 | All in stock (qty 15 each) |
+
+Total: **12 products, 74 variant rows**.
 
 ---
 
 ## Step 4 — Add Product Images
 
-Shopify does not allow images in the CSV for external URLs (they time out in development stores). Add images manually:
-
-Go to each product: **Products → [Product name] → Media → Add media**
-
-Suggested free image sources:
-- **Unsplash** (https://unsplash.com) — search for the product category, download, upload.
-- Use consistent image sizes: minimum 1200 × 1200px, square crop preferred for cards.
-
-**Alt text to set on each image** (edit after upload — click the image → "Add alt text"):
-
-| Product | Alt text |
-|---|---|
-| Sample Classic Tee | Sample classic crew-neck t-shirt in black, styled on a plain background |
-| Sample Slim Chinos | Sample slim-fit chino trousers in khaki colour on a plain background |
-| Sample Relaxed Hoodie | Sample relaxed-fit pullover hoodie in grey on a plain background |
-| Sample Oxford Shirt | Sample classic oxford shirt in white, neatly folded |
-| Sample Jogger Pants | Sample jogger trousers in black with elasticated waistband |
-| Sample Ceramic Mug | Sample white ceramic mug on a wooden surface |
-| Sample Linen Cushion Cover | Sample natural linen cushion cover in ivory on a sofa |
-| Sample Wooden Serving Board | Sample rectangular wooden serving board with handle |
-| Sample Scented Candle | Sample scented candle in a glass jar with a cotton wick |
-| Sample Canvas Tote Bag | Sample canvas tote bag in black with short handles |
-| Sample Leather Card Holder | Sample slim leather card holder in black |
-| Sample Knit Beanie | Sample ribbed knit beanie hat in charcoal |
-
-**Tip:** Upload 2–3 images per product if possible (gallery, flat-lay, detail). The second image is used for the hover-swap on product cards.
+Images are provided in the `takween-starter-images` pack — follow its `IMAGE_GUIDE.md` for upload order, alt text and variant image assignment.
 
 ---
 
 ## Step 5 — Fill Metafields on 4 Products
 
-Go to: **Products → [Product] → scroll to "Metafields" section at the bottom of the page**
+Go to: **Products → [Product] → scroll to the "Metafields" section at the bottom of the page**
 
-### Product: Sample Classic Tee
+### Product 1: Sample Organic Cotton Tee (`sample-organic-cotton-tee`)
 
 **Highlights** (add each as a separate list item):
-1. Ethically sourced 100% organic cotton
-2. Pre-shrunk for a consistent fit
-3. Free UK delivery on orders over £50
-4. Easy 30-day returns
+1. 100% GOTS-certified organic cotton
+2. Soft, breathable midweight jersey
+3. Pre-shrunk for a consistent fit
+4. Free standard UK delivery on orders over £50
 
 **Care Instructions:**
 ```
-Machine wash at 30°C. Do not tumble dry. Iron on low heat if needed. Do not dry clean.
+Machine wash at 30°C. Wash with similar colours. Do not tumble dry. Warm iron on reverse.
 ```
 
-**Specifications** (create 3 `specification` metaobject entries first via Settings → Custom data → Metaobjects → Specification → Add entry):
+**Specifications** — create 3 `specification` metaobject entries first (**Settings → Custom data → Metaobjects → Specification → Add entry**), then link:
 - Entry 1: Label = `Material`, Value = `100% Organic Cotton`
 - Entry 2: Label = `Weight`, Value = `180 gsm`
-- Entry 3: Label = `Fit`, Value = `Regular fit`
-Then link them to this product's `Specifications` metafield.
+- Entry 3: Label = `Fit`, Value = `Relaxed fit`
 
-**Product FAQs** (create 2 `faq_item` entries first):
-- Entry 1: Question = `Will this shrink after washing?`, Answer = `<p>This tee has been pre-shrunk so it retains its size after washing at 30°C.</p>`
-- Entry 2: Question = `Is the cotton certified?`, Answer = `<p>Yes — all cotton is certified organic under the Global Organic Textile Standard (GOTS). Sample certification only.</p>`
+**Product FAQs** — create 2 `faq_item` entries, then link:
+- Entry 1: Question = `How should I wash this tee?`, Answer = `<p>Machine wash at 30°C with similar colours. Hang dry to maintain shape.</p>`
+- Entry 2: Question = `Is the cotton certified organic?`, Answer = `<p>Yes, 100% GOTS-certified organic cotton. Sample product for theme development testing.</p>`
 
 **Custom Badge:** `Best seller`
 
 ---
 
-### Product: Sample Oxford Shirt
+### Product 2: Sample Relaxed Overshirt (`sample-relaxed-overshirt`)
 
 **Highlights:**
-1. Classic Oxford weave for a smart-casual look
-2. Button-down collar — no ironing required
-3. Available in White and Blue
+1. Versatile layering piece in midweight cotton-blend
+2. Dual chest pockets with horn-effect buttons
+3. Garment-dyed for subtle character
 
 **Care Instructions:**
 ```
-Machine wash at 40°C. Iron on medium heat. Do not bleach.
+Machine wash cold at 30°C. Do not bleach. Cool iron if needed. Can be dry cleaned.
 ```
+
+**Specifications:**
+- Entry 1: Label = `Material`, Value = `100% Cotton Twill`
+- Entry 2: Label = `Fit`, Value = `Relaxed boxy fit`
+- Entry 3: Label = `Closure`, Value = `Button-through front`
 
 **Custom Badge:** `Sale`
 
 ---
 
-### Product: Sample Ceramic Mug
+### Product 3: Sample Ceramic Mug Set (`sample-ceramic-mug-set`)
 
 **Highlights:**
-1. Microwave and dishwasher safe
-2. Generous 350ml capacity
-3. Heavyweight ceramic for heat retention
-
-**Specifications:**
-- Label = `Capacity`, Value = `350 ml`
-- Label = `Material`, Value = `Ceramic`
-- Label = `Dimensions`, Value = `9 cm H × 8 cm W`
-
-**Custom Badge:** `New`
-
----
-
-### Product: Sample Scented Candle
-
-**Highlights:**
-1. 40-hour burn time
-2. Natural soy wax blend
-3. Phthalate-free fragrance oils
+1. Set of two hand-thrown stoneware mugs
+2. Tactile matte glaze exterior, gloss interior
+3. Microwave and dishwasher safe
 
 **Care Instructions:**
 ```
-Trim wick to 5mm before each use. Never leave burning unattended. Keep away from draughts. 
-Stop burning when 1cm of wax remains.
+Dishwasher and microwave safe. Handle with care to prevent chipping.
 ```
 
 **Specifications:**
-- Label = `Burn time`, Value = `40 hours`
-- Label = `Wax type`, Value = `Natural soy blend`
-- Label = `Net weight`, Value = `200 g`
+- Entry 1: Label = `Material`, Value = `Stoneware ceramic`
+- Entry 2: Label = `Capacity`, Value = `320 ml per mug`
+- Entry 3: Label = `Quantity`, Value = `Set of 2`
+
+**Custom Badge:** `Sold out`
+
+---
+
+### Product 4: Sample Canvas Tote Bag (`sample-canvas-tote-bag`)
+
+**Highlights:**
+1. Heavyweight 16oz natural cotton canvas
+2. Reinforced dual handles for heavy loads
+3. Internal slip pocket for keys and phone
+
+**Care Instructions:**
+```
+Spot clean with a damp cloth and mild soap. Do not machine wash or tumble dry.
+```
+
+**Specifications:**
+- Entry 1: Label = `Material`, Value = `16oz Cotton Canvas`
+- Entry 2: Label = `Dimensions`, Value = `42cm W × 38cm H × 12cm D`
+- Entry 3: Label = `Handle Drop`, Value = `26 cm`
+
+**Custom Badge:** `Staff pick`
 
 ---
 
@@ -203,13 +196,11 @@ Go to: **Shopify Admin → Products → Collections → Create collection**
 
 ### Manual collections (3)
 
-| Collection title | Handle | Type | Add products |
+| Collection title | Handle | Type | Products |
 |---|---|---|---|
-| Apparel | `apparel` | Manual | Sample Classic Tee, Sample Slim Chinos, Sample Relaxed Hoodie, Sample Oxford Shirt, Sample Jogger Pants |
-| Home & Living | `home-living` | Manual | Sample Ceramic Mug, Sample Linen Cushion Cover, Sample Wooden Serving Board, Sample Scented Candle |
-| Accessories | `accessories` | Manual | Sample Canvas Tote Bag, Sample Leather Card Holder, Sample Knit Beanie |
-
-For each: add a short description (e.g. "Sample apparel range for theme development testing.") and a collection image from Unsplash.
+| Apparel | `apparel` | Manual | Organic Cotton Tee, Relaxed Overshirt, Merino Crew Jumper, Everyday Hoodie, Linen Shirt |
+| Home & Living | `home-living` | Manual | Ceramic Mug Set, Linen Cushion Cover, Scented Candle, Cotton Throw Blanket |
+| Accessories | `accessories` | Manual | Canvas Tote Bag, Wool Beanie, Leather Card Holder |
 
 ### Automated collection: Sale
 
@@ -218,10 +209,10 @@ For each: add a short description (e.g. "Sample apparel range for theme developm
 | Title | Sale |
 | Handle | `sale` |
 | Type | Automated |
-| Condition | **Compare at price is greater than price** *(if this condition is available on your plan)* |
-| Fallback condition | If the compare-at condition is unavailable: use tag **is equal to** `sale` — then manually tag the 4 sale products in Step 3. |
+| Condition | **Compare at price is greater than price** *(if supported)* |
+| Fallback | Tag **is equal to** `sale` (Sample Relaxed Overshirt, Sample Linen Shirt, Sample Canvas Tote Bag are tagged `sale` in the CSV) |
 
-The 4 sale products (Oxford Shirt, Linen Cushion Cover, Wooden Serving Board, Canvas Tote Bag) all have compare-at prices set in the CSV.
+The 3 on-sale products from the CSV are: **Sample Relaxed Overshirt** (£45 was £60), **Sample Linen Shirt** (£38 was £48), **Sample Canvas Tote Bag** (£18 was £22).
 
 ---
 
@@ -233,7 +224,7 @@ Go to: **Shopify Admin → Online Store → Navigation**
 
 | Item | Type | Link / Nested items |
 |---|---|---|
-| Shop | No link (parent) | Dropdown: Apparel → `/collections/apparel`; Home & Living → `/collections/home-living`; Accessories → `/collections/accessories`; Sale → `/collections/sale` |
+| Shop | Parent dropdown | Apparel → `/collections/apparel`; Home & Living → `/collections/home-living`; Accessories → `/collections/accessories`; Sale → `/collections/sale` |
 | About | Page | `/pages/about` |
 | FAQ | Page | `/pages/faq` |
 | Contact | Page | `/pages/contact` |
@@ -270,56 +261,39 @@ Go to: **Shopify Admin → Online Store → Navigation**
 
 Go to: **Shopify Admin → Online Store → Pages → Add page**
 
-Create the following pages with the sample content below:
+| Page title | Handle | Template suffix | Content |
+|---|---|---|---|
+| About Us | `about` | `page.about` *(assign after Phase 12)* | Sample brand story placeholder — see below |
+| Shipping Information | `shipping` | `page` (default) | Sample shipping policy placeholder |
+| Returns & Refunds | `returns` | `page` (default) | Sample returns policy placeholder |
+| Frequently Asked Questions | `faq` | `page.faq` *(assign after Phase 12)* | Leave blank — FAQ section pulls from metaobjects |
+| Contact Us | `contact` | `page.contact` *(assign after Phase 12)* | Leave blank — contact section renders the form |
 
-### About (`/pages/about`)
-- **Title:** About Us
-- **Template suffix:** `page.about` *(assign after Phase 12)*
-- **Content:**
-  ```
-  This is a sample About page for the Takween Shopify Starter Theme. 
-  Replace this content with your client's brand story, team information and values.
-  
-  [Sample mission statement placeholder]
-  [Sample team section placeholder]
-  [Sample values placeholder]
-  ```
+**Sample About content:**
+```
+This is a sample About page for the Takween Shopify Starter Theme. 
+Replace with your client's brand story, team information and values.
 
-### Shipping (`/pages/shipping`)
-- **Title:** Shipping Information
-- **Template suffix:** `page` (default)
-- **Content:**
-  ```
-  This is a sample Shipping page for development testing.
-  
-  Standard delivery: 3–5 working days — £[X]
-  Express delivery: 1–2 working days — £[X]
-  Free delivery on orders over £[X]
-  
-  [Replace with actual shipping policy before launch]
-  ```
+[Sample mission statement placeholder]
+[Sample team section placeholder]
+[Sample values placeholder]
+```
 
-### Returns (`/pages/returns`)
-- **Title:** Returns & Refunds
-- **Template suffix:** `page` (default)
-- **Content:**
-  ```
-  This is a sample Returns page for development testing.
-  
-  We accept returns within 30 days of purchase. Items must be unused and in original packaging.
-  
-  [Replace with actual returns policy before launch]
-  ```
+**Sample Shipping content:**
+```
+Standard delivery: 3–5 working days — £3.95 (Free over £50)
+Express delivery: 1–2 working days — £6.95
 
-### FAQ (`/pages/faq`)
-- **Title:** Frequently Asked Questions
-- **Template suffix:** `page.faq` *(assign after Phase 12)*
-- **Content:** *(leave blank — the FAQ section pulls from metaobjects)*
+[Replace with actual shipping policy before launch]
+```
 
-### Contact (`/pages/contact`)
-- **Title:** Contact Us
-- **Template suffix:** `page.contact` *(assign after Phase 12)*
-- **Content:** *(leave blank — the contact section renders the form)*
+**Sample Returns content:**
+```
+We accept returns within 30 days of purchase. 
+Items must be unused, unwashed and in original condition with tags attached.
+
+[Replace with actual returns policy before launch]
+```
 
 ---
 
@@ -327,8 +301,8 @@ Create the following pages with the sample content below:
 
 1. Go to: **Shopify Admin → Apps → App store**
 2. Search for **"Shopify Search & Discovery"** (published by Shopify).
-3. Click **Install** (it's free).
-4. After installation, go to **Apps → Search & Discovery → Filters → Add filter**:
+3. Click **Install** (free).
+4. Go to **Apps → Search & Discovery → Filters → Add filter**:
 
 | Filter | Type |
 |---|---|
@@ -344,19 +318,15 @@ Create the following pages with the sample content below:
 
 ## Step 10 — Verify Inventory Test Cases
 
-After import, go to each product and confirm the following via **Products → [Product] → Variants**:
+In **Shopify Admin → Products → [Product] → Variants**, verify the stock levels and inventory policies match the single source of truth (`products.csv`):
 
-| Test case | Product | Variant | Qty | Inventory policy |
-|---|---|---|---|---|
-| All in stock | Sample Classic Tee | All variants | 10 each | Don't allow (deny) |
-| ONE variant sold out | Sample Slim Chinos | Size 32 / Black | **0** | **Don't allow (deny)** |
-| Fully sold out | Sample Relaxed Hoodie | All variants | **0** | **Don't allow (deny)** |
-| Low stock | Sample Jogger Pants | S/Black and M/Black | **3** | Don't allow (deny) |
-| On sale | Sample Oxford Shirt | All variants | — | — (compare-at price set) |
-| On sale | Sample Linen Cushion Cover | All variants | — | — |
-| On sale | Sample Wooden Serving Board | Default | — | — |
-| On sale | Sample Canvas Tote Bag | All variants | — | — |
-| Single-variant | Sample Ceramic Mug | Default Title | 25 | Don't allow |
-| Single-variant | Sample Wooden Serving Board | Default Title | 15 | Don't allow |
-
-> **Note:** After importing the CSV, verify in the Admin that inventory quantities imported correctly. If they did not, edit them manually using the table above.
+| Test case | Product | Variant | Qty | Policy | Expected Theme Behaviour |
+|---|---|---|---|---|---|
+| **All in stock** (Colour × Size) | Sample Organic Cotton Tee | All 15 variants | 15 each | deny | Clean variant selectors, all selectable, in-stock CTA |
+| **Colour all sold out** | Sample Relaxed Overshirt | Olive (all 5 sizes: XS, S, M, L, XL) | **0** | **deny** | Selecting Olive shows sold-out state on all sizes |
+| **Specific variant sold out** | Sample Relaxed Overshirt | Stone / XL | **0** | **deny** | Selecting Stone keeps XS, S, L selectable; XL shows sold out |
+| **Low stock alert** | Sample Relaxed Overshirt | Stone / M | **3** | **deny** | Triggers low-stock indicator on PDP |
+| **Fully sold out product** | Sample Ceramic Mug Set | Default Title (single variant) | **0** | **deny** | Product card shows Sold Out badge; PDP disables Add to Cart |
+| **Single variant in stock** | Sample Scented Candle | Default Title (single variant) | 15 | deny | No variant selector shown on PDP; direct Add to Cart |
+| **Colour-only variants** | Sample Canvas Tote Bag | Natural, Black, Olive | 15 each | deny | Colour swatches only, no size selector |
+| **On sale products** | Sample Relaxed Overshirt, Sample Linen Shirt, Sample Canvas Tote Bag | All variants | — | deny | Sale badge on card, strikethrough compare-at price |

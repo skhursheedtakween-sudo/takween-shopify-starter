@@ -54,8 +54,8 @@ Product-specific structured data — such as care instructions, technical specif
 
 | Field name | Field key | Type | Required | Validation | Example |
 |---|---|---|---|---|---|
-| Question | `question` | Single line text | ✅ Yes | — | `"How do I care for this item?"` |
-| Answer | `answer` | Rich text | ✅ Yes | — | `<p>Machine wash at 30°C.</p>` |
+| Question | `question` | Single line text | ✅ Yes | — | `"How should I wash this tee?"` |
+| Answer | `answer` | Rich text | ✅ Yes | — | `<p>Machine wash at 30°C with similar colours.</p>` |
 
 **Used in:**
 - `sections/tk-faq.liquid` → metaobject source mode (reads a `metaobject_list` setting of type `faq_item`)
@@ -89,12 +89,12 @@ Product-specific structured data — such as care instructions, technical specif
 | Used in | `sections/main-product.liquid` → block `tk_highlights` |
 | Hidden when | `product.metafields.custom.highlights` is blank |
 
-**Example value:**
+**Example value (Sample Organic Cotton Tee):**
 ```
-- Free UK delivery on all orders
-- Ethically sourced materials
-- 30-day easy returns
-- Oeko-Tex certified fabric
+- 100% GOTS-certified organic cotton
+- Soft, breathable midweight jersey
+- Pre-shrunk for a consistent fit
+- Free standard UK delivery on orders over £50
 ```
 
 **Example Liquid access:**
@@ -123,9 +123,9 @@ Product-specific structured data — such as care instructions, technical specif
 | Used in | `sections/main-product.liquid` → block `tk_details_accordion` (Care tab) |
 | Hidden when | `product.metafields.custom.care_instructions` is blank |
 
-**Example value:**
+**Example value (Sample Organic Cotton Tee):**
 ```html
-<p>Machine wash at 30°C. Do not tumble dry. Iron on low heat. Dry clean if needed.</p>
+<p>Machine wash at 30°C. Wash with similar colours. Do not tumble dry. Warm iron on reverse.</p>
 ```
 
 ---
@@ -142,13 +142,12 @@ Product-specific structured data — such as care instructions, technical specif
 | Used in | `sections/main-product.liquid` → block `tk_details_accordion` (Specifications tab) |
 | Hidden when | List is empty |
 
-**Example values (a list of `specification` metaobject entries):**
+**Example values for Sample Organic Cotton Tee (`specification` metaobject entries):**
 | Label | Value |
 |---|---|
 | Material | 100% Organic Cotton |
 | Weight | 180 gsm |
-| Fit | Regular fit |
-| Country of origin | Portugal |
+| Fit | Relaxed fit |
 
 ---
 
@@ -163,6 +162,12 @@ Product-specific structured data — such as care instructions, technical specif
 | Storefront access | **ON** |
 | Used in | `sections/main-product.liquid` → block `tk_details_accordion` (FAQs tab); optionally surfaced in `sections/tk-faq.liquid` on the product page template |
 | Hidden when | List is empty |
+
+**Example values for Sample Organic Cotton Tee (`faq_item` metaobject entries):**
+- **Q:** How should I wash this tee?  
+  **A:** Machine wash at 30°C with similar colours. Hang dry to maintain shape.
+- **Q:** Is the cotton certified organic?  
+  **A:** Yes, 100% GOTS-certified organic cotton. Sample product for theme development testing.
 
 ---
 
@@ -179,7 +184,11 @@ Product-specific structured data — such as care instructions, technical specif
 | Used in | `snippets/tk-badge.liquid`, `snippets/tk-product-card.liquid` |
 | Shown when | Global setting "Show custom badge" is ON AND this metafield is not blank |
 
-**Example values:** `"New"`, `"Best seller"`, `"Staff pick"`, `"Limited"`
+**Example values across imported products:**
+- `sample-organic-cotton-tee`: `"Best seller"`
+- `sample-relaxed-overshirt`: `"Sale"`
+- `sample-ceramic-mug-set`: `"Sold out"`
+- `sample-canvas-tote-bag`: `"Staff pick"`
 
 ---
 
