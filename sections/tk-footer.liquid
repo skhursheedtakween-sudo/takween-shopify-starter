@@ -1,0 +1,586 @@
+{%- comment -%}
+  sections/tk-footer.liquid
+  Takween Footer section.
+  Designed for footer group. Replaces Dawn footer.
+{%- endcomment -%}
+
+{{ 'section-footer.css' | asset_url | stylesheet_tag }}
+{{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
+{{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .tk-footer {
+    background-color: var(--tk-color-ink);
+    color: #C9CCD1;
+    padding-top: {{ section.settings.padding_top | default: 64 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | default: 32 }}px;
+  }
+
+  .tk-footer .tk-container {
+    max-width: var(--tk-container);
+  }
+
+  .tk-footer__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: var(--tk-space-7);
+  }
+
+  .tk-footer__col-heading {
+    font-family: var(--font-heading-family);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #FFFFFF;
+    margin-top: 0;
+    margin-bottom: var(--tk-space-3);
+    text-transform: uppercase;
+  }
+
+  .tk-footer__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tk-footer__link {
+    color: #C9CCD1;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color var(--tk-transition), text-decoration-color var(--tk-transition);
+  }
+
+  .tk-footer__link:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .tk-footer__business-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .tk-footer__business-item a {
+    color: #C9CCD1;
+    text-decoration: none;
+  }
+
+  .tk-footer__business-item a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+  }
+
+  /* Bottom Bar */
+  .tk-footer__bottom {
+    border-top: 1px solid #33363B;
+    padding-top: var(--tk-space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--tk-space-3);
+    font-size: 13px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .tk-footer__bottom {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .tk-footer__copyright {
+    color: #8C9098;
+  }
+
+  .tk-footer__bottom-right {
+    display: flex;
+    align-items: center;
+    gap: var(--tk-space-4);
+    flex-wrap: wrap;
+  }
+
+  /* Mobile Accordion for Menu Blocks */
+  @media screen and (max-width: 749px) {
+    .tk-footer__grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--tk-space-4);
+    }
+
+    .tk-footer__accordion summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 48px;
+      cursor: pointer;
+      list-style: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tk-footer__accordion summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .tk-footer__accordion[open] summary {
+      border-bottom: none;
+    }
+
+    .tk-footer__accordion-content {
+      padding: var(--tk-space-2) 0 var(--tk-space-4);
+    }
+  }
+{%- endstyle -%}
+
+<footer class="tk-footer color-{{ section.settings.color_scheme }} gradient">
+  <div class="tk-container">
+    <div class="tk-footer__grid">
+      {%- for block in section.blocks -%}
+        <div class="tk-footer__block tk-footer__block--{{ block.type }}" {{ block.shopify_attributes }}>
+          {%- case block.type -%}
+            {%- when 'brand' -%}
+              {%- if block.settings.logo != blank -%}
+                <div style="margin-bottom: var(--tk-space-3);">
+                  {{
+                    block.settings.logo
+                    | image_url: width: 300
+                    | image_tag:
+                      widths: '150, 200, 300',
+                      style: 'max-width: 150px; height: auto;',
+                      alt: shop.name
+                  }}
+                </div>
+              {%- else -%}
+                <h3 class="tk-footer__col-heading">{{ shop.name }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div class="tk-rte" style="color: #C9CCD1; font-size: 14px;">
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
+
+            {%- when 'menu' -%}
+              <div class="small-hide">
+                {%- if block.settings.heading != blank -%}
+                  <h3 class="tk-footer__col-heading">{{ block.settings.heading }}</h3>
+                {%- endif -%}
+                <ul class="tk-footer__links" role="list">
+                  {%- for link in block.settings.menu.links -%}
+                    <li>
+                      <a href="{{ link.url }}" class="tk-footer__link">{{ link.title }}</a>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+
+              <!-- Mobile Accordion -->
+              <details class="tk-footer__accordion medium-hide large-up-hide">
+                <summary>
+                  <span class="tk-footer__col-heading" style="margin: 0;">{{ block.settings.heading }}</span>
+                  {% render 'tk-icon', icon: 'chevron-down', size: 16 %}
+                </summary>
+                <div class="tk-footer__accordion-content">
+                  <ul class="tk-footer__links" role="list">
+                    {%- for link in block.settings.menu.links -%}
+                      <li>
+                        <a href="{{ link.url }}" class="tk-footer__link" style="display: block; padding: 6px 0;">{{ link.title }}</a>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              </details>
+
+            {%- when 'business_info' -%}
+              {%- if block.settings.heading != blank -%}
+                <h3 class="tk-footer__col-heading">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              <div class="tk-footer__business-list">
+                {%- if block.settings.address != blank -%}
+                  <div class="tk-footer__business-item">
+                    {% render 'tk-icon', icon: 'map-pin', size: 16 %}
+                    <span>{{ block.settings.address | newline_to_br }}</span>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.phone != blank -%}
+                  <div class="tk-footer__business-item">
+                    {% render 'tk-icon', icon: 'phone', size: 16 %}
+                    <a href="tel:{{ block.settings.phone | replace: ' ', '' }}">{{ block.settings.phone }}</a>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.email != blank -%}
+                  <div class="tk-footer__business-item">
+                    {% render 'tk-icon', icon: 'mail', size: 16 %}
+                    <a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a>
+                  </div>
+                {%- endif -%}
+                {%- if block.settings.opening_hours != blank -%}
+                  <div class="tk-footer__business-item">
+                    {% render 'tk-icon', icon: 'clock', size: 16 %}
+                    <div>{{ block.settings.opening_hours }}</div>
+                  </div>
+                {%- endif -%}
+              </div>
+
+            {%- when 'text' -%}
+              {%- if block.settings.heading != blank -%}
+                <h3 class="tk-footer__col-heading">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              <div class="tk-rte" style="color: #C9CCD1; font-size: 14px;">
+                {{ block.settings.text }}
+              </div>
+
+            {%- when 'newsletter' -%}
+              {%- if block.settings.heading != blank -%}
+                <h3 class="tk-footer__col-heading">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {%- if block.settings.text != blank -%}
+                <div style="font-size: 14px; margin-bottom: var(--tk-space-3); color: #C9CCD1;">
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
+
+              {%- form 'customer', id: 'TkFooterNewsletter', class: 'tk-footer__newsletter' -%}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <div class="tk-field">
+                  <label for="TkFooterNewsletter-email" class="visually-hidden">{{ 'newsletter.label' | t }}</label>
+                  <div style="display: flex; gap: 8px;">
+                    <input
+                      id="TkFooterNewsletter-email"
+                      type="email"
+                      name="contact[email]"
+                      class="tk-input"
+                      value="{{ form.email }}"
+                      placeholder="{{ 'newsletter.label' | t }}"
+                      aria-required="true"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      autocomplete="email"
+                      required
+                      style="min-height: 44px; font-size: 14px; background: #26292E; border-color: #3D4148; color: #FFFFFF;"
+                    >
+                    <button
+                      type="submit"
+                      class="tk-btn tk-btn--primary"
+                      style="min-height: 44px; padding: 0 20px; font-size: 14px; flex-shrink: 0;"
+                    >
+                      {{ 'newsletter.button_label' | t }}
+                    </button>
+                  </div>
+                </div>
+
+                {%- if form.errors -%}
+                  <div class="tk-field__error-msg" style="margin-top: 8px; font-size: 13px;">
+                    {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+                  </div>
+                {%- endif -%}
+
+                {%- if form.posted_successfully? -%}
+                  <div class="tk-alert--success" style="margin-top: 8px;">
+                    {{ 'newsletter.success' | t }}
+                  </div>
+                {%- endif -%}
+              {%- endform -%}
+
+            {%- when 'social' -%}
+              {%- if block.settings.heading != blank -%}
+                <h3 class="tk-footer__col-heading">{{ block.settings.heading }}</h3>
+              {%- endif -%}
+              {% render 'social-icons', class: 'footer__list-social' %}
+
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="tk-footer__bottom">
+      <div class="tk-footer__copyright">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.custom_copyright }}
+      </div>
+
+      <div class="tk-footer__bottom-right">
+        {%- if section.settings.enable_country_selector or section.settings.enable_language_selector -%}
+          <div class="tk-footer__localization">
+            {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+              <localization-form>
+                {%- form 'localization', id: 'TkFooterCountryForm', class: 'localization-form' -%}
+                  <div>
+                    <h2 class="visually-hidden" id="TkFooterCountryLabel">{{ 'localization.country_label' | t }}</h2>
+                    {%- render 'country-localization', localPosition: 'TkFooterCountry' -%}
+                  </div>
+                {%- endform -%}
+              </localization-form>
+            {%- endif -%}
+
+            {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+              <localization-form>
+                {%- form 'localization', id: 'TkFooterLanguageForm', class: 'localization-form' -%}
+                  <div>
+                    <h2 class="visually-hidden" id="TkFooterLanguageLabel">{{ 'localization.language_label' | t }}</h2>
+                    {%- render 'language-localization', localPosition: 'TkFooterLanguage' -%}
+                  </div>
+                {%- endform -%}
+              </localization-form>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.payment_enable and shop.enabled_payment_types.size > 0 -%}
+          <div class="footer__payment">
+            <span class="visually-hidden">{{ 'sections.footer.payment' | t }}</span>
+            <ul class="list list-payment" role="list">
+              {%- for type in shop.enabled_payment_types -%}
+                <li class="list-payment__item">
+                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "max_blocks": 6,
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-3"
+    },
+    {
+      "type": "header",
+      "content": "Country/region selector",
+      "info": "To add a country/region, go to your [market settings.](/admin/settings/markets)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": true,
+      "label": "t:sections.footer.settings.enable_country_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "Language selector",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": true,
+      "label": "t:sections.footer.settings.enable_language_selector.label"
+    },
+    {
+      "type": "header",
+      "content": "Payment methods"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_enable",
+      "default": true,
+      "label": "t:sections.footer.settings.payment_enable.label"
+    },
+    {
+      "type": "text",
+      "id": "custom_copyright",
+      "label": "Custom copyright note",
+      "default": "All rights reserved."
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 32,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 16,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 32
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Brand",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo image"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>Thoughtfully crafted organic apparel and home essentials.</p>",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "Quick links",
+          "label": "Heading"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "default": "footer",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "business_info",
+      "name": "Business Info",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "Visit Us",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "address",
+          "default": "123 Sample High Street\nLondon, UK",
+          "label": "Address"
+        },
+        {
+          "type": "text",
+          "id": "phone",
+          "default": "+44 20 7946 0991",
+          "label": "Phone"
+        },
+        {
+          "type": "text",
+          "id": "email",
+          "default": "hello@takweensample.co.uk",
+          "label": "Email"
+        },
+        {
+          "type": "richtext",
+          "id": "opening_hours",
+          "default": "<p>Mon–Fri: 9am – 6pm<br>Sat: 10am – 4pm</p>",
+          "label": "Opening hours"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "About",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "default": "<p>Share your brand story, values, or commitments here.</p>",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "Stay in touch",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Join our mailing list for product updates and early access.",
+          "label": "Subtext"
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Social Icons",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "default": "Follow us",
+          "label": "Heading"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        {
+          "type": "brand"
+        },
+        {
+          "type": "menu",
+          "settings": {
+            "heading": "Shop",
+            "menu": "footer-shop"
+          }
+        },
+        {
+          "type": "menu",
+          "settings": {
+            "heading": "Help",
+            "menu": "footer-help"
+          }
+        },
+        {
+          "type": "menu",
+          "settings": {
+            "heading": "Company",
+            "menu": "footer-company"
+          }
+        },
+        {
+          "type": "business_info"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

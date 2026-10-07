@@ -266,9 +266,9 @@ Product-specific structured data varies per product and cannot be hard-coded int
 | File | What changed | Why |
 |---|---|---|
 | `layout/theme.liquid` | Add `{% render 'tk-css-variables' %}` + `{{ 'tk-base.css' \| asset_url \| stylesheet_tag }}` in `<head>` | Global token output and base CSS |
-| `sections/header-group.json` | Replace `announcement-bar` type with `tk-announcement-bar` | Use new custom bar |
-| `sections/footer-group.json` | Replace `footer` type with `tk-footer` | Use new custom footer |
-| `sections/header.liquid` | Add logo position options, utility CTA, mobile drawer footer, restyle with tk tokens | Extend rather than replace — keeps Dawn's header-drawer/header-menu JS |
+| `sections/header-group.json` | Replace `announcement-bar` type with `tk-announcement-bar` | Use new custom announcement bar with WCAG 2.2.2 compliance |
+| `sections/footer-group.json` | Replace `footer` type with `tk-footer` | Use new custom multi-column footer with mobile accordion and business info |
+| `sections/header.liquid` | Add utility CTA setting (`utility_cta_label`, `utility_cta_link`), `show_account_icon` toggle; replace cart and account SVG wrappers with `{% render 'tk-icon' %}`; add 18px accent cart bubble; add 52px mobile drawer items; add drawer footer with account and contact links; restyle nav with 15px/600 and 2px accent hover underline; style dropdowns with 12px radius, shadow-md, and 44px items | Extend rather than replace — keeps Dawn's `header-drawer`, `details-modal`, `header-menu`, and sticky header JS |
 | `sections/main-product.liquid` | Add `tk_stock_indicator`, `tk_highlights`, `tk_details_accordion`, `tk_trust_badges`, `tk_delivery_note` block types; add sticky ATC snippet; restyle variant picker with pills/swatches | Extend Dawn's variant/cart JS; new blocks integrate via existing schema |
 | `sections/main-collection-product-grid.liquid` | Use `tk-product-card` instead of `card-product`, add column count settings | Keeps `facet-filters-form` JS intact; only template markup changed |
 | `sections/related-products.liquid` | Use `tk-product-grid` + `tk-product-card`, add heading/columns settings | Keeps `product-recommendations` custom element |

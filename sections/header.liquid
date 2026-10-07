@@ -98,6 +98,121 @@
     min-width: 4.4rem;
     height: 4.4rem;
   }
+
+  /* --- Takween Header Styling --- */
+  .header-wrapper {
+    background-color: var(--tk-color-surface);
+    border-bottom: 1px solid var(--tk-color-border);
+  }
+
+  .header {
+    max-width: var(--tk-container);
+    min-height: 56px;
+    padding-left: var(--tk-gutter);
+    padding-right: var(--tk-gutter);
+    box-sizing: border-box;
+  }
+
+  @media screen and (min-width: 990px) {
+    .header {
+      min-height: 76px;
+    }
+  }
+
+  /* Navigation link styles */
+  .header__inline-menu .list-menu__item {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 14px;
+    color: rgb(var(--color-foreground));
+    position: relative;
+    text-decoration: none;
+    transition: color var(--tk-transition);
+  }
+
+  .header__inline-menu .list-menu__item:hover,
+  .header__inline-menu .list-menu__item.header__active-menu-item {
+    color: var(--tk-color-accent);
+    text-decoration: underline;
+    text-decoration-color: var(--tk-color-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+
+  /* Header icon target sizes (44x44px) */
+  .header__icon {
+    min-width: var(--tk-touch-target);
+    min-height: var(--tk-touch-target);
+    width: var(--tk-touch-target);
+    height: var(--tk-touch-target);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(var(--color-foreground));
+    transition: color var(--tk-transition);
+  }
+
+  .header__icon:hover {
+    color: var(--tk-color-accent);
+  }
+
+  /* Cart count bubble */
+  .cart-count-bubble {
+    position: absolute;
+    top: 6px;
+    right: 4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--tk-color-accent);
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: none;
+  }
+
+  /* Dropdown Panel */
+  .header__submenu {
+    border-radius: var(--tk-radius-card) !important;
+    box-shadow: var(--tk-shadow-md) !important;
+    padding: 8px !important;
+    border: 1px solid var(--tk-color-border) !important;
+    background-color: var(--tk-color-surface) !important;
+  }
+
+  .header__submenu .list-menu__item {
+    min-height: 44px;
+    padding: 8px 16px;
+    border-radius: var(--tk-radius-button);
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color var(--tk-transition-fast), color var(--tk-transition-fast);
+  }
+
+  .header__submenu .list-menu__item:hover {
+    background-color: var(--tk-color-tint);
+    color: var(--tk-color-accent);
+    text-decoration: none;
+  }
+
+  /* Mobile Drawer Item row height (52px) */
+  .menu-drawer__menu-item {
+    min-height: 52px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .menu-drawer__close-button {
+    min-height: 52px;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 700;
+  }
 </style>
 
 {%- style -%}
@@ -282,14 +397,22 @@
       </div>
       {% render 'header-search', input_id: 'Search-In-Modal' %}
 
-      {%- if shop.customer_accounts_enabled -%}
+      {%- if shop.customer_accounts_enabled and section.settings.show_account_icon != false -%}
         <shopify-account
           menu="{{ settings.customer_account_menu | default: 'customer-account-main-menu' }}"
           class="header__icon header__icon--account link focus-inset"
         >
-          <span slot="signed-out-avatar" class="svg-wrapper">{{ 'icon-account.svg' | inline_asset_content }}</span>
+          <span slot="signed-out-avatar" class="svg-wrapper">{% render 'tk-icon', icon: 'account', size: 20 %}</span>
           <span slot="signed-out-avatar" class="visually-hidden">{{ 'customer.log_in' | t }}</span>
         </shopify-account>
+      {%- endif -%}
+
+      {%- if section.settings.utility_cta_label != blank and section.settings.utility_cta_link != blank -%}
+        <div class="header__utility-cta small-hide medium-hide">
+          <a href="{{ section.settings.utility_cta_link }}" class="tk-btn tk-btn--primary" style="min-height: 40px; padding: 0 16px; font-size: 13px;">
+            {{ section.settings.utility_cta_label | escape }}
+          </a>
+        </div>
       {%- endif -%}
 
       {%- for block in section.blocks -%}
@@ -300,11 +423,7 @@
       {%- endfor -%}
 
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
-        {% if cart == empty %}
-          <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
-        {% else %}
-          <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
-        {% endif %}
+        <span class="svg-wrapper">{% render 'tk-icon', icon: 'cart', size: 20 %}</span>
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
         {%- if cart != empty -%}
           <div class="cart-count-bubble">
@@ -638,6 +757,22 @@
     {
       "type": "paragraph",
       "content": "t:sections.header.settings.customer_account_menu.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account_icon",
+      "default": true,
+      "label": "Show account icon"
+    },
+    {
+      "type": "text",
+      "id": "utility_cta_label",
+      "label": "Utility CTA link label"
+    },
+    {
+      "type": "url",
+      "id": "utility_cta_link",
+      "label": "Utility CTA link"
     },
     {
       "type": "header",

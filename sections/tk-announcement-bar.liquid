@@ -1,0 +1,337 @@
+{%- comment -%}
+  sections/tk-announcement-bar.liquid
+  Takween Announcement Bar section.
+  Designed for header group. Replaces Dawn announcement bar.
+{%- endcomment -%}
+
+{%- liquid
+  assign show_section = true
+  if section.settings.visibility == 'hidden'
+    assign show_section = false
+  elsif section.settings.visibility == 'homepage' and request.page_type != 'index'
+    assign show_section = false
+  endif
+-%}
+
+{%- if show_section and section.blocks.size > 0 -%}
+  <script src="{{ 'tk-announcement-bar.js' | asset_url }}" defer="defer"></script>
+
+  <tk-announcement-bar
+    class="tk-announcement color-{{ section.settings.color_scheme }} gradient"
+    data-auto-rotate="{% if section.settings.rotation == 'auto' and section.blocks.size > 1 %}true{% else %}false{% endif %}"
+    data-speed="{{ section.settings.rotation_speed | default: 5 }}"
+    data-dismissible="{{ section.settings.dismissible | default: false }}"
+    role="region"
+    aria-label="{{ 'sections.header.announcement' | t }}"
+  >
+    <div class="tk-container tk-announcement__container">
+      {%- if section.settings.show_arrows and section.blocks.size > 1 -%}
+        <button
+          type="button"
+          class="tk-announcement__btn tk-announcement__btn--prev"
+          aria-label="{{ 'sections.slideshow.previous_slideshow' | t }}"
+        >
+          {% render 'tk-icon', icon: 'chevron-left', size: 16 %}
+        </button>
+      {%- endif -%}
+
+      <div class="tk-announcement__slides" aria-live="off">
+        {%- for block in section.blocks -%}
+          <div
+            class="tk-announcement__slide{% if forloop.first %} is-active{% endif %}"
+            id="Slide-{{ section.id }}-{{ block.id }}"
+            {{ block.shopify_attributes }}
+            {% unless forloop.first %}aria-hidden="true"{% endunless %}
+          >
+            <div class="tk-announcement__message">
+              {%- if block.settings.icon != 'none' -%}
+                {% render 'tk-icon', icon: block.settings.icon, size: 16, class: 'tk-announcement__icon' %}
+              {%- endif -%}
+
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="tk-announcement__link">
+                  {{ block.settings.text }}
+                </a>
+              {%- else -%}
+                <span>{{ block.settings.text }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="tk-announcement__controls">
+        {%- if section.settings.rotation == 'auto' and section.blocks.size > 1 -%}
+          <button
+            type="button"
+            class="tk-announcement__btn tk-announcement__pause-btn"
+            aria-label="Pause announcement rotation"
+          >
+            <span class="tk-announcement__pause-icon">
+              {% render 'tk-icon', icon: 'minus', size: 14 %}
+            </span>
+          </button>
+        {%- endif -%}
+
+        {%- if section.settings.show_arrows and section.blocks.size > 1 -%}
+          <button
+            type="button"
+            class="tk-announcement__btn tk-announcement__btn--next"
+            aria-label="{{ 'sections.slideshow.next_slideshow' | t }}"
+          >
+            {% render 'tk-icon', icon: 'chevron-right', size: 16 %}
+          </button>
+        {%- endif -%}
+
+        {%- if section.settings.dismissible -%}
+          <button
+            type="button"
+            class="tk-announcement__btn tk-announcement__dismiss"
+            aria-label="{{ 'accessibility.close' | t }}"
+          >
+            {% render 'tk-icon', icon: 'close', size: 16 %}
+          </button>
+        {%- endif -%}
+      </div>
+    </div>
+  </tk-announcement-bar>
+{%- endif -%}
+
+<style>
+  .tk-announcement {
+    display: block;
+    position: relative;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: center;
+    background-color: var(--tk-color-ink);
+    color: #F6F5F2;
+    z-index: var(--tk-z-sticky);
+  }
+
+  .tk-announcement__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 24px;
+  }
+
+  .tk-announcement__slides {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .tk-announcement__slide {
+    display: none;
+    opacity: 0;
+    transition: opacity var(--tk-transition);
+  }
+
+  .tk-announcement__slide.is-active {
+    display: block;
+    opacity: 1;
+  }
+
+  .tk-announcement__message {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--tk-space-2);
+  }
+
+  .tk-announcement__icon {
+    flex-shrink: 0;
+  }
+
+  .tk-announcement__link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .tk-announcement__link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .tk-announcement__controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: absolute;
+    right: var(--tk-gutter);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .tk-announcement__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    border-radius: var(--tk-radius-button);
+    transition: background-color var(--tk-transition-fast);
+  }
+
+  .tk-announcement__btn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .tk-announcement__btn--prev {
+    position: absolute;
+    left: var(--tk-gutter);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  @media screen and (max-width: 749px) {
+    .tk-announcement {
+      padding: 8px 0;
+    }
+    .tk-announcement__btn--prev {
+      left: 8px;
+    }
+    .tk-announcement__controls {
+      right: 8px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "max_blocks": 5,
+  "class": "announcement-bar-section",
+  "enabled_on": {
+    "groups": ["header"]
+  },
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-3"
+    },
+    {
+      "type": "select",
+      "id": "visibility",
+      "label": "Visibility",
+      "options": [
+        {
+          "value": "all",
+          "label": "All pages"
+        },
+        {
+          "value": "homepage",
+          "label": "Homepage only"
+        },
+        {
+          "value": "hidden",
+          "label": "Hidden"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "select",
+      "id": "rotation",
+      "label": "Rotation",
+      "options": [
+        {
+          "value": "off",
+          "label": "Off"
+        },
+        {
+          "value": "auto",
+          "label": "Auto-rotate"
+        }
+      ],
+      "default": "off"
+    },
+    {
+      "type": "range",
+      "id": "rotation_speed",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "label": "Change messages every",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show navigation arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "dismissible",
+      "label": "Allow visitors to dismiss bar",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Announcement",
+      "settings": [
+        {
+          "type": "inline_richtext",
+          "id": "text",
+          "default": "Free UK delivery on orders over £50",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "truck", "label": "Truck / Delivery" },
+            { "value": "return", "label": "Returns" },
+            { "value": "shield", "label": "Shield / Guarantee" },
+            { "value": "check", "label": "Checkmark" }
+          ],
+          "default": "none"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        {
+          "type": "message",
+          "settings": {
+            "text": "Free UK delivery on orders over £50",
+            "icon": "truck"
+          }
+        },
+        {
+          "type": "message",
+          "settings": {
+            "text": "30-day easy returns",
+            "icon": "return"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
