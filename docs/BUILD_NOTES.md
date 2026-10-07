@@ -137,13 +137,13 @@ When adapting the Takween Starter Theme for a new client project:
 |---|---|---|---|---|
 | `sections/tk-announcement-bar.liquid` | **NEW** | Brief §5: Announcement bar | Colour scheme, auto-rotate, dismissible, visibility | Replaces Dawn's `announcement-bar` in header-group.json |
 | `sections/header.liquid` | **EXTEND** | Brief §5: Header/navigation | Logo position, menu type, search, utility CTA | Dawn's `header-drawer`, `header-menu`, predictive-search must stay working |
-| `sections/tk-hero.liquid` | **NEW** | Brief §5: Hero/banner | Desktop+mobile image, overlay, height, content position, eager/lazy load | First-section detection for `fetchpriority="high"` |
-| `sections/tk-rich-text.liquid` | **NEW** | Brief §5: Rich text/content intro | Alignment, content width, colour scheme | Dawn has `rich-text.liquid` — new tk version for clear custom attribution |
+| `sections/tk-hero.liquid` | **NEW** | Brief §5: Hero/banner | Desktop+mobile image, overlay, height, content position, white card toggle, eager/lazy load | First-section detection for `fetchpriority="high"`, 9-position grid |
+| `sections/tk-rich-text.liquid` | **NEW** | Brief §5: Rich text/content intro | Alignment, content width (narrow 560px, normal 720px, wide 960px), colour scheme | Standalone tk version with eyebrow, heading, text, caption, button blocks |
 | `sections/tk-featured-collection.liquid` | **NEW** | Brief §5: Featured collection | Collection picker, product count, columns, mobile slider | Uses `tk-product-grid` + `tk-product-card` |
 | `sections/tk-featured-products.liquid` | **NEW** | Brief §5: Featured products | Product list picker, columns, layout | Uses same grid/card system |
-| `sections/tk-image-with-text.liquid` | **NEW** | Brief §5: Image with text, reversible | Image width, reverse toggle, mobile order | Dawn has `image-with-text.liquid` — tk version for custom control |
-| `sections/tk-multicolumn.liquid` | **NEW** | Brief §5: Multicolumn benefits/trust | Columns desktop/mobile, card style, icon or image per block | Dawn has `multicolumn.liquid` — new version for icon support + tk styling |
-| `sections/tk-logo-strip.liquid` | **NEW** | Brief §5: Logo/trust-mark strip | Grayscale toggle, marquee option, logos per row | New section — Dawn has no equivalent |
+| `sections/tk-image-with-text.liquid` | **NEW** | Brief §5: Image with text, reversible | Image ratio/width, reverse toggle, mobile order, borders, checklist | Default scheme-2 white surface, 1px top/bottom border, 5:4 ratio, checklist items |
+| `sections/tk-multicolumn.liquid` | **NEW** | Brief §5: Multicolumn benefits/trust | Columns desktop/mobile, card style, icon position, mobile horizontal scroll | Trust bar preset: 4 columns, 40px icon circle (#ECEFFA / accent), 12px radius, 1px border |
+| `sections/tk-logo-strip.liquid` | **NEW** | Brief §5: Logo/trust-mark strip | Grayscale toggle, marquee or grid option, logos per row, logo max height | Accessible marquee with hover/focus pause, disabled under prefers-reduced-motion |
 | `sections/tk-testimonials.liquid` | **NEW** | Brief §5: Testimonials/reviews | Grid or slider layout, star rating block | New section — Dawn has no equivalent |
 | `sections/tk-faq.liquid` | **NEW** | Brief §5: FAQ accordion | Blocks or metaobject source, single/multi open, JSON-LD toggle | New section — Dawn has `collapsible-content` but no metaobject source |
 | `sections/tk-promo-split.liquid` | **NEW** | Brief §5: Promotional split banner | Split ratio, height, 2-panel blocks with per-panel colour scheme | New section — Dawn has no equivalent |

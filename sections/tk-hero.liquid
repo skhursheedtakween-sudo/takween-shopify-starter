@@ -1,0 +1,492 @@
+{%- comment -%}
+  sections/tk-hero.liquid
+  Takween Hero Section.
+  Supports contained/full-width, 9-position content placement, white content card toggle,
+  eager/fetchpriority loading on section.index == 1, and responsive desktop/mobile imagery.
+{%- endcomment -%}
+
+{%- liquid
+  assign is_first_section = false
+  if section.index == 1
+    assign is_first_section = true
+  endif
+
+  assign fetch_priority = 'auto'
+  assign loading_strategy = 'lazy'
+  if is_first_section
+    assign fetch_priority = 'high'
+    assign loading_strategy = 'eager'
+  endif
+
+  assign min_h_desktop = '560px'
+  case section.settings.height
+    when 'small'
+      assign min_h_desktop = '400px'
+    when 'medium'
+      assign min_h_desktop = '560px'
+    when 'large'
+      assign min_h_desktop = '720px'
+    when 'full'
+      assign min_h_desktop = '100vh'
+    when 'adapt'
+      if section.settings.image != blank
+        assign min_h_desktop = 'auto'
+      endif
+  endcase
+
+  assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0
+-%}
+
+<div class="tk-hero-wrapper{% if section.settings.layout == 'contained' %} tk-container tk-hero-wrapper--contained{% endif %}">
+  <div
+    class="tk-hero tk-hero--h-{{ section.settings.height }} tk-hero--align-{{ section.settings.text_alignment }} tk-hero--pos-{{ section.settings.content_position }}{% if section.settings.mobile_layout == 'below' %} tk-hero--mobile-below{% else %} tk-hero--mobile-overlay{% endif %} color-{{ section.settings.color_scheme }} gradient"
+    style="--tk-hero-min-height: {{ min_h_desktop }}; --tk-hero-overlay: rgba(0, 0, 0, {{ overlay_alpha }});"
+  >
+    <!-- Background Imagery -->
+    <div class="tk-hero__media">
+      {%- if section.settings.image != blank -%}
+        {%- if section.settings.mobile_image != blank -%}
+          <picture>
+            <source
+              media="(max-width: 749px)"
+              srcset="{{ section.settings.mobile_image | image_url: width: 750 }}"
+            >
+            {{
+              section.settings.image
+              | image_url: width: 2000
+              | image_tag:
+                widths: '750, 1100, 1500, 1780, 2000',
+                sizes: '100vw',
+                loading: loading_strategy,
+                fetchpriority: fetch_priority,
+                class: 'tk-hero__image',
+                alt: section.settings.image.alt | default: shop.name | escape
+            }}
+          </picture>
+        {%- else -%}
+          {{
+            section.settings.image
+            | image_url: width: 2000
+            | image_tag:
+              widths: '750, 1100, 1500, 1780, 2000',
+              sizes: '100vw',
+              loading: loading_strategy,
+              fetchpriority: fetch_priority,
+              class: 'tk-hero__image',
+              alt: section.settings.image.alt | default: shop.name | escape
+          }}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'tk-placeholder-svg tk-hero__image' }}
+      {%- endif -%}
+
+      <div class="tk-hero__overlay"></div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="tk-hero__content-container">
+      <div class="tk-hero__content-box{% if section.settings.show_content_box %} tk-hero__content-box--card{% endif %}">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'eyebrow' -%}
+              {%- if block.settings.eyebrow != blank -%}
+                <span class="tk-eyebrow" {{ block.shopify_attributes }}>
+                  {{ block.settings.eyebrow | escape }}
+                </span>
+              {%- endif -%}
+
+            {%- when 'heading' -%}
+              {%- if block.settings.heading != blank -%}
+                {%- assign h_tag = block.settings.heading_tag | default: 'h1' -%}
+                <{{ h_tag }}
+                  class="tk-hero__heading {% if block.settings.heading_size == 'large' %}tk-h1{% else %}tk-h2{% endif %}"
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.heading | escape }}
+                </{{ h_tag }}>
+              {%- endif -%}
+
+            {%- when 'text' -%}
+              {%- if block.settings.text != blank -%}
+                <div class="tk-hero__text tk-rte tk-text-muted" {{ block.shopify_attributes }}>
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
+
+            {%- when 'buttons' -%}
+              <div class="tk-hero__buttons tk-cluster" {{ block.shopify_attributes }}>
+                {%- if block.settings.button_1_label != blank -%}
+                  {% render 'tk-button',
+                    label: block.settings.button_1_label,
+                    url: block.settings.button_1_link,
+                    style: block.settings.button_1_style
+                  %}
+                {%- endif -%}
+                {%- if block.settings.button_2_label != blank -%}
+                  {% render 'tk-button',
+                    label: block.settings.button_2_label,
+                    url: block.settings.button_2_link,
+                    style: block.settings.button_2_style
+                  %}
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tk-hero-wrapper--contained {
+    padding-top: 24px;
+  }
+
+  .tk-hero {
+    position: relative;
+    width: 100%;
+    min-height: var(--tk-hero-min-height, 560px);
+    overflow: hidden;
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  .tk-hero-wrapper--contained .tk-hero {
+    border-radius: var(--tk-radius-card);
+  }
+
+  .tk-hero__media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .tk-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .tk-hero__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--tk-hero-overlay, rgba(0, 0, 0, 0));
+  }
+
+  .tk-hero__content-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: var(--tk-container);
+    margin: 0 auto;
+    padding: 48px var(--tk-gutter);
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  /* 9-Position Content Alignment */
+  .tk-hero--pos-top-left .tk-hero__content-container { align-items: flex-start; justify-content: flex-start; }
+  .tk-hero--pos-top-center .tk-hero__content-container { align-items: flex-start; justify-content: center; }
+  .tk-hero--pos-top-right .tk-hero__content-container { align-items: flex-start; justify-content: flex-end; }
+  .tk-hero--pos-middle-left .tk-hero__content-container { align-items: center; justify-content: flex-start; }
+  .tk-hero--pos-middle-center .tk-hero__content-container { align-items: center; justify-content: center; }
+  .tk-hero--pos-middle-right .tk-hero__content-container { align-items: center; justify-content: flex-end; }
+  .tk-hero--pos-bottom-left .tk-hero__content-container { align-items: flex-end; justify-content: flex-start; }
+  .tk-hero--pos-bottom-center .tk-hero__content-container { align-items: flex-end; justify-content: center; }
+  .tk-hero--pos-bottom-right .tk-hero__content-container { align-items: flex-end; justify-content: flex-end; }
+
+  /* Text alignments */
+  .tk-hero--align-left .tk-hero__content-box { text-align: left; }
+  .tk-hero--align-center .tk-hero__content-box { text-align: center; }
+  .tk-hero--align-center .tk-hero__buttons { justify-content: center; }
+  .tk-hero--align-right .tk-hero__content-box { text-align: right; }
+  .tk-hero--align-right .tk-hero__buttons { justify-content: flex-end; }
+
+  .tk-hero__content-box {
+    max-width: 560px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tk-hero__content-box--card {
+    background-color: var(--tk-color-surface);
+    color: var(--tk-color-ink);
+    border-radius: var(--tk-radius-card);
+    padding: 40px;
+    box-shadow: var(--tk-shadow-md);
+  }
+
+  .tk-hero__heading {
+    margin-top: 0;
+    margin-bottom: var(--tk-space-3);
+  }
+
+  .tk-hero__text {
+    font-size: 17px;
+    line-height: 1.6;
+    margin-bottom: var(--tk-space-5);
+  }
+
+  .tk-hero__buttons {
+    gap: 12px;
+  }
+
+  /* Mobile Layout */
+  @media screen and (max-width: 749px) {
+    .tk-hero--mobile-below {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .tk-hero--mobile-below .tk-hero__media {
+      position: relative;
+      height: 260px;
+    }
+
+    .tk-hero--mobile-below .tk-hero__content-container {
+      position: relative;
+      padding: var(--tk-space-5) var(--tk-gutter);
+      align-items: stretch !important;
+      justify-content: stretch !important;
+    }
+
+    .tk-hero--mobile-below .tk-hero__content-box--card {
+      padding: var(--tk-space-4);
+      box-shadow: none;
+      border: 1px solid var(--tk-color-border);
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "tag": "section",
+  "class": "section tk-hero-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "contained", "label": "Contained (1280px)" },
+        { "value": "full_width", "label": "Full width" }
+      ],
+      "default": "contained"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image (optional)"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "label": "Image overlay opacity",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Banner height",
+      "options": [
+        { "value": "small", "label": "Small (400px)" },
+        { "value": "medium", "label": "Medium (560px)" },
+        { "value": "large", "label": "Large (720px)" },
+        { "value": "full", "label": "Full screen (100vh)" },
+        { "value": "adapt", "label": "Adapt to image" }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content position",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "bottom-left"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_content_box",
+      "label": "Show content in card box",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "options": [
+        { "value": "below", "label": "Text below image" },
+        { "value": "overlay", "label": "Text over image" }
+      ],
+      "default": "below"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "eyebrow",
+      "name": "Eyebrow",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow text",
+          "default": "New Season Arrival"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "name": "Heading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Thoughtfully crafted organic apparel"
+        },
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Heading size",
+          "options": [
+            { "value": "regular", "label": "Regular (H2)" },
+            { "value": "large", "label": "Large (H1)" }
+          ],
+          "default": "large"
+        },
+        {
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Heading tag",
+          "options": [
+            { "value": "h1", "label": "H1" },
+            { "value": "h2", "label": "H2" }
+          ],
+          "default": "h1"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Discover sustainably sourced essentials made from certified organic cotton and pure natural fibres.</p>"
+        }
+      ]
+    },
+    {
+      "type": "buttons",
+      "name": "Buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_1_label",
+          "label": "Button 1 label",
+          "default": "Shop collection"
+        },
+        {
+          "type": "url",
+          "id": "button_1_link",
+          "label": "Button 1 link"
+        },
+        {
+          "type": "select",
+          "id": "button_1_style",
+          "label": "Button 1 style",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "primary"
+        },
+        {
+          "type": "text",
+          "id": "button_2_label",
+          "label": "Button 2 label",
+          "default": "Explore story"
+        },
+        {
+          "type": "url",
+          "id": "button_2_link",
+          "label": "Button 2 link"
+        },
+        {
+          "type": "select",
+          "id": "button_2_style",
+          "label": "Button 2 style",
+          "options": [
+            { "value": "primary", "label": "Primary" },
+            { "value": "secondary", "label": "Secondary" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "outline"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero banner",
+      "blocks": [
+        { "type": "eyebrow" },
+        { "type": "heading" },
+        { "type": "text" },
+        { "type": "buttons" }
+      ]
+    }
+  ]
+}
+{% endschema %}

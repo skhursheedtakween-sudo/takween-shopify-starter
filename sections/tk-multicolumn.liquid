@@ -1,0 +1,524 @@
+{%- comment -%}
+  sections/tk-multicolumn.liquid
+  Takween Multicolumn / Benefits / Trust Bar Section.
+  Default "trust bar": 4 columns desktop / horizontal scroll on mobile with scroll snap.
+  Card spec: white surface, 1px border #E3E1DC, 12px radius, 20px padding, icon in 40px circle (#ECEFFA bg, accent icon 20px).
+{%- endcomment -%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .tk-multicolumn-grid--{{ section.id }} {
+    --tk-mc-columns: {{ section.settings.columns_desktop }};
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="tk-container section-{{ section.id }}-padding">
+    {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
+      {% render 'tk-section-heading',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        subheading: section.settings.subheading,
+        alignment: section.settings.heading_alignment,
+        heading_tag: section.settings.heading_tag,
+        link_label: section.settings.link_label,
+        link_url: section.settings.link_url
+      %}
+    {%- endif -%}
+
+    <div class="tk-multicolumn tk-multicolumn--mobile-{{ section.settings.mobile_layout }}">
+      <div class="tk-multicolumn__grid tk-multicolumn-grid--{{ section.id }}">
+        {%- for block in section.blocks -%}
+          <div
+            class="tk-multicolumn__item tk-mc-card tk-mc-card--{{ section.settings.card_style }} tk-mc-card--icon-{{ section.settings.icon_position }} tk-mc-card--align-{{ section.settings.text_alignment }}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.icon != 'none' or block.settings.image != blank -%}
+              <div class="tk-mc-card__icon-wrap">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 80
+                    | image_tag:
+                      widths: '40, 80',
+                      loading: 'lazy',
+                      class: 'tk-mc-card__image',
+                      alt: block.settings.heading | default: '' | escape
+                  }}
+                {%- elsif block.settings.icon != 'none' -%}
+                  <div class="tk-mc-card__icon-circle">
+                    {% render 'tk-icon', icon: block.settings.icon, size: 20 %}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            <div class="tk-mc-card__content">
+              {%- if block.settings.heading != blank -%}
+                <h3 class="tk-mc-card__title">{{ block.settings.heading | escape }}</h3>
+              {%- endif -%}
+
+              {%- if block.settings.text != blank -%}
+                <div class="tk-mc-card__text tk-rte tk-text-muted">
+                  {{ block.settings.text }}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+                <div class="tk-mc-card__link">
+                  <a href="{{ block.settings.link_url }}" class="tk-btn tk-btn--link">
+                    <span>{{ block.settings.link_label | escape }}</span>
+                    {% render 'tk-icon', icon: 'chevron-right', size: 14 %}
+                  </a>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tk-multicolumn__grid {
+    display: grid;
+    gap: var(--tk-space-4);
+    grid-template-columns: 1fr;
+  }
+
+  @media screen and (min-width: 750px) {
+    .tk-multicolumn__grid {
+      grid-template-columns: repeat(var(--tk-mc-columns, 4), 1fr);
+    }
+  }
+
+  /* Mobile scroll layout */
+  @media screen and (max-width: 749px) {
+    .tk-multicolumn--mobile-scroll {
+      margin-inline: calc(var(--tk-space-4) * -1);
+      padding-inline: var(--tk-space-4);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .tk-multicolumn--mobile-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tk-multicolumn--mobile-scroll .tk-multicolumn__grid {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: var(--tk-space-3);
+    }
+
+    .tk-multicolumn--mobile-scroll .tk-mc-card {
+      flex: 0 0 75%;
+      min-width: 240px;
+      scroll-snap-align: start;
+    }
+
+    .tk-multicolumn--mobile-columns_2 .tk-multicolumn__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--tk-space-3);
+    }
+  }
+
+  /* Card Styles */
+  .tk-mc-card {
+    display: flex;
+    border-radius: var(--tk-radius-card);
+    transition: transform var(--tk-transition), box-shadow var(--tk-transition);
+  }
+
+  .tk-mc-card--bordered {
+    background-color: var(--tk-color-surface);
+    border: 1px solid var(--tk-color-border);
+    padding: var(--tk-space-4);
+  }
+
+  .tk-mc-card--filled {
+    background-color: var(--tk-color-tint);
+    border: 1px solid transparent;
+    padding: var(--tk-space-4);
+  }
+
+  .tk-mc-card--plain {
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
+
+  /* Icon Positions & Alignment */
+  .tk-mc-card--icon-left {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--tk-space-3);
+  }
+
+  .tk-mc-card--icon-top {
+    flex-direction: column;
+    gap: var(--tk-space-3);
+  }
+
+  .tk-mc-card--align-center.tk-mc-card--icon-top {
+    align-items: center;
+    text-align: center;
+  }
+
+  .tk-mc-card--align-left {
+    text-align: left;
+  }
+
+  .tk-mc-card__icon-wrap {
+    flex-shrink: 0;
+  }
+
+  .tk-mc-card__icon-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ECEFFA;
+    color: var(--tk-color-accent);
+  }
+
+  .tk-mc-card__image {
+    display: block;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  .tk-mc-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1 1 auto;
+  }
+
+  .tk-mc-card__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0;
+    color: var(--tk-color-ink);
+  }
+
+  .tk-mc-card__text {
+    font-size: 1.4rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .tk-mc-card__link {
+    margin-top: var(--tk-space-2);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Multicolumn",
+  "tag": "section",
+  "class": "tk-section-multicolumn",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "Heading alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "heading_tag",
+      "label": "Heading tag",
+      "options": [
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link destination"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "options": [
+        {
+          "value": "scroll",
+          "label": "Horizontal scroll"
+        },
+        {
+          "value": "stack",
+          "label": "Stacked"
+        },
+        {
+          "value": "columns_2",
+          "label": "2 columns"
+        }
+      ],
+      "default": "scroll"
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card style",
+      "options": [
+        {
+          "value": "bordered",
+          "label": "Bordered"
+        },
+        {
+          "value": "filled",
+          "label": "Filled"
+        },
+        {
+          "value": "plain",
+          "label": "Plain"
+        }
+      ],
+      "default": "bordered"
+    },
+    {
+      "type": "select",
+      "id": "icon_position",
+      "label": "Icon position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left of text"
+        },
+        {
+          "value": "top",
+          "label": "Top of text"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "return",
+              "label": "Return"
+            },
+            {
+              "value": "shield",
+              "label": "Shield"
+            },
+            {
+              "value": "mail",
+              "label": "Mail"
+            },
+            {
+              "value": "star",
+              "label": "Star"
+            },
+            {
+              "value": "check",
+              "label": "Check"
+            },
+            {
+              "value": "clock",
+              "label": "Clock"
+            },
+            {
+              "value": "map-pin",
+              "label": "Map Pin"
+            }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Feature Title"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description",
+          "default": "<p>Short description of this store benefit or service.</p>"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link destination"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multicolumn",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "icon": "truck",
+            "heading": "Free UK delivery",
+            "text": "<p>On all orders over £50. Carbon-neutral dispatch.</p>"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "icon": "return",
+            "heading": "30-day easy returns",
+            "text": "<p>Pre-printed return labels included in every box.</p>"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "icon": "shield",
+            "heading": "Secure checkout",
+            "text": "<p>256-bit encryption. Apple Pay, Google Pay & Klarna.</p>"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "icon": "mail",
+            "heading": "Dedicated support",
+            "text": "<p>Mon–Fri, 9am–5pm UK time. We reply within hours.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

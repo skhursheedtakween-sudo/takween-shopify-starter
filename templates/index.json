@@ -1,5 +1,302 @@
 {
   "sections": {
+    "tk_hero": {
+      "type": "tk-hero",
+      "blocks": {
+        "eyebrow": {
+          "type": "eyebrow",
+          "settings": {
+            "eyebrow": "Timeless Everyday Essentials"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Consciously crafted for quiet confidence.",
+            "heading_size": "large",
+            "heading_tag": "h1"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Discover our enduring wardrobe staples and homeware, crafted ethically in Portugal and England from certified natural fibers.</p>"
+          }
+        },
+        "buttons": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Shop collection",
+            "button_link_1": "shopify://collections/all",
+            "button_style_1": "primary",
+            "button_label_2": "Our story",
+            "button_link_2": "/pages/about",
+            "button_style_2": "outline"
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow",
+        "heading",
+        "text",
+        "buttons"
+      ],
+      "settings": {
+        "layout": "contained",
+        "overlay_opacity": 15,
+        "height": "medium",
+        "content_position": "bottom-left",
+        "text_alignment": "left",
+        "show_content_box": true,
+        "color_scheme": "scheme-1",
+        "mobile_layout": "below"
+      }
+    },
+    "tk_multicolumn": {
+      "type": "tk-multicolumn",
+      "blocks": {
+        "delivery": {
+          "type": "column",
+          "settings": {
+            "icon": "truck",
+            "heading": "Free UK delivery",
+            "text": "<p>On all orders over £50. Carbon-neutral dispatch.</p>",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "returns": {
+          "type": "column",
+          "settings": {
+            "icon": "return",
+            "heading": "30-day easy returns",
+            "text": "<p>Pre-printed return labels included in every box.</p>",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "security": {
+          "type": "column",
+          "settings": {
+            "icon": "shield",
+            "heading": "Secure checkout",
+            "text": "<p>256-bit encryption. Apple Pay, Google Pay & Klarna.</p>",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "support": {
+          "type": "column",
+          "settings": {
+            "icon": "mail",
+            "heading": "Dedicated support",
+            "text": "<p>Mon–Fri, 9am–5pm UK time. We reply within hours.</p>",
+            "link_label": "",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "delivery",
+        "returns",
+        "security",
+        "support"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "eyebrow": "",
+        "heading": "",
+        "subheading": "",
+        "heading_alignment": "left",
+        "heading_tag": "h2",
+        "link_label": "",
+        "link_url": "",
+        "columns_desktop": 4,
+        "mobile_layout": "scroll",
+        "card_style": "bordered",
+        "icon_position": "left",
+        "text_alignment": "left",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "tk_image_with_text": {
+      "type": "tk-image-with-text",
+      "blocks": {
+        "eyebrow": {
+          "type": "eyebrow",
+          "settings": {
+            "eyebrow": "Traceable Quality"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Built for comfort, designed to endure.",
+            "heading_tag": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every garment is cut from certified organic fibers, milled under fair working conditions, and constructed with reinforced stitching.</p>"
+          }
+        },
+        "feature_1": {
+          "type": "list_item",
+          "settings": {
+            "icon": "check",
+            "text": "100% GOTS certified organic cotton"
+          }
+        },
+        "feature_2": {
+          "type": "list_item",
+          "settings": {
+            "icon": "check",
+            "text": "Pre-washed for zero shrinkage"
+          }
+        },
+        "feature_3": {
+          "type": "list_item",
+          "settings": {
+            "icon": "check",
+            "text": "Reinforced double-needle seams"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Learn more about our standards",
+            "button_link": "/pages/about",
+            "button_style": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow",
+        "heading",
+        "text",
+        "feature_1",
+        "feature_2",
+        "feature_3",
+        "button"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2",
+        "image_ratio": "ratio_5_4",
+        "image_width": "50",
+        "reverse_layout": false,
+        "mobile_order": "image_first",
+        "vertical_alignment": "middle",
+        "show_borders": true,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "tk_rich_text": {
+      "type": "tk-rich-text",
+      "blocks": {
+        "eyebrow": {
+          "type": "eyebrow",
+          "settings": {
+            "eyebrow": "About Our Craft"
+          }
+        },
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Honest essentials crafted to last a lifetime.",
+            "heading_size": "regular",
+            "heading_tag": "h2"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We design timeless wardrobe staples and home goods using sustainably sourced materials, ethical European mills, and rigorous craftsmanship.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Discover Our Story",
+            "button_link": "/pages/about",
+            "button_style": "outline"
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow",
+        "heading",
+        "text",
+        "button"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "alignment": "center",
+        "content_width": "normal",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    },
+    "tk_logo_strip": {
+      "type": "tk-logo-strip",
+      "blocks": {
+        "logo_1": {
+          "type": "logo",
+          "settings": {
+            "link": "",
+            "alt_text": "Vogue"
+          }
+        },
+        "logo_2": {
+          "type": "logo",
+          "settings": {
+            "link": "",
+            "alt_text": "Monocle"
+          }
+        },
+        "logo_3": {
+          "type": "logo",
+          "settings": {
+            "link": "",
+            "alt_text": "GQ"
+          }
+        },
+        "logo_4": {
+          "type": "logo",
+          "settings": {
+            "link": "",
+            "alt_text": "Dwell"
+          }
+        },
+        "logo_5": {
+          "type": "logo",
+          "settings": {
+            "link": "",
+            "alt_text": "Kinfolk"
+          }
+        }
+      },
+      "block_order": [
+        "logo_1",
+        "logo_2",
+        "logo_3",
+        "logo_4",
+        "logo_5"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "label_text": "As featured in",
+        "layout": "grid",
+        "logos_per_row_desktop": 5,
+        "logos_per_row_mobile": 3,
+        "logo_max_height": 40,
+        "grayscale": true,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
     "image_banner": {
       "type": "image-banner",
       "blocks": {
@@ -69,6 +366,11 @@
     }
   },
   "order": [
+    "tk_hero",
+    "tk_multicolumn",
+    "tk_image_with_text",
+    "tk_rich_text",
+    "tk_logo_strip",
     "image_banner",
     "featured_collection"
   ]
