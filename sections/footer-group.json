@@ -17,8 +17,7 @@
         "brand": {
           "type": "brand",
           "settings": {
-            "heading": "Considered essentials for <em>wardrobe and home</em>.",
-            "logo_width": 140
+            "heading": "Considered essentials for <em>wardrobe and home</em>."
           }
         },
         "menu-shop": {
@@ -66,10 +65,10 @@
         "enable_language_selector": true,
         "payment_enable": true,
         "custom_copyright": "All rights reserved.",
-        "padding_top": 96,
-        "padding_bottom": 32,
         "show_large_wordmark": true,
-        "wordmark_text": "Takween"
+        "wordmark_text": "Takween",
+        "padding_top": 96,
+        "padding_bottom": 32
       }
     }
   },

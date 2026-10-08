@@ -138,6 +138,105 @@
         "padding_bottom": 0
       }
     },
+    "tk_promo": {
+      "type": "tk-promo-split",
+      "blocks": {
+        "tile_apparel": {
+          "type": "tile",
+          "settings": {
+            "collection": "apparel",
+            "title": "",
+            "meta": "5 essentials · from £24",
+            "link": ""
+          }
+        },
+        "tile_home": {
+          "type": "tile",
+          "settings": {
+            "collection": "home-living",
+            "title": "",
+            "meta": "4 pieces · from £22",
+            "link": ""
+          }
+        },
+        "tile_accessories": {
+          "type": "tile",
+          "settings": {
+            "collection": "accessories",
+            "title": "",
+            "meta": "3 pieces · from £16",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "tile_apparel",
+        "tile_home",
+        "tile_accessories"
+      ],
+      "settings": {
+        "layout": "bento",
+        "eyebrow": "Shop by category",
+        "heading": "Curated for <em>everyday</em>",
+        "text": "Three collections, one quiet palette. Mix, layer and live with them.",
+        "tile_height": 680,
+        "color_scheme": "scheme-1",
+        "padding_top": 112,
+        "padding_bottom": 56
+      }
+    },
+    "tk_new_arrivals": {
+      "type": "tk-featured-collection",
+      "blocks": {
+        "tab_all": {
+          "type": "tab",
+          "settings": {
+            "collection": "all",
+            "label": "All"
+          }
+        },
+        "tab_apparel": {
+          "type": "tab",
+          "settings": {
+            "collection": "apparel",
+            "label": "Apparel"
+          }
+        },
+        "tab_home": {
+          "type": "tab",
+          "settings": {
+            "collection": "home-living",
+            "label": "Home"
+          }
+        },
+        "tab_accessories": {
+          "type": "tab",
+          "settings": {
+            "collection": "accessories",
+            "label": "Accessories"
+          }
+        }
+      },
+      "block_order": [
+        "tab_all",
+        "tab_apparel",
+        "tab_home",
+        "tab_accessories"
+      ],
+      "settings": {
+        "eyebrow": "",
+        "heading": "New arrivals",
+        "collection": "all",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "mobile_slider": true,
+        "show_view_all": true,
+        "view_all_label": "View all",
+        "color_scheme": "scheme-1",
+        "padding_top": 56,
+        "padding_bottom": 112
+      }
+    },
     "tk_image_with_text": {
       "type": "tk-image-with-text",
       "blocks": {
@@ -203,8 +302,9 @@
         "button"
       ],
       "settings": {
-        "layout": "editorial",
         "color_scheme": "scheme-2",
+        "layout": "editorial",
+        "image": "shopify://shop_images/image-with-text.jpg",
         "image_ratio": "ratio_5_4",
         "image_width": "50",
         "reverse_layout": false,
@@ -213,6 +313,68 @@
         "show_borders": true,
         "padding_top": 72,
         "padding_bottom": 72
+      }
+    },
+    "tk_spotlight": {
+      "type": "tk-featured-products",
+      "settings": {
+        "layout": "spotlight",
+        "eyebrow": "Product spotlight",
+        "heading": "The Relaxed <em>Overshirt</em>",
+        "product": "sample-relaxed-overshirt",
+        "text": "<p>Brushed cotton twill, soft from the first wear. The layer you will reach for all season.</p>",
+        "product_list": [],
+        "columns_desktop": 4,
+        "color_scheme": "scheme-3",
+        "padding_top": 112,
+        "padding_bottom": 112
+      }
+    },
+    "tk_testimonials": {
+      "type": "tk-testimonials",
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>“The kind of everyday pieces you reach for <em>without thinking</em> — and keep for years.”</p>",
+            "author": "Sample Customer",
+            "location": "London",
+            "rating": 5
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>“Quietly beautiful, and the fabric gets <em>better</em> with every wash.”</p>",
+            "author": "Sample Customer",
+            "location": "Manchester",
+            "rating": 5
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>“Fast delivery, thoughtful packaging and a fit that is <em>just right</em>.”</p>",
+            "author": "Sample Customer",
+            "location": "Leeds",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {
+        "layout": "slider",
+        "eyebrow": "",
+        "heading": "",
+        "sample_label": "sample review",
+        "columns_desktop": 3,
+        "color_scheme": "scheme-5",
+        "padding_top": 120,
+        "padding_bottom": 120
       }
     },
     "tk_logo_strip": {
@@ -287,160 +449,6 @@
         "padding_bottom": 44
       }
     },
-    "tk_promo": {
-      "type": "tk-promo-split",
-      "blocks": {
-        "tile_apparel": {
-          "type": "tile",
-          "settings": {
-            "collection": "apparel",
-            "meta": "5 essentials · from £24"
-          }
-        },
-        "tile_home": {
-          "type": "tile",
-          "settings": {
-            "collection": "home-living",
-            "meta": "4 pieces · from £22"
-          }
-        },
-        "tile_accessories": {
-          "type": "tile",
-          "settings": {
-            "collection": "accessories",
-            "meta": "3 pieces · from £16"
-          }
-        }
-      },
-      "block_order": [
-        "tile_apparel",
-        "tile_home",
-        "tile_accessories"
-      ],
-      "settings": {
-        "layout": "bento",
-        "eyebrow": "Shop by category",
-        "heading": "Curated for <em>everyday</em>",
-        "text": "Three collections, one quiet palette. Mix, layer and live with them.",
-        "tile_height": 680,
-        "color_scheme": "scheme-1",
-        "padding_top": 112,
-        "padding_bottom": 56
-      }
-    },
-    "tk_new_arrivals": {
-      "type": "tk-featured-collection",
-      "blocks": {
-        "tab_all": {
-          "type": "tab",
-          "settings": {
-            "collection": "all",
-            "label": "All"
-          }
-        },
-        "tab_apparel": {
-          "type": "tab",
-          "settings": {
-            "collection": "apparel",
-            "label": "Apparel"
-          }
-        },
-        "tab_home": {
-          "type": "tab",
-          "settings": {
-            "collection": "home-living",
-            "label": "Home"
-          }
-        },
-        "tab_accessories": {
-          "type": "tab",
-          "settings": {
-            "collection": "accessories",
-            "label": "Accessories"
-          }
-        }
-      },
-      "block_order": [
-        "tab_all",
-        "tab_apparel",
-        "tab_home",
-        "tab_accessories"
-      ],
-      "settings": {
-        "eyebrow": "",
-        "heading": "New arrivals",
-        "collection": "all",
-        "products_to_show": 4,
-        "columns_desktop": 4,
-        "mobile_slider": true,
-        "show_view_all": true,
-        "view_all_label": "View all",
-        "color_scheme": "scheme-1",
-        "padding_top": 56,
-        "padding_bottom": 112
-      }
-    },
-    "tk_spotlight": {
-      "type": "tk-featured-products",
-      "settings": {
-        "layout": "spotlight",
-        "eyebrow": "Product spotlight",
-        "heading": "The Relaxed <em>Overshirt</em>",
-        "product": "sample-relaxed-overshirt",
-        "text": "<p>Brushed cotton twill, soft from the first wear. The layer you will reach for all season.</p>",
-        "columns_desktop": 4,
-        "color_scheme": "scheme-3",
-        "padding_top": 112,
-        "padding_bottom": 112
-      }
-    },
-    "tk_testimonials": {
-      "type": "tk-testimonials",
-      "blocks": {
-        "t1": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>“The kind of everyday pieces you reach for <em>without thinking</em> — and keep for years.”</p>",
-            "author": "Sample Customer",
-            "location": "London",
-            "rating": 5
-          }
-        },
-        "t2": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>“Quietly beautiful, and the fabric gets <em>better</em> with every wash.”</p>",
-            "author": "Sample Customer",
-            "location": "Manchester",
-            "rating": 5
-          }
-        },
-        "t3": {
-          "type": "testimonial",
-          "settings": {
-            "quote": "<p>“Fast delivery, thoughtful packaging and a fit that is <em>just right</em>.”</p>",
-            "author": "Sample Customer",
-            "location": "Leeds",
-            "rating": 5
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3"
-      ],
-      "settings": {
-        "layout": "slider",
-        "eyebrow": "",
-        "heading": "",
-        "sample_label": "sample review",
-        "columns_desktop": 3,
-        "color_scheme": "scheme-5",
-        "padding_top": 120,
-        "padding_bottom": 120
-      }
-    },
     "tk_faq": {
       "type": "tk-faq",
       "blocks": {
@@ -485,6 +493,7 @@
         "heading": "Questions, <em>answered.</em>",
         "text": "<p>Can’t find what you need? <a href=\"/pages/contact\" title=\"Contact\">Contact us</a></p>",
         "source": "blocks",
+        "faq_items": [],
         "open_first": true,
         "enable_schema": false,
         "color_scheme": "scheme-1",
