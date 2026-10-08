@@ -123,6 +123,15 @@
   color: rgb(var(--color-foreground));
 }
 
+.tk-h1 em,
+.tk-h2 em,
+.tk-h3 em,
+.tk-display em {
+  font-family: var(--font-heading-family);
+  font-style: italic;
+  font-weight: 300;
+}
+
 .tk-h2 {
   font-family: var(--font-heading-family);
   font-size: var(--tk-text-4xl);
@@ -151,12 +160,12 @@
   font-weight: var(--tk-eyebrow-weight);
   letter-spacing: var(--tk-eyebrow-tracking);
   text-transform: var(--tk-eyebrow-transform);
-  color: var(--tk-color-accent);
+  color: var(--tk-color-olive);
   margin-bottom: var(--tk-space-2);
 }
 
 .tk-card-title {
-  font-family: var(--font-heading-family);
+  font-family: var(--font-body-family);
   font-size: var(--tk-card-title-size);
   font-weight: var(--tk-card-title-weight);
   line-height: var(--tk-card-title-leading);
@@ -192,33 +201,34 @@
 .tk-rte a {
   color: rgb(var(--color-foreground));
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
   transition: color var(--tk-transition), text-decoration-color var(--tk-transition);
 }
 
 .tk-rte a:hover {
-  color: var(--tk-color-accent);
-  text-decoration-color: var(--tk-color-accent);
+  color: var(--tk-color-olive);
+  text-decoration-color: var(--tk-color-olive);
 }
 
 /* ==========================================================================
-   3. BUTTONS & INTERACTION STATES
+   3. BUTTONS & INTERACTION STATES (v2 Pill & Underline Link)
    ========================================================================== */
 
 .tk-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: var(--tk-button-height);
-  min-width: var(--tk-touch-target);
-  padding: 0 28px;
+  gap: 10px;
+  min-height: var(--tk-button-height, 54px);
+  min-width: var(--tk-touch-target, 44px);
+  padding: 0 30px;
   font-family: var(--font-body-family);
-  font-size: var(--tk-btn-text-size);
-  font-weight: 700;
+  font-size: var(--tk-btn-text-size, 15px);
+  font-weight: var(--tk-btn-weight, 550);
   text-align: center;
   text-decoration: none;
   text-transform: var(--tk-button-transform);
-  border-radius: var(--tk-radius-button);
+  border-radius: var(--tk-radius-button, 999px);
   border: 1.5px solid transparent;
   cursor: pointer;
   box-shadow: none;
@@ -230,20 +240,18 @@
   box-sizing: border-box;
 }
 
-/* Primary Button (Accent background) */
+/* Primary Button (Ink background #1C1A17, Linen text #F3EFE8) */
 .tk-btn--primary {
-  background-color: var(--tk-color-accent);
-  color: #FFFFFF;
-  border-color: var(--tk-color-accent);
+  background-color: var(--tk-color-ink);
+  color: var(--tk-color-linen);
+  border-color: var(--tk-color-ink);
 }
 
 .tk-btn--primary:hover,
 .tk-btn--primary.is-hover {
-  background-color: #1A43B8;
-  background-color: color-mix(in srgb, var(--tk-color-accent) 88%, black);
-  border-color: #1A43B8;
-  border-color: color-mix(in srgb, var(--tk-color-accent) 88%, black);
-  color: #FFFFFF;
+  background-color: #332F2A;
+  border-color: #332F2A;
+  color: var(--tk-color-linen);
   transform: translateY(-1px);
   box-shadow: var(--tk-shadow-sm);
 }
@@ -253,41 +261,64 @@
   box-shadow: none;
 }
 
-/* Secondary Button (Ink background) */
+/* Secondary Button (v2: Underlined text link with 6px offset or Linen pill on dark) */
 .tk-btn--secondary {
-  background-color: var(--tk-color-ink);
-  color: #FFFFFF;
-  border-color: var(--tk-color-ink);
+  background-color: transparent;
+  color: rgb(var(--color-foreground));
+  border-color: transparent;
+  padding: 0 4px;
+  min-height: auto;
+  border-radius: 0;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1.5px;
 }
 
 .tk-btn--secondary:hover,
 .tk-btn--secondary.is-hover {
-  background-color: #2A2D32;
-  border-color: #2A2D32;
-  color: #FFFFFF;
-  transform: translateY(-1px);
-  box-shadow: var(--tk-shadow-sm);
-}
-
-.tk-btn--secondary:active {
-  transform: translateY(0);
+  color: var(--tk-color-olive);
+  text-decoration-color: var(--tk-color-olive);
+  transform: none;
   box-shadow: none;
 }
 
-/* Outline Button */
+.tk-btn--secondary:active {
+  transform: none;
+}
+
+/* Secondary solid variant when placed on dark espresso sections */
+.color-scheme-3 .tk-btn--primary,
+.color-scheme-4 .tk-btn--secondary-solid,
+.tk-btn--light-pill {
+  background-color: var(--tk-color-linen);
+  color: var(--tk-color-ink);
+  border-color: var(--tk-color-linen);
+  border-radius: var(--tk-radius-button, 999px);
+  padding: 0 32px;
+  min-height: 54px;
+}
+
+.color-scheme-3 .tk-btn--primary:hover,
+.color-scheme-4 .tk-btn--secondary-solid:hover,
+.tk-btn--light-pill:hover {
+  background-color: #FFFFFF;
+  border-color: #FFFFFF;
+  color: var(--tk-color-ink);
+}
+
+/* Outline Button (1.5px border) */
 .tk-btn--outline {
   background-color: transparent;
-  color: var(--tk-color-ink);
-  border-color: var(--tk-color-ink);
+  color: rgb(var(--color-foreground));
+  border-color: var(--tk-color-input-border);
 }
 
 .tk-btn--outline:hover,
 .tk-btn--outline.is-hover {
-  background-color: var(--tk-color-ink);
+  background-color: transparent;
   border-color: var(--tk-color-ink);
-  color: #FFFFFF;
+  color: var(--tk-color-ink);
   transform: translateY(-1px);
-  box-shadow: var(--tk-shadow-sm);
 }
 
 .tk-btn--outline:active {
@@ -302,18 +333,18 @@
   padding: 0;
   background: none;
   border: none;
-  color: var(--tk-color-accent);
+  color: rgb(var(--color-foreground));
   text-decoration: underline;
-  text-underline-offset: 4px;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1.5px;
   transform: none !important;
   box-shadow: none !important;
 }
 
 .tk-btn--link:hover,
 .tk-btn--link.is-hover {
-  color: #1A43B8;
-  color: color-mix(in srgb, var(--tk-color-accent) 88%, black);
-  text-decoration-thickness: 2px;
+  color: var(--tk-color-olive);
+  text-decoration-color: var(--tk-color-olive);
 }
 
 /* Full Width */
@@ -325,7 +356,7 @@
 .tk-btn:disabled,
 .tk-btn[aria-disabled="true"],
 .tk-btn.is-disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
   transform: none !important;

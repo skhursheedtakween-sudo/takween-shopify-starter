@@ -17,7 +17,7 @@
 
     <!-- SECTION 1: COLOUR SCHEMES -->
     <section style="margin-bottom: var(--tk-space-8);">
-      <h2 class="tk-h2">1. Colour Schemes (Dawn OS 2.0 Integration)</h2>
+      <h2 class="tk-h2">1. Colour Schemes (v2 Premium Editorial)</h2>
       <p class="tk-text-muted" style="margin-bottom: var(--tk-space-4);">
         The 5 configured presets mapped to Dawn colour schemes:
       </p>
@@ -25,28 +25,28 @@
       <div class="tk-grid" style="--tk-grid-cols-desktop: 5; --tk-grid-cols-tablet: 3; --tk-grid-cols-mobile: 1;">
         <div class="color-scheme-1 gradient" style="padding: var(--tk-space-4); border-radius: var(--tk-radius-card); border: 1px solid var(--tk-color-border);">
           <strong>Scheme 1</strong><br>
-          <small>Light (Default)</small><br>
-          Bg: #F6F5F2<br>Text: #16181B
+          <small>Linen (Default)</small><br>
+          Bg: #F3EFE8<br>Text: #1C1A17
         </div>
         <div class="color-scheme-2 gradient" style="padding: var(--tk-space-4); border-radius: var(--tk-radius-card); border: 1px solid var(--tk-color-border);">
           <strong>Scheme 2</strong><br>
-          <small>White Surface</small><br>
-          Bg: #FFFFFF<br>Text: #16181B
+          <small>Paper (Surface)</small><br>
+          Bg: #FBF9F5<br>Text: #1C1A17
         </div>
         <div class="color-scheme-3 gradient" style="padding: var(--tk-space-4); border-radius: var(--tk-radius-card); border: 1px solid var(--tk-color-border);">
           <strong>Scheme 3</strong><br>
-          <small>Dark</small><br>
-          Bg: #16181B<br>Text: #F6F5F2
+          <small>Espresso (Dark)</small><br>
+          Bg: #1C1A17<br>Text: #EDE6DA
         </div>
         <div class="color-scheme-4 gradient" style="padding: var(--tk-space-4); border-radius: var(--tk-radius-card); border: 1px solid var(--tk-color-border);">
           <strong>Scheme 4</strong><br>
-          <small>Accent</small><br>
-          Bg: #1F4FD8<br>Text: #FFFFFF
+          <small>Sand</small><br>
+          Bg: #E3DACB<br>Text: #1C1A17
         </div>
         <div class="color-scheme-5 gradient" style="padding: var(--tk-space-4); border-radius: var(--tk-radius-card); border: 1px solid var(--tk-color-border);">
           <strong>Scheme 5</strong><br>
-          <small>Tint</small><br>
-          Bg: #ECEAE5<br>Text: #16181B
+          <small>Stone</small><br>
+          Bg: #ECE6DC<br>Text: #1C1A17
         </div>
       </div>
     </section>
@@ -186,25 +186,24 @@
     </section>
 
     <!-- SECTION 6: TOKENS OVERVIEW -->
-    <!-- SECTION 6: TOKENS OVERVIEW -->
     <section style="margin-bottom: var(--tk-space-8);">
       <h2 class="tk-h2">6. Shape, Spacing & Container Tokens</h2>
       <div class="tk-card-box">
         <div class="tk-grid" style="--tk-grid-cols-desktop: 3; --tk-grid-cols-tablet: 2; --tk-grid-cols-mobile: 1;">
           <div>
-            <strong>Container max-width:</strong> {{ settings.tk_container_width | default: 1280 }}px<br>
-            <strong>Grid gap:</strong> {{ settings.tk_grid_gap | default: 24 }}px<br>
+            <strong>Container max-width:</strong> {{ settings.tk_container_width | default: 1360 }}px<br>
+            <strong>Grid gap:</strong> {{ settings.tk_grid_gap | default: 20 }}px<br>
             <strong>Spacing scale:</strong> {{ settings.tk_spacing_scale | default: 'default' }}
           </div>
           <div>
-            <strong>Button radius:</strong> {{ settings.tk_button_radius | default: 8 }}px<br>
-            <strong>Card radius:</strong> {{ settings.tk_card_radius | default: 12 }}px<br>
-            <strong>Input radius:</strong> {{ settings.tk_input_radius | default: 8 }}px
+            <strong>Button radius:</strong> {{ settings.tk_button_radius | default: 999 }}px (pill)<br>
+            <strong>Card/Media radius:</strong> {{ settings.tk_card_radius | default: 4 }}px<br>
+            <strong>Input radius:</strong> {{ settings.tk_input_radius | default: 4 }}px
           </div>
           <div>
-            <strong>Button height:</strong> 48px<br>
+            <strong>Primary button min-height:</strong> 54px<br>
             <strong>Touch target min:</strong> 44&times;44px<br>
-            <strong>Focus ring:</strong> 2px solid accent (offset 3px)
+            <strong>Focus ring:</strong> 2px solid ink (offset 3px)
           </div>
         </div>
       </div>

@@ -87,6 +87,19 @@
                   </div>
                 {%- endif -%}
 
+              {%- when 'numbered_item' -%}
+                {%- if block.settings.title != blank -%}
+                  <div class="tk-iwt__numbered-item" {{ block.shopify_attributes }}>
+                    <span class="tk-iwt__numbered-num">{{ block.settings.number | escape }}</span>
+                    <div class="tk-iwt__numbered-body">
+                      <span class="tk-iwt__numbered-title">{{ block.settings.title | escape }}</span>
+                      {%- if block.settings.text != blank -%}
+                        <span class="tk-iwt__numbered-desc">{{ block.settings.text | escape }}</span>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+
               {%- when 'button' -%}
                 {%- if block.settings.button_label != blank -%}
                   <div class="tk-iwt__button-wrap" {{ block.shopify_attributes }}>
@@ -179,8 +192,8 @@
   }
 
   .tk-iwt__text {
-    font-size: 1.7rem;
-    line-height: 1.6;
+    font-size: 17px;
+    line-height: 1.7;
     margin: 0;
   }
 
@@ -188,8 +201,8 @@
     display: flex;
     align-items: center;
     gap: var(--tk-space-2);
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 500;
     line-height: 1.4;
     color: var(--tk-color-ink);
   }
@@ -198,8 +211,44 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--tk-color-success);
+    color: var(--tk-color-olive);
     flex-shrink: 0;
+  }
+
+  /* Numbered Principle / Item (v2 Editorial Style) */
+  .tk-iwt__numbered-item {
+    display: flex;
+    gap: 24px;
+    padding: 18px 0;
+    border-top: 1px solid var(--tk-color-border, #DDD5C9);
+  }
+
+  .tk-iwt__numbered-num {
+    font-family: var(--font-heading-family);
+    font-style: italic;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--tk-color-faint, #8C8478);
+    width: 32px;
+    flex-shrink: 0;
+  }
+
+  .tk-iwt__numbered-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .tk-iwt__numbered-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--tk-color-ink);
+  }
+
+  .tk-iwt__numbered-desc {
+    font-size: 15px;
+    color: var(--tk-color-meta, #6B645B);
+    line-height: 1.55;
   }
 
   .tk-iwt__button-wrap {
@@ -483,6 +532,31 @@
       ]
     },
     {
+      "type": "numbered_item",
+      "name": "Numbered item",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number / Index",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Principle title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Short explanation of this standard or principle."
+        }
+      ]
+    },
+    {
       "type": "button",
       "name": "Button",
       "limit": 1,
@@ -561,6 +635,64 @@
         },
         {
           "type": "button"
+        }
+      ]
+    },
+    {
+      "name": "Editorial split",
+      "settings": {
+        "color_scheme": "scheme-2",
+        "show_borders": true
+      },
+      "blocks": [
+        {
+          "type": "eyebrow",
+          "settings": {
+            "eyebrow": "Our approach"
+          }
+        },
+        {
+          "type": "heading",
+          "settings": {
+            "heading": "Fewer, better things."
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>An image-with-text section with a reversible layout. Pair a large editorial image with a short, confident story.</p>"
+          }
+        },
+        {
+          "type": "numbered_item",
+          "settings": {
+            "number": "01",
+            "title": "Natural fibres first",
+            "text": "Organic cotton, pure wool, flax linen. Renewable and breathable."
+          }
+        },
+        {
+          "type": "numbered_item",
+          "settings": {
+            "number": "02",
+            "title": "Fair maker partnerships",
+            "text": "Family mills in Portugal and England audited for fair conditions."
+          }
+        },
+        {
+          "type": "numbered_item",
+          "settings": {
+            "number": "03",
+            "title": "Wear tests & longevity",
+            "text": "Sample garments tested over 50 wash cycles before release."
+          }
+        },
+        {
+          "type": "button",
+          "settings": {
+            "button_label": "Read our story",
+            "button_style": "secondary"
+          }
         }
       ]
     }

@@ -10,10 +10,11 @@
 
 {%- style -%}
   .tk-footer {
-    background-color: var(--tk-color-ink);
-    color: #C9CCD1;
-    padding-top: {{ section.settings.padding_top | default: 64 }}px;
+    background-color: var(--tk-color-espresso, #1C1A17);
+    color: var(--tk-color-espresso-body, #C9C0B3);
+    padding-top: {{ section.settings.padding_top | default: 96 }}px;
     padding-bottom: {{ section.settings.padding_bottom | default: 32 }}px;
+    overflow: hidden;
   }
 
   .tk-footer .tk-container {
@@ -22,17 +23,33 @@
 
   .tk-footer__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 48px;
     margin-bottom: var(--tk-space-7);
   }
 
-  .tk-footer__col-heading {
+  .tk-footer__block--brand,
+  .tk-footer__block--intro {
+    grid-column: span 2;
+    min-width: 0;
+  }
+
+  .tk-footer__intro-text {
+    margin: 0;
+    max-width: 380px;
     font-family: var(--font-heading-family);
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    color: #FFFFFF;
+    font-size: 24px;
+    line-height: 1.35;
+    font-weight: 300;
+    color: var(--tk-color-espresso-text, #EDE6DA);
+  }
+
+  .tk-footer__col-heading {
+    font-family: var(--font-body-family);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: var(--tk-color-espresso-text, #EDE6DA);
     margin-top: 0;
     margin-bottom: var(--tk-space-3);
     text-transform: uppercase;
@@ -48,16 +65,17 @@
   }
 
   .tk-footer__link {
-    color: #C9CCD1;
-    font-size: 14px;
+    color: var(--tk-color-espresso-body, #C9C0B3);
+    font-size: 15px;
     text-decoration: none;
     transition: color var(--tk-transition), text-decoration-color var(--tk-transition);
   }
 
-  .tk-footer__link:hover {
-    color: #FFFFFF;
+  .tk-footer__link:hover,
+  .tk-footer__link:focus-visible {
+    color: var(--tk-color-espresso-text, #EDE6DA);
     text-decoration: underline;
-    text-underline-offset: 3px;
+    text-underline-offset: 4px;
   }
 
   .tk-footer__business-item {
@@ -65,28 +83,45 @@
     align-items: flex-start;
     gap: 10px;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.6;
     margin-bottom: 10px;
+    color: var(--tk-color-espresso-body, #C9C0B3);
   }
 
   .tk-footer__business-item a {
-    color: #C9CCD1;
+    color: var(--tk-color-espresso-body, #C9C0B3);
     text-decoration: none;
   }
 
   .tk-footer__business-item a:hover {
-    color: #FFFFFF;
+    color: var(--tk-color-espresso-text, #EDE6DA);
     text-decoration: underline;
+  }
+
+  /* Oversized editorial wordmark */
+  .tk-footer__wordmark {
+    margin-top: 80px;
+    font-family: var(--font-heading-family);
+    font-weight: 300;
+    font-size: clamp(96px, 19vw, 300px);
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    color: var(--tk-color-espresso-text, #EDE6DA);
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: none;
   }
 
   /* Bottom Bar */
   .tk-footer__bottom {
-    border-top: 1px solid #33363B;
-    padding-top: var(--tk-space-5);
+    border-top: 1px solid var(--tk-color-espresso-line, #36322D);
+    padding-top: 28px;
+    padding-bottom: 4px;
     display: flex;
     flex-direction: column;
     gap: var(--tk-space-3);
     font-size: 13px;
+    color: var(--tk-color-espresso-muted, #A89F92);
   }
 
   @media screen and (min-width: 750px) {
@@ -98,7 +133,7 @@
   }
 
   .tk-footer__copyright {
-    color: #8C9098;
+    color: var(--tk-color-espresso-body, #C9C0B3);
   }
 
   .tk-footer__bottom-right {
@@ -106,6 +141,16 @@
     align-items: center;
     gap: var(--tk-space-4);
     flex-wrap: wrap;
+  }
+
+  .tk-footer__bottom-right a {
+    color: var(--tk-color-espresso-body, #C9C0B3);
+    text-decoration: none;
+  }
+
+  .tk-footer__bottom-right a:hover {
+    color: var(--tk-color-espresso-text, #EDE6DA);
+    text-decoration: underline;
   }
 
   /* Mobile Accordion for Menu Blocks */
@@ -116,6 +161,11 @@
       gap: var(--tk-space-4);
     }
 
+    .tk-footer__block--brand,
+    .tk-footer__block--intro {
+      grid-column: span 1;
+    }
+
     .tk-footer__accordion summary {
       display: flex;
       justify-content: space-between;
@@ -123,7 +173,7 @@
       min-height: 48px;
       cursor: pointer;
       list-style: none;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid var(--tk-color-espresso-line, #36322D);
     }
 
     .tk-footer__accordion summary::-webkit-details-marker {
@@ -158,11 +208,14 @@
                       alt: shop.name
                   }}
                 </div>
-              {%- else -%}
+              {%- endif -%}
+              {%- if block.settings.heading != blank -%}
+                <p class="tk-footer__intro-text">{{ block.settings.heading }}</p>
+              {%- elsif block.settings.logo == blank -%}
                 <h3 class="tk-footer__col-heading">{{ shop.name }}</h3>
               {%- endif -%}
               {%- if block.settings.text != blank -%}
-                <div class="tk-rte" style="color: #C9CCD1; font-size: 14px;">
+                <div class="tk-rte" style="color: var(--tk-color-espresso-body, #C9C0B3); font-size: 14px; margin-top: 10px; line-height: 1.6;">
                   {{ block.settings.text }}
                 </div>
               {%- endif -%}
@@ -300,6 +353,12 @@
       {%- endfor -%}
     </div>
 
+    {%- if section.settings.show_large_wordmark -%}
+      <div class="tk-footer__wordmark" aria-hidden="true">
+        {{ section.settings.wordmark_text | default: shop.name | escape }}
+      </div>
+    {%- endif -%}
+
     <!-- Bottom Bar -->
     <div class="tk-footer__bottom">
       <div class="tk-footer__copyright">
@@ -404,17 +463,33 @@
     },
     {
       "type": "header",
+      "content": "Large Wordmark"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_large_wordmark",
+      "label": "Show large wordmark",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "wordmark_text",
+      "label": "Wordmark text (defaults to store name)",
+      "default": "Takween"
+    },
+    {
+      "type": "header",
       "content": "t:sections.all.padding.section_padding_heading"
     },
     {
       "type": "range",
       "id": "padding_top",
       "min": 32,
-      "max": 100,
+      "max": 140,
       "step": 4,
       "unit": "px",
       "label": "t:sections.all.padding.padding_top",
-      "default": 64
+      "default": 96
     },
     {
       "type": "range",
@@ -436,6 +511,12 @@
           "type": "image_picker",
           "id": "logo",
           "label": "Logo image"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Intro heading (Fraunces)",
+          "default": "Considered essentials for wardrobe and home."
         },
         {
           "type": "richtext",

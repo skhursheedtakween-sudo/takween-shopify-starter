@@ -129,6 +129,38 @@
     {%- else -%}
       {{ 'product-apparel-1' | placeholder_svg_tag: 'tk-placeholder-svg' }}
     {%- endif -%}
+
+    <!-- QUICK ADD (Hover pill on desktop, touch button on mobile) -->
+    {%- if settings.tk_card_show_quick_add and card_product.available -%}
+      <div class="tk-product-card__quick-add no-js-hidden">
+        {%- assign quick_add_form_id = 'tk-quick-add-' | append: section_id | append: '-' | append: card_product.id -%}
+        {%- if card_product.variants.size > 1 -%}
+          <a
+            href="{{ card_product.url }}"
+            class="tk-product-card__quick-add-btn"
+            aria-label="{{ 'products.product.choose_options' | t }}: {{ card_product.title | escape }}"
+          >
+            <span class="tk-product-card__quick-add-text">{{ 'products.product.choose_options' | t }}</span>
+            <span class="tk-product-card__quick-add-icon" aria-hidden="true">+</span>
+          </a>
+        {%- else -%}
+          <product-form data-section-id="{{ section_id }}">
+            {%- form 'product', card_product, id: quick_add_form_id -%}
+              <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+              <button
+                type="submit"
+                name="add"
+                class="tk-product-card__quick-add-btn"
+                aria-label="{{ 'products.product.add_to_cart' | t }}: {{ card_product.title | escape }}"
+              >
+                <span class="tk-product-card__quick-add-text">{{ 'products.product.add_to_cart' | t }}</span>
+                <span class="tk-product-card__quick-add-icon" aria-hidden="true">+</span>
+              </button>
+            {%- endform -%}
+          </product-form>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
   </div>
 
   <!-- CONTENT -->
@@ -139,50 +171,21 @@
       </div>
     {%- endif -%}
 
-    <{{ tag }} class="tk-product-card__title">
-      <a href="{{ card_product.url }}" class="tk-product-card__link">
-        {{ card_product.title | escape }}
-      </a>
-    </{{ tag }}>
+    <div class="tk-product-card__header-row">
+      <{{ tag }} class="tk-product-card__title">
+        <a href="{{ card_product.url }}" class="tk-product-card__link">
+          {{ card_product.title | escape }}
+        </a>
+      </{{ tag }}>
 
-    <div class="tk-product-card__price-row">
-      {% render 'tk-price', product: card_product %}
+      <div class="tk-product-card__price-row">
+        {% render 'tk-price', product: card_product %}
+      </div>
     </div>
 
     {%- if settings.tk_card_show_swatches -%}
       <div class="tk-product-card__swatches">
         {% render 'tk-swatch', product: card_product, max_swatches: 5 %}
-      </div>
-    {%- endif -%}
-
-    {%- if settings.tk_card_show_quick_add and card_product.available -%}
-      <div class="tk-product-card__quick-add no-js-hidden">
-        {%- assign quick_add_form_id = 'tk-quick-add-' | append: section_id | append: '-' | append: card_product.id -%}
-        {%- if card_product.variants.size > 1 -%}
-          <button
-            type="button"
-            class="tk-btn tk-btn--outline tk-btn--full"
-            style="min-height: 40px; padding: 0 16px; font-size: 13px;"
-            aria-haspopup="dialog"
-            data-product-url="{{ card_product.url }}"
-          >
-            {{ 'products.product.choose_options' | t }}
-          </button>
-        {%- else -%}
-          <product-form data-section-id="{{ section_id }}">
-            {%- form 'product', card_product, id: quick_add_form_id -%}
-              <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
-              <button
-                type="submit"
-                name="add"
-                class="tk-btn tk-btn--outline tk-btn--full"
-                style="min-height: 40px; padding: 0 16px; font-size: 13px;"
-              >
-                {{ 'products.product.add_to_cart' | t }}
-              </button>
-            {%- endform -%}
-          </product-form>
-        {%- endif -%}
       </div>
     {%- endif -%}
   </div>

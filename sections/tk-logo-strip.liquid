@@ -28,14 +28,49 @@
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
   <div class="tk-container section-{{ section.id }}-padding">
-    <div class="tk-logo-strip tk-logo-strip--{{ section.id }}">
+    <div class="tk-logo-strip tk-logo-strip--{{ section.id }}{% if section.settings.layout == 'inline_row' %} tk-logo-strip--inline-row{% endif %}">
       {%- if section.settings.label_text != blank -%}
         <div class="tk-logo-strip__label">
           {{ section.settings.label_text | escape }}
         </div>
       {%- endif -%}
 
-      {%- if section.settings.layout == 'marquee' -%}
+      {%- if section.settings.layout == 'inline_row' -%}
+        <!-- Inline Row Layout (Editorial single-line / wrap row with label left, logos right) -->
+        <div class="tk-logo-strip__inline-row{% if section.settings.grayscale %} tk-logo-strip--grayscale{% endif %}">
+          {%- for block in section.blocks -%}
+            <div class="tk-logo-strip__item" {{ block.shopify_attributes }}>
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}" class="tk-logo-strip__link" target="_blank" rel="noopener noreferrer">
+              {%- endif -%}
+
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: height: 160
+                  | image_tag:
+                    height: section.settings.logo_max_height,
+                    loading: 'lazy',
+                    class: 'tk-logo-strip__image',
+                    alt: block.settings.alt_text | default: block.settings.image.alt | default: 'Logo' | escape
+                }}
+              {%- elsif block.settings.alt_text != blank -%}
+                <span class="tk-logo-strip__text-logo">
+                  {{ block.settings.alt_text | escape }}
+                </span>
+              {%- else -%}
+                <div class="tk-logo-strip__placeholder">
+                  {{ 'logo' | placeholder_svg_tag: 'tk-placeholder-svg' }}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- elsif section.settings.layout == 'marquee' -%}
         <!-- Marquee Layout -->
         <div class="tk-logo-strip__marquee-track" tabindex="0" role="region" aria-label="{{ section.settings.label_text | default: 'Logos' | escape }}">
           <div class="tk-logo-strip__marquee-inner{% if section.settings.grayscale %} tk-logo-strip--grayscale{% endif %}">
@@ -56,6 +91,10 @@
                         class: 'tk-logo-strip__image',
                         alt: block.settings.alt_text | default: block.settings.image.alt | default: 'Logo' | escape
                     }}
+                  {%- elsif block.settings.alt_text != blank -%}
+                    <span class="tk-logo-strip__text-logo">
+                      {{ block.settings.alt_text | escape }}
+                    </span>
                   {%- else -%}
                     <div class="tk-logo-strip__placeholder">
                       {{ 'logo' | placeholder_svg_tag: 'tk-placeholder-svg' }}
@@ -87,6 +126,10 @@
                         class: 'tk-logo-strip__image',
                         alt: ''
                     }}
+                  {%- elsif block.settings.alt_text != blank -%}
+                    <span class="tk-logo-strip__text-logo">
+                      {{ block.settings.alt_text | escape }}
+                    </span>
                   {%- else -%}
                     <div class="tk-logo-strip__placeholder">
                       {{ 'logo' | placeholder_svg_tag: 'tk-placeholder-svg' }}
@@ -120,6 +163,10 @@
                     class: 'tk-logo-strip__image',
                     alt: block.settings.alt_text | default: block.settings.image.alt | default: 'Logo' | escape
                 }}
+              {%- elsif block.settings.alt_text != blank -%}
+                <span class="tk-logo-strip__text-logo">
+                  {{ block.settings.alt_text | escape }}
+                </span>
               {%- else -%}
                 <div class="tk-logo-strip__placeholder">
                   {{ 'logo' | placeholder_svg_tag: 'tk-placeholder-svg' }}
@@ -141,17 +188,48 @@
   .tk-logo-strip {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: var(--tk-space-4);
   }
 
+  .tk-logo-strip--inline-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
   .tk-logo-strip__label {
-    font-size: 1.3rem;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--tk-color-muted);
-    text-align: center;
+    letter-spacing: 0.16em;
+    color: var(--tk-color-meta, #6B645B);
+  }
+
+  /* Inline Row Layout (Section 10 Mockup) */
+  .tk-logo-strip__inline-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex: 1 1 auto;
+  }
+
+  .tk-logo-strip__text-logo {
+    font-family: var(--font-heading-family);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--tk-color-faint, #8C8478);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    transition: color var(--tk-transition);
+  }
+
+  .tk-logo-strip__link:hover .tk-logo-strip__text-logo,
+  .tk-logo-strip__link:focus-visible .tk-logo-strip__text-logo {
+    color: rgb(var(--color-foreground));
   }
 
   /* Grid Layout */
@@ -175,14 +253,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: var(--tk-logo-height, 40px);
+    min-height: var(--tk-logo-height, 40px);
   }
 
   .tk-logo-strip__link {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    text-decoration: none;
     transition: opacity var(--tk-transition), filter var(--tk-transition);
   }
 
@@ -303,6 +381,10 @@
       "label": "Layout style",
       "options": [
         {
+          "value": "inline_row",
+          "label": "Inline row (Editorial)"
+        },
+        {
           "value": "grid",
           "label": "Grid"
         },
@@ -311,7 +393,7 @@
           "label": "Infinite marquee"
         }
       ],
-      "default": "grid"
+      "default": "inline_row"
     },
     {
       "type": "range",

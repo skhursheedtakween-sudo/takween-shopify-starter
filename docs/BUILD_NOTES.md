@@ -49,38 +49,55 @@
 
 ## 3. Design System (tokens & global settings)
 
-### Core Colours & Presets
-Configured in `config/settings_data.json` presets mapping directly to Dawn's 5 OS 2.0 colour schemes:
-- **scheme-1 (Light / Default):** Background `#F6F5F2`, Text `#16181B`, Button `#1F4FD8`, Button Label `#FFFFFF`, Secondary Button `#16181B`, Shadow `#16181B`
-- **scheme-2 (White surface):** Background `#FFFFFF`, Text `#16181B`, Button `#16181B`, Button Label `#FFFFFF`, Secondary Button `#16181B`
-- **scheme-3 (Dark):** Background `#16181B`, Text `#F6F5F2`, Button `#F6F5F2`, Button Label `#16181B`, Secondary Button `#F6F5F2`
-- **scheme-4 (Accent):** Background `#1F4FD8`, Text `#FFFFFF`, Button `#16181B`, Button Label `#FFFFFF`, Secondary Button `#FFFFFF`
-- **scheme-5 (Tint):** Background `#ECEAE5`, Text `#16181B`, Button `#1F4FD8`, Button Label `#FFFFFF`, Secondary Button `#16181B`
+### Core Colours & Presets (v2 Premium Editorial)
+Configured in `config/settings_data.json` presets mapping directly to Dawn's 5 OS 2.0 colour schemes according to `docs/design-reference/DESIGN_SPEC.md`:
+- **scheme-1 (Linen / Default):** Background `#F3EFE8`, Text `#1C1A17`, Button `#1C1A17`, Button Label `#F3EFE8`, Secondary Button `#1C1A17`, Shadow `#1C1A17`
+- **scheme-2 (Paper / Surface):** Background `#FBF9F5`, Text `#1C1A17`, Button `#1C1A17`, Button Label `#FBF9F5`, Secondary Button `#1C1A17`
+- **scheme-3 (Espresso / Dark):** Background `#1C1A17`, Text `#EDE6DA`, Button `#F3EFE8`, Button Label `#1C1A17`, Secondary Button `#EDE6DA`, Body text `#C9C0B3`, Line `#36322D`
+- **scheme-4 (Sand):** Background `#E3DACB`, Text `#1C1A17`, Button `#1C1A17`, Button Label `#E3DACB`, Secondary Button `#1C1A17`
+- **scheme-5 (Stone):** Background `#ECE6DC`, Text `#1C1A17`, Button `#1C1A17`, Button Label `#ECE6DC`, Secondary Button `#1C1A17`
 
-Status tokens (in `config/settings_schema.json` under *Takween — Status colours*):
-- `--tk-color-sale`: `#B42318` (Sale badge and discounted prices)
-- `--tk-color-success`: `#1F7A4D` (In stock indicator, checkmarks, success alerts)
-- `--tk-color-low-stock`: `#9A3412` (Low stock alert text and indicator)
+Editorial Palette & Feedback Tokens:
+- `--tk-color-linen`: `#F3EFE8` (Linen page background)
+- `--tk-color-paper`: `#FBF9F5` (Paper surface)
+- `--tk-color-espresso`: `#1C1A17` (Espresso dark background)
+- `--tk-color-sand`: `#E3DACB` (Warm Sand accent section)
+- `--tk-color-stone`: `#ECE6DC` (Stone tint section)
+- `--tk-color-olive`: `#5E6B47` (Olive editorial accent, eyebrows, details)
+- `--tk-color-tile`: `#E9E2D6` (Product card media tile background)
+- `--tk-color-muted`: `#4D473F` (Body text muted)
+- `--tk-color-meta`: `#6B645B` (Secondary metadata, captions)
+- `--tk-color-faint`: `#8C8478` (Strikethrough prices, editorial numbers)
+- `--tk-color-border`: `#DDD5C9` (Dividers, thin border lines)
+- `--tk-color-pill-border`: `#CFC6B8` (Form fields, pills, filter buttons)
+- `--tk-color-sale`: `#A3361F` (Sale badge and discounted prices)
+- `--tk-color-success`: `#3F5A2E` (In stock indicator, checkmarks)
+- `--tk-color-low-stock`: `#9A3412` (Low stock alert text)
 - `--tk-color-soldout`: `#3D4148` (Sold-out badge background)
 
-### Typography
-- Primary font: **Manrope** (`manrope_n4` body 400, `manrope_n8` heading 800) set as default in `settings_data.json`.
+### Typography (v2 Premium Editorial)
+- Primary heading/display font: **Fraunces** (variable, opsz, weights 300–350; emphasis words in *italic* weight 300 via `<em>`). Self-hosted SIL OFL WOFF2 in `assets/fraunces-latin.woff2` and `assets/fraunces-italic-latin.woff2`. Preloaded in `<head>`.
+- Primary body/UI font: **Instrument Sans** (weights 400, 500, 600). Self-hosted SIL OFL WOFF2 in `assets/instrument-sans-latin.woff2` and `assets/instrument-sans-italic-latin.woff2`.
+- Setting `settings.tk_typography_source`: Allows merchants in Theme Editor to toggle between `"theme"` (self-hosted Fraunces & Instrument Sans) and `"shopify"` (Shopify native font library picker).
 - **Root Font Size Rule (1rem = 10px):** Dawn sets `html { font-size: calc(var(--font-body-scale) * 62.5%) }`, which makes 1rem equal to 10px rather than 16px. All Takween fluid typography tokens use explicit `px` targets inside `clamp()` so computed sizes are never halved or skewed.
 - Fluid clamp typography tokens:
-  - `--tk-text-5xl` (H1): `clamp(34px, 27.5px + 1.73vw, 52px)` (52px desktop &rarr; 34px mobile 375px, 800 weight, 1.04 line-height, -0.03em tracking)
-  - `--tk-text-4xl` (H2): `clamp(26px, 22.4px + 0.96vw, 36px)` (36px desktop &rarr; 26px mobile 375px, 800 weight, 1.15 line-height, -0.02em tracking)
-  - `--tk-text-3xl` (H3): `clamp(18px, 16.5px + 0.38vw, 22px)` (22px desktop &rarr; 18px mobile 375px, 700 weight, 1.25 line-height)
-  - `--tk-card-title-size`: `clamp(15px, 14.6px + 0.1vw, 16px)` (16px desktop &rarr; 15px mobile, 700 weight, 1.35 line-height)
-  - `--tk-text-base` (Body): `16px` (never below 14px, 1.6 line-height)
-  - `--tk-text-sm`: `14px` (small text)
-  - `--tk-eyebrow-size`: `clamp(12px, 11.6px + 0.1vw, 13px)` (13px desktop &rarr; 12px mobile, 700 weight, uppercase, 0.1em tracking, accent colour)
-  - `--tk-btn-text-size`: `15px` (button text)
+  - Display / Hero display: `clamp(56px, 8vw, 116px)`, 0.92 line-height, -0.035em tracking (Fraunces weight 300)
+  - Section H2: `clamp(40px, 4.4vw, 60px)`, 1.0 line-height, -0.03em tracking (Fraunces weight 350)
+  - Product H1: `clamp(38px, 4vw, 52px)`, 1.0 line-height (Fraunces weight 350)
+  - Card title: `15px / 500` (Instrument Sans)
+  - Body: `16px–18px`, 1.6–1.7 line-height (Instrument Sans)
+  - Eyebrow: `12px / 600`, uppercase, 0.16em tracking, olive `#5E6B47`
+  - Option / Form labels: `13px / 600`, uppercase, 0.08em tracking
+  - Marquee: `22px` (Fraunces italic weight 300)
+  - Quotes: `30px–46px` (Fraunces weight 300)
+  - Button text: `15px / 550` (Instrument Sans)
   - Form inputs: strictly `16px` minimum to prevent iOS automatic Safari zooming on focus.
 
-### Shape, Spacing & Container Tokens
-- `--tk-container`: `1280px` (adjustable 1000–1600px via Theme Settings)
-- `--tk-gap`: `clamp(12px, 2.5vw, 24px)`
-- `--tk-gutter`: `clamp(16px, 4vw, 24px)`
+### Shape, Spacing & Container Tokens (v2 Premium Editorial)
+- `--tk-container`: `1360px` (adjustable 1000–1600px via Theme Settings)
+- `--tk-gutter`: `clamp(20px, 4vw, 40px)` (40px desktop / 20px mobile)
+- `--tk-gap`: `20px` (card grid gap 20px, row gap 44px)
+- Section vertical padding: `112px` desktop / `64px` mobile
 - Spacing scale multiplier: `--tk-spacing-mult` (compact = 0.67, default = 1.0, spacious = 1.33)
   - `--tk-space-1`: `calc(4px * mult)`
   - `--tk-space-2`: `calc(8px * mult)`
@@ -92,12 +109,14 @@ Status tokens (in `config/settings_schema.json` under *Takween — Status colour
   - `--tk-space-8`: `calc(64px * mult)`
   - `--tk-space-9`: `calc(96px * mult)`
 - Corner radii:
-  - `--tk-radius-button`: `8px`
-  - `--tk-radius-card`: `12px`
-  - `--tk-radius-input`: `8px`
-  - `--tk-radius-badge`: `999px` (pill)
-- Button min-height: `48px`, padding `0 28px`, touch target min `44×44px`.
-- Keyboard focus outline: `2px solid var(--tk-color-accent)` with `3px` offset.
+  - `--tk-radius-button`: `999px` (pill)
+  - `--tk-radius-card`: `4px`
+  - `--tk-radius-input`: `4px`
+  - `--tk-radius-badge`: `999px` (pill, 11px/600 uppercase ls 0.08em)
+- Buttons:
+  - Primary button: Ink background (`#1C1A17`), Linen text (`#F3EFE8`), min-height `54px`, padding `0 30px`, font `15px/550`, pill `999px`, optional arrow icon.
+  - Secondary button: Underlined text link with `6px` text-underline-offset.
+- Keyboard focus outline: `2px solid var(--tk-color-ink)` with `3px` offset.
 
 ### Colour Swatch Map Setting
 Configured in `config/settings_schema.json` under *Takween — Product cards* (`tk_color_swatch_map`). Provides fallback hex codes for storefront colour swatches whenever Shopify's native Category metafield swatch (`option_value.swatch`) is unpopulated:

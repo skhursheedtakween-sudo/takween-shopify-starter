@@ -1472,6 +1472,22 @@
     "settings": [
       {
         "type": "select",
+        "id": "tk_typography_source",
+        "label": "Typography source",
+        "options": [
+          {
+            "value": "theme",
+            "label": "Theme fonts (Fraunces + Instrument Sans)"
+          },
+          {
+            "value": "shopify",
+            "label": "Shopify font pickers"
+          }
+        ],
+        "default": "theme"
+      },
+      {
+        "type": "select",
         "id": "tk_spacing_scale",
         "label": "t:tk.settings.layout_group.spacing_scale.label",
         "options": [
@@ -1498,7 +1514,7 @@
         "step": 20,
         "unit": "px",
         "label": "t:tk.settings.layout_group.container_width.label",
-        "default": 1280
+        "default": 1360
       },
       {
         "type": "range",
@@ -1508,7 +1524,7 @@
         "step": 4,
         "unit": "px",
         "label": "t:tk.settings.layout_group.grid_gap.label",
-        "default": 24
+        "default": 20
       }
     ]
   },
@@ -1519,31 +1535,31 @@
         "type": "range",
         "id": "tk_button_radius",
         "min": 0,
-        "max": 32,
-        "step": 2,
+        "max": 999,
+        "step": 1,
         "unit": "px",
         "label": "t:tk.settings.shape_group.button_radius.label",
-        "default": 8
+        "default": 999
       },
       {
         "type": "range",
         "id": "tk_card_radius",
         "min": 0,
         "max": 32,
-        "step": 2,
+        "step": 1,
         "unit": "px",
         "label": "t:tk.settings.shape_group.card_radius.label",
-        "default": 12
+        "default": 4
       },
       {
         "type": "range",
         "id": "tk_input_radius",
         "min": 0,
         "max": 32,
-        "step": 2,
+        "step": 1,
         "unit": "px",
         "label": "t:tk.settings.shape_group.input_radius.label",
-        "default": 8
+        "default": 4
       },
       {
         "type": "select",
@@ -1587,14 +1603,14 @@
         "id": "tk_color_sale",
         "label": "t:tk.settings.status_group.color_sale.label",
         "info": "t:tk.settings.status_group.color_sale.info",
-        "default": "#B42318"
+        "default": "#A3361F"
       },
       {
         "type": "color",
         "id": "tk_color_success",
         "label": "t:tk.settings.status_group.color_success.label",
         "info": "t:tk.settings.status_group.color_success.info",
-        "default": "#1F7A4D"
+        "default": "#3F5A2E"
       },
       {
         "type": "color",
@@ -1608,7 +1624,7 @@
         "id": "tk_color_sold_out",
         "label": "t:tk.settings.status_group.color_sold_out.label",
         "info": "t:tk.settings.status_group.color_sold_out.info",
-        "default": "#3D4148"
+        "default": "#1C1A17"
       }
     ]
   },

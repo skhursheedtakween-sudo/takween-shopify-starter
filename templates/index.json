@@ -51,11 +51,12 @@
         "buttons"
       ],
       "settings": {
-        "layout": "contained",
+        "layout": "full_width",
+        "content_style": "gradient_scrim",
         "image": "shopify://shop_images/hero-desktop.jpg",
         "mobile_image": "shopify://shop_images/hero-mobile.jpg",
-        "overlay_opacity": 20,
-        "height": "medium",
+        "overlay_opacity": 0,
+        "height": "large",
         "content_position": "bottom-left",
         "text_alignment": "left",
         "show_content_box": true,
@@ -316,13 +317,13 @@
       "settings": {
         "color_scheme": "scheme-1",
         "label_text": "As featured in",
-        "layout": "marquee",
+        "layout": "inline_row",
         "logos_per_row_desktop": 6,
         "logos_per_row_mobile": 3,
-        "logo_max_height": 56,
+        "logo_max_height": 40,
         "grayscale": true,
         "padding_top": 44,
-        "padding_bottom": 48
+        "padding_bottom": 44
       }
     },
     "image_banner": {

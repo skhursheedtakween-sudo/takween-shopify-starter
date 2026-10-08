@@ -52,7 +52,7 @@
                 class="tk-rich-text__heading {% if block.settings.heading_size == 'large' %}tk-h1{% elsif block.settings.heading_size == 'small' %}tk-h3{% else %}tk-h2{% endif %}"
                 {{ block.shopify_attributes }}
               >
-                {{ block.settings.heading | escape }}
+                {{ block.settings.heading }}
               </{{ h_tag }}>
             {%- endif -%}
 
@@ -109,25 +109,24 @@
   }
 
   .tk-rich-text__eyebrow {
-    color: var(--tk-color-accent);
+    color: var(--tk-color-olive);
   }
 
   .tk-rich-text__heading {
     margin: 0;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
   }
 
   .tk-rich-text__body {
-    font-size: 1.7rem;
-    line-height: 1.6;
+    font-size: 17px;
+    line-height: 1.65;
     margin: 0;
   }
 
   .tk-rich-text__caption {
-    font-size: 1.4rem;
-    letter-spacing: 0.05em;
+    font-size: 12px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 600;
     margin: 0;

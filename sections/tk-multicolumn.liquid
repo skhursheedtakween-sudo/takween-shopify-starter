@@ -23,72 +23,102 @@
   }
 {%- endstyle -%}
 
-<div class="color-{{ section.settings.color_scheme }} gradient">
-  <div class="tk-container section-{{ section.id }}-padding">
-    {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
-      {% render 'tk-section-heading',
-        eyebrow: section.settings.eyebrow,
-        heading: section.settings.heading,
-        subheading: section.settings.subheading,
-        alignment: section.settings.heading_alignment,
-        heading_tag: section.settings.heading_tag,
-        link_label: section.settings.link_label,
-        link_url: section.settings.link_url
-      %}
-    {%- endif -%}
+<div class="color-{{ section.settings.color_scheme }} gradient{% if section.settings.layout == 'marquee' %} tk-multicolumn--marquee-wrapper{% endif %}">
+  {%- if section.settings.layout == 'marquee' -%}
+    <!-- Marquee Values Layout (v2 Approved Design) -->
+    <div class="tk-mc-marquee" tabindex="0" role="region" aria-label="{{ section.settings.heading | default: 'Values' | escape }}">
+      <div class="tk-mc-marquee__inner">
+        <div class="tk-mc-marquee__group">
+          {%- for block in section.blocks -%}
+            <span class="tk-mc-marquee__item" {{ block.shopify_attributes }}>
+              <span class="tk-mc-marquee__text">{{ block.settings.heading | escape }}</span>
+              <svg class="tk-mc-marquee__star" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+                <path d="M5 0L6.2 3.8 10 5 6.2 6.2 5 10 3.8 6.2 0 5 3.8 3.8Z" fill="currentColor"></path>
+              </svg>
+            </span>
+          {%- endfor -%}
+        </div>
 
-    <div class="tk-multicolumn tk-multicolumn--mobile-{{ section.settings.mobile_layout }}">
-      <div class="tk-multicolumn__grid tk-multicolumn-grid--{{ section.id }}">
-        {%- for block in section.blocks -%}
-          <div
-            class="tk-multicolumn__item tk-mc-card tk-mc-card--{{ section.settings.card_style }} tk-mc-card--icon-{{ section.settings.icon_position }} tk-mc-card--align-{{ section.settings.text_alignment }}"
-            {{ block.shopify_attributes }}
-          >
-            {%- if block.settings.icon != 'none' or block.settings.image != blank -%}
-              <div class="tk-mc-card__icon-wrap">
-                {%- if block.settings.image != blank -%}
-                  {{
-                    block.settings.image
-                    | image_url: width: 80
-                    | image_tag:
-                      widths: '40, 80',
-                      loading: 'lazy',
-                      class: 'tk-mc-card__image',
-                      alt: block.settings.heading | default: '' | escape
-                  }}
-                {%- elsif block.settings.icon != 'none' -%}
-                  <div class="tk-mc-card__icon-circle">
-                    {% render 'tk-icon', icon: block.settings.icon, size: 20 %}
+        <!-- Duplicate group for seamless infinite animation (screen-reader hidden) -->
+        <div class="tk-mc-marquee__group" aria-hidden="true">
+          {%- for block in section.blocks -%}
+            <span class="tk-mc-marquee__item">
+              <span class="tk-mc-marquee__text">{{ block.settings.heading | escape }}</span>
+              <svg class="tk-mc-marquee__star" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+                <path d="M5 0L6.2 3.8 10 5 6.2 6.2 5 10 3.8 6.2 0 5 3.8 3.8Z" fill="currentColor"></path>
+              </svg>
+            </span>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- else -%}
+    <div class="tk-container section-{{ section.id }}-padding">
+      {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
+        {% render 'tk-section-heading',
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          subheading: section.settings.subheading,
+          alignment: section.settings.heading_alignment,
+          heading_tag: section.settings.heading_tag,
+          link_label: section.settings.link_label,
+          link_url: section.settings.link_url
+        %}
+      {%- endif -%}
+
+      <div class="tk-multicolumn tk-multicolumn--mobile-{{ section.settings.mobile_layout }}">
+        <div class="tk-multicolumn__grid tk-multicolumn-grid--{{ section.id }}">
+          {%- for block in section.blocks -%}
+            <div
+              class="tk-multicolumn__item tk-mc-card tk-mc-card--{{ section.settings.card_style }} tk-mc-card--icon-{{ section.settings.icon_position }} tk-mc-card--align-{{ section.settings.text_alignment }}"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.icon != 'none' or block.settings.image != blank -%}
+                <div class="tk-mc-card__icon-wrap">
+                  {%- if block.settings.image != blank -%}
+                    {{
+                      block.settings.image
+                      | image_url: width: 80
+                      | image_tag:
+                        widths: '40, 80',
+                        loading: 'lazy',
+                        class: 'tk-mc-card__image',
+                        alt: block.settings.heading | default: '' | escape
+                    }}
+                  {%- elsif block.settings.icon != 'none' -%}
+                    <div class="tk-mc-card__icon-circle">
+                      {% render 'tk-icon', icon: block.settings.icon, size: 20 %}
+                    </div>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+              <div class="tk-mc-card__content">
+                {%- if block.settings.heading != blank -%}
+                  <h3 class="tk-mc-card__title">{{ block.settings.heading | escape }}</h3>
+                {%- endif -%}
+
+                {%- if block.settings.text != blank -%}
+                  <div class="tk-mc-card__text tk-rte tk-text-muted">
+                    {{ block.settings.text }}
+                  </div>
+                {%- endif -%}
+
+                {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+                  <div class="tk-mc-card__link">
+                    <a href="{{ block.settings.link_url }}" class="tk-btn tk-btn--link">
+                      <span>{{ block.settings.link_label | escape }}</span>
+                      {% render 'tk-icon', icon: 'chevron-right', size: 14 %}
+                    </a>
                   </div>
                 {%- endif -%}
               </div>
-            {%- endif -%}
-
-            <div class="tk-mc-card__content">
-              {%- if block.settings.heading != blank -%}
-                <h3 class="tk-mc-card__title">{{ block.settings.heading | escape }}</h3>
-              {%- endif -%}
-
-              {%- if block.settings.text != blank -%}
-                <div class="tk-mc-card__text tk-rte tk-text-muted">
-                  {{ block.settings.text }}
-                </div>
-              {%- endif -%}
-
-              {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
-                <div class="tk-mc-card__link">
-                  <a href="{{ block.settings.link_url }}" class="tk-btn tk-btn--link">
-                    <span>{{ block.settings.link_label | escape }}</span>
-                    {% render 'tk-icon', icon: 'chevron-right', size: 14 %}
-                  </a>
-                </div>
-              {%- endif -%}
             </div>
-          </div>
-        {%- endfor -%}
+          {%- endfor -%}
+        </div>
       </div>
     </div>
-  </div>
+  {%- endif -%}
 </div>
 
 <style>
@@ -229,6 +259,83 @@
   .tk-mc-card__link {
     margin-top: var(--tk-space-2);
   }
+
+  /* --- Marquee Values Styling (v2 Approved Spec) --- */
+  .tk-multicolumn--marquee-wrapper {
+    border-bottom: 1px solid var(--tk-color-border);
+    overflow: hidden;
+  }
+
+  .tk-mc-marquee {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    outline: none;
+    padding: 20px 0;
+  }
+
+  .tk-mc-marquee:focus-visible {
+    outline: 2px solid var(--tk-color-ink);
+    outline-offset: -2px;
+  }
+
+  .tk-mc-marquee__inner {
+    display: flex;
+    width: max-content;
+    animation: tkValuesMarquee 35s linear infinite;
+  }
+
+  .tk-mc-marquee:hover .tk-mc-marquee__inner,
+  .tk-mc-marquee:focus-within .tk-mc-marquee__inner {
+    animation-play-state: paused;
+  }
+
+  .tk-mc-marquee__group {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    padding-right: 48px;
+    flex-shrink: 0;
+  }
+
+  .tk-mc-marquee__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 48px;
+    white-space: nowrap;
+    font-family: var(--font-heading-family);
+    font-style: italic;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--tk-color-muted);
+  }
+
+  .tk-mc-marquee__star {
+    color: var(--tk-color-olive);
+    flex-shrink: 0;
+  }
+
+  @keyframes tkValuesMarquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tk-mc-marquee {
+      overflow-x: auto;
+    }
+    .tk-mc-marquee__inner {
+      animation: none !important;
+      width: auto;
+    }
+    .tk-mc-marquee__group[aria-hidden="true"] {
+      display: none;
+    }
+  }
 </style>
 
 {% schema %}
@@ -237,6 +344,16 @@
   "tag": "section",
   "class": "tk-section-multicolumn",
   "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "grid", "label": "Grid / Cards" },
+        { "value": "marquee", "label": "Values marquee (v2 Editorial)" }
+      ],
+      "default": "grid"
+    },
     {
       "type": "color_scheme",
       "id": "color_scheme",
@@ -515,6 +632,45 @@
             "icon": "mail",
             "heading": "Dedicated support",
             "text": "<p>Mon–Fri, 9am–5pm UK time. We reply within hours.</p>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Values marquee",
+      "settings": {
+        "layout": "marquee",
+        "color_scheme": "scheme-1"
+      },
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Certified natural fibres"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Honest transparent pricing"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Cut & sewn in Europe"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Enduring silhouettes"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Zero plastic packaging"
           }
         }
       ]

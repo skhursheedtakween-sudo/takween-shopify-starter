@@ -2,6 +2,7 @@
   snippets/tk-css-variables.liquid
   Renders Takween design tokens as CSS custom properties on :root.
   Loaded in layout/theme.liquid immediately following Dawn's base font/colour variables.
+  v2 "Premium Editorial" Approved Spec.
 
   NOTE ON ROOT FONT SIZE:
   Dawn sets `html { font-size: calc(var(--font-body-scale) * 62.5%) }`, which means
@@ -21,27 +22,27 @@
       assign spacing_multiplier = 1.0
   endcase
 
-  assign container_max_w = settings.tk_container_width | default: 1280
-  assign grid_gap_desktop = settings.tk_grid_gap | default: 24
-  assign button_radius = settings.tk_button_radius | default: 8
-  assign card_radius = settings.tk_card_radius | default: 12
-  assign input_radius = settings.tk_input_radius | default: 8
+  assign container_max_w = settings.tk_container_width | default: 1360
+  assign grid_gap_desktop = settings.tk_grid_gap | default: 20
+  assign button_radius = settings.tk_button_radius | default: 999
+  assign card_radius = settings.tk_card_radius | default: 4
+  assign input_radius = settings.tk_input_radius | default: 4
   assign button_style = settings.tk_button_style | default: 'solid'
   assign button_transform = settings.tk_button_text_transform | default: 'none'
 
-  assign color_sale = settings.tk_color_sale | default: '#B42318'
-  assign color_success = settings.tk_color_success | default: '#1F7A4D'
+  assign color_sale = settings.tk_color_sale | default: '#A3361F'
+  assign color_success = settings.tk_color_success | default: '#3F5A2E'
   assign color_low_stock = settings.tk_color_low_stock | default: '#9A3412'
-  assign color_sold_out = settings.tk_color_sold_out | default: '#3D4148'
+  assign color_sold_out = settings.tk_color_sold_out | default: '#1C1A17'
 -%}
 
 <style id="tk-css-tokens">
   :root {
-    /* --- Takween Layout & Spacing Tokens --- */
+    /* --- Takween Layout & Spacing Tokens (v2 Premium Editorial) --- */
     --tk-spacing-mult: {{ spacing_multiplier }};
     --tk-container: {{ container_max_w }}px;
-    --tk-gutter: clamp(16px, 4vw, 24px);
-    --tk-gap: clamp(12px, 2.5vw, {{ grid_gap_desktop }}px);
+    --tk-gutter: clamp(20px, 4vw, 40px);
+    --tk-gap: clamp(16px, 2.5vw, {{ grid_gap_desktop }}px);
 
     /* 4/8px base spacing scale scaled by multiplier */
     --tk-space-1: calc(4px * var(--tk-spacing-mult));
@@ -53,81 +54,111 @@
     --tk-space-7: calc(48px * var(--tk-spacing-mult));
     --tk-space-8: calc(64px * var(--tk-spacing-mult));
     --tk-space-9: calc(96px * var(--tk-spacing-mult));
+    --tk-space-10: calc(112px * var(--tk-spacing-mult));
 
-    /* Section padding scale: 72px desktop / 48px mobile at default (1.0) */
-    --tk-section-pt-default: clamp(48px, 6vw, calc(72px * var(--tk-spacing-mult)));
-    --tk-section-pb-default: clamp(48px, 6vw, calc(72px * var(--tk-spacing-mult)));
+    /* Section padding scale: 112px desktop / 64px mobile at default (1.0) */
+    --tk-section-pt-default: clamp(64px, 8vw, calc(112px * var(--tk-spacing-mult)));
+    --tk-section-pb-default: clamp(64px, 8vw, calc(112px * var(--tk-spacing-mult)));
 
-    /* --- Takween Fluid Typography Scale (Explicit px in clamp for 10px root safety) --- */
-    /* H1: 52px desktop -> 34px mobile 375px, weight 800, line-height 1.04, letter-spacing -0.03em */
-    --tk-text-5xl: clamp(34px, 27.5px + 1.73vw, 52px);
-    --tk-leading-5xl: 1.04;
+    /* --- Takween v2 Typography Scale (Fraunces Display + Instrument Sans UI) --- */
+    /* Hero Display: clamp(56px, 8vw, 116px), weight 350, line-height 0.92, letter-spacing -0.035em */
+    --tk-text-display: clamp(56px, 8vw, 116px);
+    --tk-leading-display: 0.92;
+    --tk-tracking-display: -0.035em;
+    --tk-weight-display: 350;
+
+    /* Section H1 / Product H1: 52px desktop -> 38px mobile 375px, weight 350, lh 1.0 */
+    --tk-text-5xl: clamp(38px, 32px + 1.8vw, 52px);
+    --tk-leading-5xl: 1.0;
     --tk-tracking-5xl: -0.03em;
-    --tk-weight-5xl: 800;
+    --tk-weight-5xl: 350;
 
-    /* H2: 36px desktop -> 26px mobile 375px, weight 800, letter-spacing -0.02em */
-    --tk-text-4xl: clamp(26px, 22.4px + 0.96vw, 36px);
-    --tk-leading-4xl: 1.15;
-    --tk-tracking-4xl: -0.02em;
-    --tk-weight-4xl: 800;
+    /* Section H2: clamp(40px, 4.4vw, 60px), weight 350, lh 1.0, ls -0.03em */
+    --tk-text-4xl: clamp(40px, 4.4vw, 60px);
+    --tk-leading-4xl: 1.0;
+    --tk-tracking-4xl: -0.03em;
+    --tk-weight-4xl: 350;
 
-    /* H3: 22px desktop -> 18px mobile 375px, weight 700 */
-    --tk-text-3xl: clamp(18px, 16.5px + 0.38vw, 22px);
+    /* H3: clamp(20px, 18px + 0.5vw, 24px), weight 400 */
+    --tk-text-3xl: clamp(20px, 18px + 0.5vw, 24px);
     --tk-leading-3xl: 1.25;
     --tk-tracking-3xl: -0.01em;
-    --tk-weight-3xl: 700;
+    --tk-weight-3xl: 400;
 
-    /* Card title: 16px desktop -> 15px mobile 375px, weight 700, line-height 1.35 */
-    --tk-card-title-size: clamp(15px, 14.6px + 0.1vw, 16px);
-    --tk-card-title-leading: 1.35;
-    --tk-card-title-weight: 700;
+    /* Marquee & quotes: Fraunces italic 300, 22px marquee */
+    --tk-text-marquee: 22px;
+    --tk-leading-marquee: 1.2;
 
-    /* Body: 16px desktop -> 16px mobile, line-height 1.6 (never below 14px) */
+    /* Card title: 15px Instrument Sans, weight 500, line-height 1.4 */
+    --tk-card-title-size: 15px;
+    --tk-card-title-leading: 1.4;
+    --tk-card-title-weight: 500;
+
+    /* Body: 16px - 18px, line-height 1.6 - 1.7 */
     --tk-text-base: 16px;
-    --tk-leading-base: 1.6;
+    --tk-text-lg: 18px;
+    --tk-leading-base: 1.65;
 
-    /* Small: 14px desktop -> 14px mobile */
+    /* Small & meta: 14px / 13px */
     --tk-text-sm: 14px;
-    --tk-text-xs: 13px;
-    --tk-leading-sm: 1.4;
+    --tk-text-xs: 12px;
+    --tk-leading-sm: 1.45;
 
-    /* Eyebrow: 13px desktop -> 12px mobile, weight 700, uppercase, letter-spacing 0.1em */
-    --tk-eyebrow-size: clamp(12px, 11.6px + 0.1vw, 13px);
-    --tk-eyebrow-weight: 700;
-    --tk-eyebrow-tracking: 0.1em;
+    /* Eyebrow: 12px Instrument Sans, weight 600, uppercase, ls 0.16em, olive #5E6B47 */
+    --tk-eyebrow-size: 12px;
+    --tk-eyebrow-weight: 600;
+    --tk-eyebrow-tracking: 0.16em;
     --tk-eyebrow-transform: uppercase;
 
-    /* Button text: 15px */
+    /* Button text: 15px, weight 500-600 */
     --tk-btn-text-size: 15px;
+    --tk-btn-weight: 550;
 
-    /* --- Takween Shape Tokens --- */
+    /* --- Takween v2 Shape Tokens --- */
     --tk-radius-button: {{ button_radius }}px;
     --tk-radius-card: {{ card_radius }}px;
     --tk-radius-input: {{ input_radius }}px;
     --tk-radius-badge: 999px;
+    --tk-radius-size-btn: 4px;
     --tk-button-style: {{ button_style }};
     --tk-button-transform: {{ button_transform }};
-    --tk-button-height: 48px;
+    --tk-button-height: 54px;
     --tk-touch-target: 44px;
 
-    /* --- Takween Status & Core Colours --- */
+    /* --- Takween v2 Color Palette Tokens --- */
+    --tk-color-linen: #F3EFE8;
+    --tk-color-paper: #FBF9F5;
+    --tk-color-espresso: #1C1A17;
+    --tk-color-ink: #1C1A17;
+    --tk-color-sand: #E3DACB;
+    --tk-color-stone: #ECE6DC;
+    --tk-color-olive: #5E6B47;
+    --tk-color-muted: #4D473F;
+    --tk-color-meta: #6B645B;
+    --tk-color-faint: #8C8478;
+    --tk-color-border: #DDD5C9;
+    --tk-color-input-border: #CFC6B8;
+    --tk-color-tile: #E9E2D6;
+    --tk-color-surface: #FBF9F5;
+    --tk-color-bg: #F3EFE8;
+    --tk-color-accent: #5E6B47;
+
+    /* Status colours */
     --tk-color-sale: {{ color_sale }};
     --tk-color-success: {{ color_success }};
     --tk-color-low-stock: {{ color_low_stock }};
     --tk-color-soldout: {{ color_sold_out }};
-    --tk-color-border: #E3E1DC;
-    --tk-color-input-border: #C9C6BF;
-    --tk-color-muted: #5A5F66;
-    --tk-color-accent: #1F4FD8;
-    --tk-color-ink: #16181B;
-    --tk-color-surface: #FFFFFF;
-    --tk-color-bg: #F6F5F2;
-    --tk-color-tint: #ECEAE5;
+
+    /* Espresso section specific text and border */
+    --tk-color-espresso-text: #EDE6DA;
+    --tk-color-espresso-muted: #C9C0B3;
+    --tk-color-espresso-faint: #A89F92;
+    --tk-color-espresso-line: #36322D;
 
     /* --- Takween Elevation & Transitions --- */
-    --tk-shadow-sm: 0 2px 4px rgba(22, 24, 27, 0.08);
-    --tk-shadow-md: 0 4px 12px rgba(22, 24, 27, 0.08), 0 2px 4px rgba(22, 24, 27, 0.04);
-    --tk-shadow-lg: 0 12px 28px rgba(22, 24, 27, 0.12), 0 4px 8px rgba(22, 24, 27, 0.06);
+    --tk-shadow-sm: 0 1px 3px rgba(28, 26, 23, 0.05);
+    --tk-shadow-md: 0 4px 16px rgba(28, 26, 23, 0.07);
+    --tk-shadow-lg: 0 12px 32px rgba(28, 26, 23, 0.09);
 
     --tk-transition-fast: 150ms cubic-bezier(0.2, 0, 0, 1);
     --tk-transition-base: 180ms ease;
@@ -145,8 +176,8 @@
     --tk-z-modal: 600;
     --tk-z-toast: 700;
 
-    /* --- Accessible Focus Outline --- */
-    --tk-focus-ring: 2px solid var(--tk-color-accent);
+    /* --- Accessible Focus Outline (2px ink, 3px offset) --- */
+    --tk-focus-ring: 2px solid #1C1A17;
     --tk-focus-offset: 3px;
   }
 </style>

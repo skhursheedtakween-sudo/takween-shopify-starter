@@ -18,14 +18,14 @@
     assign loading_strategy = 'eager'
   endif
 
-  assign min_h_desktop = '560px'
+  assign min_h_desktop = '820px'
   case section.settings.height
     when 'small'
-      assign min_h_desktop = '400px'
-    when 'medium'
       assign min_h_desktop = '560px'
-    when 'large'
+    when 'medium'
       assign min_h_desktop = '720px'
+    when 'large'
+      assign min_h_desktop = '820px'
     when 'full'
       assign min_h_desktop = '100vh'
     when 'adapt'
@@ -35,16 +35,18 @@
   endcase
 
   assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0
+  assign scrim_alpha = section.settings.scrim_opacity | default: 92 | divided_by: 100.0
   assign box_opacity_alpha = section.settings.content_box_opacity | default: 78 | divided_by: 100.0
   assign box_blur_px = section.settings.content_box_blur | default: 12
 -%}
 
 <div class="tk-hero-wrapper{% if section.settings.layout == 'contained' %} tk-container tk-hero-wrapper--contained{% endif %}">
   <div
-    class="tk-hero tk-hero--h-{{ section.settings.height }} tk-hero--align-{{ section.settings.text_alignment }} tk-hero--pos-{{ section.settings.content_position }}{% if section.settings.mobile_layout == 'below' %} tk-hero--mobile-below{% else %} tk-hero--mobile-overlay{% endif %} color-{{ section.settings.color_scheme }} gradient"
+    class="tk-hero tk-hero--h-{{ section.settings.height }} tk-hero--style-{{ section.settings.content_style }} tk-hero--align-{{ section.settings.text_alignment }} tk-hero--pos-{{ section.settings.content_position }}{% if section.settings.mobile_layout == 'below' %} tk-hero--mobile-below{% else %} tk-hero--mobile-overlay{% endif %} color-{{ section.settings.color_scheme }} gradient"
     style="
       --tk-hero-min-height: {{ min_h_desktop }};
       --tk-hero-overlay: rgba(0, 0, 0, {{ overlay_alpha }});
+      --tk-hero-scrim-alpha: {{ scrim_alpha }};
       --tk-hero-box-opacity: {{ box_opacity_alpha }};
       --tk-hero-box-blur: {{ box_blur_px }}px;
     "
@@ -87,17 +89,21 @@
         {{ 'lifestyle-1' | placeholder_svg_tag: 'tk-placeholder-svg tk-hero__image' }}
       {%- endif -%}
 
-      <div class="tk-hero__overlay"></div>
+      {%- if section.settings.content_style == 'gradient_scrim' -%}
+        <div class="tk-hero__scrim"></div>
+      {%- else -%}
+        <div class="tk-hero__overlay"></div>
+      {%- endif -%}
     </div>
 
     <!-- Content Area -->
     <div class="tk-hero__content-container">
-      <div class="tk-hero__content-box{% if section.settings.show_content_box %} tk-hero__content-box--card{% if section.settings.content_box_border %} tk-hero__content-box--border{% endif %}{% if section.settings.content_box_opacity < 60 %} tk-hero__content-box--subtle-shadow{% endif %}{% endif %}">
+      <div class="tk-hero__content-box{% if section.settings.content_style == 'frosted_box' and section.settings.show_content_box %} tk-hero__content-box--card{% if section.settings.content_box_border %} tk-hero__content-box--border{% endif %}{% if section.settings.content_box_opacity < 60 %} tk-hero__content-box--subtle-shadow{% endif %}{% endif %}">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'eyebrow' -%}
               {%- if block.settings.eyebrow != blank -%}
-                <span class="tk-eyebrow" {{ block.shopify_attributes }}>
+                <span class="tk-eyebrow tk-hero__eyebrow" {{ block.shopify_attributes }}>
                   {{ block.settings.eyebrow | escape }}
                 </span>
               {%- endif -%}
@@ -106,10 +112,10 @@
               {%- if block.settings.heading != blank -%}
                 {%- assign h_tag = block.settings.heading_tag | default: 'h1' -%}
                 <{{ h_tag }}
-                  class="tk-hero__heading {% if block.settings.heading_size == 'large' %}tk-h1{% else %}tk-h2{% endif %}"
+                  class="tk-hero__heading {% if block.settings.heading_size == 'display' %}tk-hero__heading--display{% elsif block.settings.heading_size == 'large' %}tk-h1{% else %}tk-h2{% endif %}"
                   {{ block.shopify_attributes }}
                 >
-                  {{ block.settings.heading | escape }}
+                  {{ block.settings.heading }}
                 </{{ h_tag }}>
               {%- endif -%}
 
@@ -126,7 +132,8 @@
                   {% render 'tk-button',
                     label: block.settings.button_1_label,
                     url: block.settings.button_1_link,
-                    style: block.settings.button_1_style
+                    style: block.settings.button_1_style,
+                    icon: 'arrow-right'
                   %}
                 {%- endif -%}
                 {%- if block.settings.button_2_label != blank -%}
@@ -140,6 +147,14 @@
           {%- endcase -%}
         {%- endfor -%}
       </div>
+
+      {%- if section.settings.show_slide_counter -%}
+        <div class="tk-hero__counter small-hide">
+          <span>01</span>
+          <span class="tk-hero__counter-bar"></span>
+          <span>03</span>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </div>
@@ -209,6 +224,70 @@
   .tk-hero--pos-bottom-center .tk-hero__content-container { align-items: flex-end; justify-content: center; }
   .tk-hero--pos-bottom-right .tk-hero__content-container { align-items: flex-end; justify-content: flex-end; }
 
+  /* --- Gradient Scrim (v2 Default Content Style) --- */
+  .tk-hero__scrim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(243, 239, 232, var(--tk-hero-scrim-alpha, 0.92)) 0%,
+      rgba(243, 239, 232, calc(var(--tk-hero-scrim-alpha, 0.92) * 0.65)) 38%,
+      rgba(243, 239, 232, 0) 62%
+    );
+  }
+
+  .tk-hero--style-gradient_scrim .tk-hero__content-box {
+    max-width: 640px;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  .tk-hero__heading--display {
+    font-family: var(--font-heading-family);
+    font-weight: 350;
+    font-size: clamp(56px, 8vw, 116px);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    margin-top: 0;
+    margin-bottom: var(--tk-space-4);
+    color: rgb(var(--color-foreground));
+  }
+
+  .tk-hero__heading--display em {
+    font-family: var(--font-heading-family);
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .tk-hero__eyebrow {
+    color: var(--tk-color-olive);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: var(--tk-space-3);
+  }
+
+  .tk-hero__counter {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--tk-color-muted);
+    padding-bottom: 8px;
+  }
+
+  .tk-hero__counter-bar {
+    width: 80px;
+    height: 1px;
+    background-color: var(--tk-color-ink);
+  }
+
   /* Text alignments */
   .tk-hero--align-left .tk-hero__content-box { text-align: left; }
   .tk-hero--align-center .tk-hero__content-box { text-align: center; }
@@ -252,19 +331,20 @@
   }
 
   .tk-hero__text {
-    font-size: 17px;
+    font-size: 18px;
     line-height: 1.6;
     margin-bottom: var(--tk-space-5);
   }
 
   .tk-hero__buttons {
-    gap: 12px;
+    gap: 16px;
+    align-items: center;
   }
 
   /* Mobile Layout (< 750px) */
   @media screen and (max-width: 749px) {
     .tk-hero {
-      min-height: 520px !important;
+      min-height: 600px !important;
       position: relative;
     }
 
@@ -276,10 +356,19 @@
       height: 100%;
     }
 
+    .tk-hero__scrim {
+      background: linear-gradient(
+        0deg,
+        rgba(243, 239, 232, 0.96) 0%,
+        rgba(243, 239, 232, 0.8) 45%,
+        rgba(243, 239, 232, 0) 75%
+      );
+    }
+
     .tk-hero__content-container {
       position: relative;
-      min-height: 520px;
-      padding: 16px !important;
+      min-height: 600px;
+      padding: 24px 20px !important;
       display: flex;
       flex-direction: column;
       justify-content: flex-end !important;
@@ -297,16 +386,18 @@
       box-shadow: var(--tk-shadow-sm);
     }
 
+    .tk-hero__heading--display,
     .tk-hero__heading.tk-h1,
     .tk-hero__heading.tk-h2 {
-      font-size: 34px !important;
-      line-height: 1.15;
+      font-size: 38px !important;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
     }
 
     .tk-hero__buttons {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       width: 100%;
     }
 
@@ -328,10 +419,20 @@
       "id": "layout",
       "label": "Layout",
       "options": [
-        { "value": "contained", "label": "Contained (1280px)" },
-        { "value": "full_width", "label": "Full width" }
+        { "value": "full_width", "label": "Full bleed (100vw)" },
+        { "value": "contained", "label": "Contained (1360px)" }
       ],
-      "default": "contained"
+      "default": "full_width"
+    },
+    {
+      "type": "select",
+      "id": "content_style",
+      "label": "Content style",
+      "options": [
+        { "value": "gradient_scrim", "label": "Gradient scrim (v2 Editorial)" },
+        { "value": "frosted_box", "label": "Frosted card box" }
+      ],
+      "default": "gradient_scrim"
     },
     {
       "type": "image_picker",
@@ -345,26 +446,36 @@
     },
     {
       "type": "range",
+      "id": "scrim_opacity",
+      "min": 40,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Gradient scrim opacity",
+      "default": 92
+    },
+    {
+      "type": "range",
       "id": "overlay_opacity",
       "min": 0,
       "max": 80,
       "step": 5,
       "unit": "%",
       "label": "Image overlay opacity",
-      "default": 10
+      "default": 0
     },
     {
       "type": "select",
       "id": "height",
       "label": "Banner height",
       "options": [
-        { "value": "small", "label": "Small (400px)" },
-        { "value": "medium", "label": "Medium (560px)" },
-        { "value": "large", "label": "Large (720px)" },
+        { "value": "small", "label": "Small (560px)" },
+        { "value": "medium", "label": "Medium (720px)" },
+        { "value": "large", "label": "Large (820px)" },
         { "value": "full", "label": "Full screen (100vh)" },
         { "value": "adapt", "label": "Adapt to image" }
       ],
-      "default": "medium"
+      "default": "large"
     },
     {
       "type": "select",
@@ -396,8 +507,14 @@
     },
     {
       "type": "checkbox",
+      "id": "show_slide_counter",
+      "label": "Show slide counter (01 / 03)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
       "id": "show_content_box",
-      "label": "Show content in card box",
+      "label": "Show content in card box (Frosted style only)",
       "default": true
     },
     {
@@ -441,7 +558,7 @@
         { "value": "below", "label": "Text below image" },
         { "value": "overlay", "label": "Text over image" }
       ],
-      "default": "below"
+      "default": "overlay"
     }
   ],
   "blocks": [
@@ -474,10 +591,11 @@
           "id": "heading_size",
           "label": "Heading size",
           "options": [
-            { "value": "regular", "label": "Regular (H2)" },
-            { "value": "large", "label": "Large (H1)" }
+            { "value": "display", "label": "Display (Hero clamp 56-116px)" },
+            { "value": "large", "label": "Large (H1)" },
+            { "value": "regular", "label": "Regular (H2)" }
           ],
-          "default": "large"
+          "default": "display"
         },
         {
           "type": "select",
