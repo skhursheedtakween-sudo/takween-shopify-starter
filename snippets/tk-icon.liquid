@@ -121,6 +121,13 @@
       <circle cx="12" cy="12" r="10"></circle>
       <polyline points="12 6 12 12 16 14"></polyline>
 
+    {%- when 'pause' -%}
+      <rect x="7" y="5" width="3.2" height="14" rx="1" fill="currentColor" stroke="none"></rect>
+      <rect x="13.8" y="5" width="3.2" height="14" rx="1" fill="currentColor" stroke="none"></rect>
+
+    {%- when 'play' -%}
+      <path d="M7 5l12 7-12 7z" fill="currentColor" stroke="none"></path>
+
     {%- when 'arrow-right' -%}
       <path d="M5 12h14"></path>
       <path d="M13 6l6 6-6 6"></path>

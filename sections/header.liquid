@@ -219,6 +219,22 @@
     height: 20px;
   }
 
+  /* Dropdown caret next to parent nav items (e.g. Shop) */
+  .header__inline-menu summary .icon-caret,
+  .header__inline-menu .header__menu-item .icon-caret {
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.4rem;
+    color: currentColor;
+    opacity: 0.6;
+    align-self: center;
+  }
+
+  .header__inline-menu summary {
+    display: inline-flex;
+    align-items: center;
+  }
+
   /* Cart link: desktop "Cart (n)" text link, mobile icon bubble */
   .header__cart-text-link {
     width: auto !important;
@@ -514,7 +530,7 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2 tk-header__wordmark">{{ shop.name }}</span>
+          <span class="h2 tk-header__wordmark">{{ section.settings.wordmark_text | default: shop.name }}</span>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
@@ -557,7 +573,7 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2 tk-header__wordmark">{{ shop.name }}</span>
+          <span class="h2 tk-header__wordmark">{{ section.settings.wordmark_text | default: shop.name }}</span>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
@@ -933,6 +949,12 @@
       ],
       "default": "text",
       "info": "Text wordmark uses the heading font. Falls back to text when no logo image is set."
+    },
+    {
+      "type": "text",
+      "id": "wordmark_text",
+      "label": "Wordmark text",
+      "info": "Used for the text wordmark. Leave blank to use the store name."
     },
     {
       "type": "select",
