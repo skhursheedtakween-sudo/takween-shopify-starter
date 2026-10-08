@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Takween Starter — Design tokens and components</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#16181B}a:hover{color:#3B3F45}
+</style>
+</helmet>
+<div style="width: 1280px; height: 960px; overflow: hidden; background: #F6F5F2; color: #16181B; padding: 56px; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #1F4FD8">tk- design system</span>
+<h1 style="margin: 0; font-size: 40px; font-weight: 800; letter-spacing: -0.03em">Tokens &amp; components</h1>
+<p style="margin: 0; font-size: 15px; color: #4A4F56">Neutral defaults. Every value below is a theme setting or a CSS custom property, so a client rebrand changes settings, not templates.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px">
+<!-- Colours -->
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 800">Colour schemes</h2>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{colours}}" as="c" hint-placeholder-count="8">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 64px; border-radius: 10px; background: {{c.hex}}; border: 1px solid rgba(0,0,0,0.08)"></div>
+<span style="font-size: 13px; font-weight: 700">{{c.name}}</span>
+<span style="font-size: 12px; color: #5A5F66; font-family: ui-monospace, monospace">{{c.hex}}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<!-- Type -->
+<section style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0 0 4px; font-size: 16px; font-weight: 800">Type scale · Manrope</h2>
+<div style="display: flex; align-items: baseline; gap: 16px"><span style="width: 90px; font-size: 12px; color: #5A5F66; font-family: ui-monospace, monospace">--tk-text-5xl</span><span style="font-size: 48px; font-weight: 800; letter-spacing: -0.03em; line-height: 1">Heading XL</span></div>
+<div style="display: flex; align-items: baseline; gap: 16px"><span style="width: 90px; font-size: 12px; color: #5A5F66; font-family: ui-monospace, monospace">--tk-text-3xl</span><span style="font-size: 34px; font-weight: 800; letter-spacing: -0.02em">Heading L</span></div>
+<div style="display: flex; align-items: baseline; gap: 16px"><span style="width: 90px; font-size: 12px; color: #5A5F66; font-family: ui-monospace, monospace">--tk-text-xl</span><span style="font-size: 22px; font-weight: 700">Heading M</span></div>
+<div style="display: flex; align-items: baseline; gap: 16px"><span style="width: 90px; font-size: 12px; color: #5A5F66; font-family: ui-monospace, monospace">--tk-text-base</span><span style="font-size: 16px; line-height: 1.6">Body text for descriptions and content pages.</span></div>
+<div style="display: flex; align-items: baseline; gap: 16px"><span style="width: 90px; font-size: 12px; color: #5A5F66; font-family: ui-monospace, monospace">eyebrow</span><span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #1F4FD8">Section eyebrow</span></div>
+</section>
+
+<!-- Buttons + badges -->
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 800">Buttons · min 48px tall</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+<a href="#" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 26px; background: #1F4FD8; color: #FFFFFF; border-radius: 8px; font-weight: 700; text-decoration: none">Primary</a>
+<a href="#" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 26px; background: #16181B; color: #FFFFFF; border-radius: 8px; font-weight: 700; text-decoration: none">Secondary</a>
+<a href="#" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 26px; border: 1.5px solid #16181B; border-radius: 8px; font-weight: 700; text-decoration: none">Outline</a>
+<a href="#" style="font-weight: 700; text-underline-offset: 4px">Text link</a>
+<span style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 26px; background: #8A8F96; color: #FFFFFF; border-radius: 8px; font-weight: 700">Disabled</span>
+</div>
+<h2 style="margin: 12px 0 0; font-size: 16px; font-weight: 800">Badges</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<span style="padding: 4px 12px; border-radius: 999px; background: #B42318; color: #FFFFFF; font-size: 12px; font-weight: 700">Sale</span>
+<span style="padding: 4px 12px; border-radius: 999px; background: #B42318; color: #FFFFFF; font-size: 12px; font-weight: 700">-25%</span>
+<span style="padding: 4px 12px; border-radius: 999px; background: #3D4148; color: #FFFFFF; font-size: 12px; font-weight: 700">Sold out</span>
+<span style="padding: 4px 12px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E3E1DC; font-size: 12px; font-weight: 700">New · from metafield</span>
+</div>
+</section>
+
+<!-- Forms + tokens -->
+<section style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 800">Form fields</h2>
+<div style="display: flex; gap: 16px">
+<label style="flex: 1; display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Email<input type="email" placeholder="you@example.com" style="min-height: 48px; padding: 0 14px; border: 1.5px solid #C9C6BF; border-radius: 8px; font: inherit; font-weight: 500; background: #FFFFFF"></label>
+<label style="flex: 1; display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; color: #B42318">Name (error)<input value="" aria-invalid="true" style="min-height: 48px; padding: 0 14px; border: 1.5px solid #B42318; border-radius: 8px; font: inherit; background: #FFFFFF"><span style="font-weight: 600; font-size: 12px">Please enter your name</span></label>
+</div>
+<h2 style="margin: 8px 0 0; font-size: 16px; font-weight: 800">Shape &amp; spacing tokens</h2>
+<div style="display: flex; gap: 14px; align-items: flex-end">
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: center"><div style="width: 64px; height: 64px; background: #FFFFFF; border: 1.5px solid #16181B; border-radius: 8px"></div><span style="font-size: 12px; font-family: ui-monospace, monospace">button 8</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px; align-items: center"><div style="width: 64px; height: 64px; background: #FFFFFF; border: 1.5px solid #16181B; border-radius: 12px"></div><span style="font-size: 12px; font-family: ui-monospace, monospace">card 12</span></div>
+<div style="display: flex; gap: 6px; align-items: flex-end; margin-left: 20px">
+<div style="width: 8px; height: 8px; background: #1F4FD8"></div><div style="width: 16px; height: 16px; background: #1F4FD8"></div><div style="width: 24px; height: 24px; background: #1F4FD8"></div><div style="width: 32px; height: 32px; background: #1F4FD8"></div><div style="width: 48px; height: 48px; background: #1F4FD8"></div><div style="width: 64px; height: 64px; background: #1F4FD8"></div>
+</div>
+<span style="font-size: 12px; color: #5A5F66; font-family: ui-monospace, monospace">--tk-space-1 … 9 (× spacing scale)</span>
+</div>
+</section>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":960}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      colours: [
+        { name: 'Background', hex: '#F6F5F2' },
+        { name: 'Surface', hex: '#FFFFFF' },
+        { name: 'Ink', hex: '#16181B' },
+        { name: 'Muted text', hex: '#5A5F66' },
+        { name: 'Border', hex: '#E3E1DC' },
+        { name: 'Accent', hex: '#1F4FD8' },
+        { name: 'Sale', hex: '#B42318' },
+        { name: 'Success', hex: '#1F7A4D' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

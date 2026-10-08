@@ -2,114 +2,102 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Takween Starter — Product page</title>
+<title>Takween Starter v2 — Product page</title>
 <script src="./support.js"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#F6F5F2;color:#16181B;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{margin:0;background:#F3EFE8;color:#1C1A17;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 *{box-sizing:border-box}
-a{color:#16181B}a:hover{color:#3B3F45}
-a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #1F4FD8;outline-offset:3px}
+a{color:#1C1A17}a:hover{color:#5E6B47}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid #1C1A17;outline-offset:3px}
+.v2-nav{display:flex}
+@media (max-width:900px){.v2-nav{display:none}}
 </style>
 </helmet>
-<div style="width: 100%; min-height: 100%; background: #F6F5F2">
-
-<header style="background: #FFFFFF; border-bottom: 1px solid #E3E1DC">
-<div style="max-width: 1280px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
-<a href="#" style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; text-decoration: none">[STORE LOGO]</a>
-<nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 28px; font-size: 15px; font-weight: 600"><a href="#" style="text-decoration: none">Shop</a><a href="#" style="text-decoration: none">New in</a><a href="#" style="text-decoration: none">Sale</a><a href="#" style="text-decoration: none">About</a></nav>
-<a href="#" aria-label="Cart, {{cartCount}} items" style="min-width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 700; text-decoration: none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg>{{cartCount}}</a>
+<div style="width: 100%; min-height: 100%; background: #F3EFE8">
+<div style="background: #1C1A17; color: #EDE6DA; text-align: center; font-size: 12px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 11px 16px">Free UK delivery over £50 &#160;·&#160; 30-day returns</div>
+<header style="background: rgba(243,239,232,0.9); border-bottom: 1px solid #DDD5C9">
+<div style="max-width: 1360px; margin: 0 auto; padding: 18px 40px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px">
+<nav class="v2-nav" aria-label="Main" style="gap: 30px; font-size: 14px; font-weight: 500"><a href="#" style="text-decoration: none">Shop</a><a href="#" style="text-decoration: none">New in</a><a href="#" style="text-decoration: none">Sale</a><a href="#" style="text-decoration: none">About</a></nav>
+<a href="#" style="justify-self: center; font-family: 'Fraunces', serif; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; text-decoration: none">Takween</a>
+<a href="#" style="justify-self: end; min-height: 44px; display: flex; align-items: center; font-size: 14px; font-weight: 500; text-decoration: none">Cart ({{cart}})</a>
 </div>
 </header>
 
-<main style="max-width: 1280px; margin: 0 auto; padding: 20px 24px 72px">
-<nav aria-label="Breadcrumb" style="font-size: 13px; color: #5A5F66; margin-bottom: 20px"><a href="#" style="color: #5A5F66">Home</a> / <a href="#" style="color: #5A5F66">Apparel</a> / <span aria-current="page">Sample Relaxed Overshirt</span></nav>
+<main style="max-width: 1360px; margin: 0 auto; padding: 20px 40px 112px">
+<nav aria-label="Breadcrumb" style="font-size: 13px; color: #6B645B; margin-bottom: 24px"><a href="#" style="color: #6B645B">Home</a> &#160;/&#160; <a href="#" style="color: #6B645B">Apparel</a> &#160;/&#160; <span aria-current="page">Sample Relaxed Overshirt</span></nav>
+<div style="display: flex; flex-wrap: wrap; gap: 56px; align-items: flex-start">
 
-<div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
-<!-- Gallery -->
-<div style="flex: 1 1 520px; min-width: 0; display: flex; gap: 12px">
-<div style="display: flex; flex-direction: column; gap: 10px; flex: none">
-<sc-for list="{{thumbs}}" as="t" hint-placeholder-count="4"><button aria-label="{{t.label}}" onClick="{{t.pick}}" style="width: 72px; height: 88px; border-radius: 8px; border: 2px solid {{t.border}}; background: {{t.tone}}; cursor: pointer; padding: 0"></button></sc-for>
-</div>
-<div style="flex: 1; min-width: 0; aspect-ratio: 4 / 5; border-radius: 12px; background: {{mainTone}}; display: flex; align-items: center; justify-content: center; position: relative">
-<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6B7078">Product media · {{colourName}} · image {{imageNo}}</span>
-<span style="position: absolute; top: 16px; left: 16px; padding: 4px 10px; border-radius: 999px; background: #B42318; color: #FFFFFF; font-size: 12px; font-weight: 700">-25%</span>
-</div>
+<div style="flex: 7 1 560px; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="grid-column: span 2; aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden; background: #E9E2D6; position: relative"><img src="{{mainImg}}" alt="Sample Relaxed Overshirt in {{colourName}}" style="width: 100%; height: 100%; object-fit: cover; display: block"><span style="position: absolute; top: 18px; left: 18px; padding: 5px 11px; border-radius: 999px; background: #A3361F; color: #FFFFFF; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase">−25%</span></div>
+<div style="aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden"><img src="/_blob/415bd854f4d4f5d0d1759a8a19b2328f" alt="Overshirt pocket detail" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden"><img src="/_blob/a9783a493aeb27e4ea030ddb5ec45006" alt="Fabric swatches" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
 </div>
 
-<!-- Product info -->
-<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
-<div style="display: flex; flex-direction: column; gap: 10px">
-<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #5A5F66">Takween Sample Co.</span>
-<h1 style="margin: 0; font-size: 36px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em">Sample Relaxed Overshirt</h1>
-<div style="display: flex; gap: 10px; align-items: baseline"><span style="font-size: 22px; font-weight: 800; color: #B42318">£45.00</span><s style="font-size: 17px; color: #5A5F66">£60.00</s><span style="font-size: 13px; color: #5A5F66">Tax included.</span></div>
+<div style="flex: 5 1 400px; min-width: 0; position: sticky; top: 24px; display: flex; flex-direction: column; gap: 26px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: #5E6B47">Takween Sample Co.</span>
+<h1 style="margin: 0; font-family: 'Fraunces', serif; font-weight: 350; font-size: 52px; line-height: 1; letter-spacing: -0.03em">Relaxed <em style="font-weight: 300">Overshirt</em></h1>
+<div style="display: flex; gap: 12px; align-items: baseline"><span style="font-family: 'Fraunces', serif; font-size: 28px; color: #A3361F">£45.00</span><s style="font-size: 17px; color: #8C8478">£60.00</s><span style="font-size: 13px; color: #6B645B">Tax included</span></div>
+<p style="margin: 0; font-size: 16px; line-height: 1.7; color: #4D473F">Brushed cotton twill with two chest pockets and a relaxed, layerable fit.</p>
 </div>
 
-<fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px">
-<legend style="font-size: 14px; font-weight: 700; margin-bottom: 10px">Colour: <span style="font-weight: 500; color: #4A4F56">{{colourName}}</span></legend>
-<div style="display: flex; gap: 10px">
-<sc-for list="{{colours}}" as="c" hint-placeholder-count="3"><button aria-label="{{c.name}}" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="width: 44px; height: 44px; border-radius: 22px; background: {{c.hex}}; border: 2px solid {{c.ring}}; box-shadow: inset 0 0 0 3px #FFFFFF; cursor: pointer"></button></sc-for>
+<fieldset style="border: 0; padding: 0; margin: 0">
+<legend style="font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px">Colour — <span style="font-weight: 500; text-transform: none; letter-spacing: 0; color: #4D473F">{{colourName}}{{colourNote}}</span></legend>
+<div style="display: flex; gap: 14px">
+<sc-for list="{{colours}}" as="c" hint-placeholder-count="3"><button aria-label="{{c.aria}}" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="width: 40px; height: 40px; border-radius: 20px; border: 0; background: {{c.hex}}; box-shadow: {{c.ring}}; cursor: pointer; position: relative"></button></sc-for>
 </div>
 </fieldset>
 
 <fieldset style="border: 0; padding: 0; margin: 0">
-<legend style="font-size: 14px; font-weight: 700; margin-bottom: 10px; width: 100%; display: flex; justify-content: space-between">Size: {{sizeName}}</legend>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-<sc-for list="{{sizes}}" as="s" hint-placeholder-count="5"><button aria-pressed="{{s.pressed}}" aria-label="{{s.aria}}" onClick="{{s.pick}}" style="min-width: 56px; height: 48px; padding: 0 16px; border-radius: 8px; border: 1.5px solid {{s.border}}; background: {{s.bg}}; color: {{s.fg}}; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer; text-decoration: {{s.strike}}">{{s.name}}</button></sc-for>
+<legend style="width: 100%; display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px"><span>Size — <span style="font-weight: 500; text-transform: none; letter-spacing: 0; color: #4D473F">{{sizeName}}</span></span><a href="#" style="font-weight: 500; text-transform: none; letter-spacing: 0; text-underline-offset: 4px">Size guide</a></legend>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{sizes}}" as="s" hint-placeholder-count="5"><button aria-pressed="{{s.pressed}}" aria-label="{{s.aria}}" onClick="{{s.pick}}" style="height: 52px; border-radius: 4px; border: 1px solid {{s.border}}; background: {{s.bg}}; color: {{s.fg}}; font: inherit; font-size: 15px; font-weight: 500; cursor: pointer; text-decoration: {{s.strike}}">{{s.name}}</button></sc-for>
 </div>
-<a href="#" style="display: inline-block; margin-top: 10px; font-size: 13px; font-weight: 600">Size guide</a>
 </fieldset>
 
-<div role="status" style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: {{stockColor}}"><span style="width: 8px; height: 8px; border-radius: 4px; background: {{stockColor}}"></span>{{stockText}}</div>
+<div role="status" style="display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: {{stockColor}}"><span style="width: 8px; height: 8px; border-radius: 4px; background: {{stockColor}}"></span>{{stockText}}</div>
 
-<div style="display: flex; gap: 12px; flex-wrap: wrap">
-<div style="display: flex; align-items: center; border: 1.5px solid #C9C6BF; border-radius: 8px; background: #FFFFFF">
-<button aria-label="Decrease quantity" onClick="{{dec}}" style="width: 48px; height: 52px; border: 0; background: none; font-size: 20px; cursor: pointer">−</button>
-<label for="qty" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Quantity</label>
-<input id="qty" value="{{qty}}" inputmode="numeric" readonly="" style="width: 44px; height: 52px; border: 0; text-align: center; font: inherit; font-weight: 700; font-size: 16px; background: none">
-<button aria-label="Increase quantity" onClick="{{inc}}" style="width: 48px; height: 52px; border: 0; background: none; font-size: 20px; cursor: pointer">+</button>
+<div style="display: flex; gap: 10px">
+<div style="display: flex; align-items: center; border: 1px solid #CFC6B8; border-radius: 999px">
+<button aria-label="Decrease quantity" onClick="{{dec}}" style="width: 48px; height: 56px; border: 0; background: none; font-size: 18px; cursor: pointer">−</button>
+<span aria-live="polite" style="width: 28px; text-align: center; font-weight: 600">{{qty}}</span>
+<button aria-label="Increase quantity" onClick="{{inc}}" style="width: 48px; height: 56px; border: 0; background: none; font-size: 18px; cursor: pointer">+</button>
 </div>
-<button onClick="{{add}}" disabled="{{soldOut}}" style="flex: 1 1 220px; min-height: 52px; border: 0; border-radius: 8px; background: {{atcBg}}; color: #FFFFFF; font: inherit; font-weight: 800; font-size: 16px; cursor: pointer">{{atcLabel}}</button>
+<button onClick="{{add}}" disabled="{{soldOut}}" style="flex: 1; min-height: 56px; border: 0; border-radius: 999px; background: {{atcBg}}; color: #F3EFE8; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer">{{atcLabel}}</button>
 </div>
-<sc-if value="{{added}}" hint-placeholder-val="{{ false }}"><p role="status" style="margin: 0; padding: 12px 14px; border-radius: 8px; background: #E8F3EC; color: #1F5F3D; font-size: 14px; font-weight: 600">Added to cart — the cart drawer opens here in the theme.</p></sc-if>
+<sc-if value="{{added}}" hint-placeholder-val="{{ false }}"><p role="status" style="margin: -10px 0 0; font-size: 14px; color: #3F5A2E">Added to your cart — the cart drawer opens here in the theme.</p></sc-if>
 
-<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 15px">
-<li style="display: flex; gap: 10px; align-items: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>Brushed cotton twill, soft from day one</li>
-<li style="display: flex; gap: 10px; align-items: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>Relaxed fit — layer over tees</li>
-<li style="display: flex; gap: 10px; align-items: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>Machine washable at 30°</li>
-</ul>
-<p style="margin: -10px 0 0; font-size: 12px; color: #5A5F66">Highlights from the custom.highlights metafield</p>
-
-<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
-<div style="display: flex; gap: 10px; align-items: center; padding: 14px; border: 1px solid #E3E1DC; border-radius: 8px; background: #FFFFFF; font-size: 13px; font-weight: 600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="17" cy="18" r="1.6"></circle></svg>Free delivery over £50</div>
-<div style="display: flex; gap: 10px; align-items: center; padding: 14px; border: 1px solid #E3E1DC; border-radius: 8px; background: #FFFFFF; font-size: 13px; font-weight: 600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"></path></svg>30-day returns</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; font-size: 13px; color: #4D473F">
+<div style="display: flex; gap: 10px; align-items: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="17" cy="18" r="1.6"></circle></svg>Free UK delivery over £50</div>
+<div style="display: flex; gap: 10px; align-items: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v4h4"></path></svg>Free 30-day returns</div>
 </div>
 
 <div style="display: flex; flex-direction: column">
-<details open="" style="border-top: 1px solid #D6D3CD; padding: 18px 0"><summary style="cursor: pointer; font-weight: 700; font-size: 16px">Specifications</summary>
-<dl style="margin: 14px 0 0; display: grid; grid-template-columns: 140px 1fr; gap: 8px 16px; font-size: 14px"><dt style="color: #5A5F66">Material</dt><dd style="margin: 0">100% cotton</dd><dt style="color: #5A5F66">Fit</dt><dd style="margin: 0">Relaxed</dd><dt style="color: #5A5F66">Origin</dt><dd style="margin: 0">[COUNTRY]</dd></dl>
-<p style="margin: 10px 0 0; font-size: 12px; color: #5A5F66">From specification metaobjects</p></details>
-<details style="border-top: 1px solid #D6D3CD; padding: 18px 0"><summary style="cursor: pointer; font-weight: 700; font-size: 16px">Care instructions</summary></details>
-<details style="border-top: 1px solid #D6D3CD; padding: 18px 0"><summary style="cursor: pointer; font-weight: 700; font-size: 16px">Product FAQs</summary></details>
-<details style="border-top: 1px solid #D6D3CD; border-bottom: 1px solid #D6D3CD; padding: 18px 0"><summary style="cursor: pointer; font-weight: 700; font-size: 16px">Shipping &amp; returns</summary></details>
+<details open="" style="border-top: 1px solid #CFC6B8; padding: 20px 0"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; font-size: 16px; font-weight: 500">Highlights<span aria-hidden="true" style="font-weight: 300">−</span></summary>
+<ul style="margin: 14px 0 0; padding: 0 0 0 18px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; line-height: 1.6; color: #4D473F"><li>Brushed cotton twill, soft from day one</li><li>Relaxed fit — layer over tees</li><li>Two chest pockets</li></ul></details>
+<details style="border-top: 1px solid #CFC6B8; padding: 20px 0"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; font-size: 16px; font-weight: 500">Specifications<span aria-hidden="true" style="font-weight: 300">+</span></summary></details>
+<details style="border-top: 1px solid #CFC6B8; padding: 20px 0"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; font-size: 16px; font-weight: 500">Care<span aria-hidden="true" style="font-weight: 300">+</span></summary></details>
+<details style="border-top: 1px solid #CFC6B8; border-bottom: 1px solid #CFC6B8; padding: 20px 0"><summary style="cursor: pointer; list-style: none; display: flex; justify-content: space-between; font-size: 16px; font-weight: 500">Questions<span aria-hidden="true" style="font-weight: 300">+</span></summary></details>
 </div>
 </div>
 </div>
 
-<!-- Recommendations -->
-<section style="margin-top: 80px">
-<h2 style="margin: 0 0 24px; font-size: 30px; font-weight: 800; letter-spacing: -0.02em">You may also like</h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px">
+<section style="margin-top: 120px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 32px; flex-wrap: wrap">
+<h2 style="margin: 0; font-family: 'Fraunces', serif; font-weight: 350; font-size: 48px; line-height: 1; letter-spacing: -0.03em">Complete the <em style="font-weight: 300">look</em></h2>
+<a href="#" style="font-size: 14px; font-weight: 500; text-underline-offset: 6px">View all</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 40px 20px">
 <sc-for list="{{recs}}" as="p" hint-placeholder-count="4">
-<article style="display: flex; flex-direction: column; gap: 10px">
-<div style="aspect-ratio: 4 / 5; border-radius: 12px; background: {{p.tone}}; display: flex; align-items: center; justify-content: center"><span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6B7078">Product image</span></div>
-<h3 style="margin: 0; font-size: 15px; font-weight: 700"><a href="#" style="text-decoration: none">{{p.name}}</a></h3>
-<span style="font-size: 15px; font-weight: 700">{{p.price}}</span>
+<article style="display: flex; flex-direction: column; gap: 14px">
+<div style="aspect-ratio: 4 / 5; border-radius: 4px; overflow: hidden; background: #E9E2D6"><img src="{{p.img}}" alt="{{p.name}}" style="width: 100%; height: 100%; object-fit: cover; display: block"></div>
+<div style="display: flex; justify-content: space-between; gap: 12px"><h3 style="margin: 0; font-size: 15px; font-weight: 500"><a href="#" style="text-decoration: none">{{p.name}}</a></h3><span style="font-size: 15px; font-weight: 500">{{p.price}}</span></div>
 </article>
 </sc-for>
 </div>
@@ -117,49 +105,45 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #1F
 </main>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2300}}'>
 class Component extends DCLogic {
-  constructor(props) { super(props); this.state = { colour: 0, size: 2, qty: 1, image: 0, cart: 2, added: false }; }
+  constructor(props) { super(props); this.state = { colour: 1, size: 2, qty: 1, cart: 2, added: false }; }
   renderVals() {
-    var self = this;
-    var st = this.state;
+    var self = this; var st = this.state;
     var colours = [
-      { name: 'Stone', hex: '#D8CDB8', tone: '#E7E2D9', alt: '#DED8CC', stock: [6, 9, 3, 12, 0] },
-      { name: 'Charcoal', hex: '#3A3D42', tone: '#D9DDE3', alt: '#CFD4DB', stock: [4, 0, 8, 10, 2] },
-      { name: 'Olive', hex: '#6B7A55', tone: '#D8E0D8', alt: '#CDD7CD', stock: [0, 0, 0, 0, 0] }
+      { name: 'Stone', hex: '#D8CDB8', img: '/_blob/b5c577e9f89086f4e8ac63f1556f608d', stock: [6, 9, 3, 12, 0] },
+      { name: 'Charcoal', hex: '#3A3D42', img: '/_blob/fc7c7369dc41a59912a2007294cb3b0b', stock: [10, 10, 10, 10, 10] },
+      { name: 'Olive', hex: '#6B7A55', img: '/_blob/f7f8089d84017b293dfacd343e819fbd', stock: [0, 0, 0, 0, 0] }
     ];
     var sizeNames = ['XS', 'S', 'M', 'L', 'XL'];
     var c = colours[st.colour];
-    var qtyLeft = c.stock[st.size];
-    var soldOut = qtyLeft === 0;
-    var low = !soldOut && qtyLeft <= 3;
+    var left = c.stock[st.size]; var soldOut = left === 0; var low = !soldOut && left <= 3;
+    var colourOut = c.stock.every(function (n) { return n === 0; });
     return {
-      cartCount: st.cart,
-      colourName: c.name,
-      sizeName: sizeNames[st.size],
-      mainTone: st.image % 2 === 0 ? c.tone : c.alt,
-      imageNo: st.image + 1,
-      qty: st.qty,
-      added: st.added,
-      soldOut: soldOut,
-      atcLabel: soldOut ? 'Sold out' : 'Add to cart',
-      atcBg: soldOut ? '#8A8F96' : '#16181B',
-      stockText: soldOut ? 'Sold out in this size' : (low ? 'Low stock — only ' + qtyLeft + ' left' : 'In stock, ready to ship'),
-      stockColor: soldOut ? '#5A5F66' : (low ? '#9A3412' : '#1F7A4D'),
-      thumbs: [0, 1, 2, 3].map(function (i) { return { label: 'Show image ' + (i + 1), tone: i % 2 === 0 ? c.tone : c.alt, border: i === st.image ? '#16181B' : 'transparent', pick: function () { self.setState({ image: i }); } }; }),
-      colours: colours.map(function (col, i) { return { name: col.name, hex: col.hex, pressed: i === st.colour ? 'true' : 'false', ring: i === st.colour ? '#16181B' : '#C9C6BF', pick: function () { self.setState({ colour: i, added: false, qty: 1 }); } }; }),
+      cart: st.cart, qty: st.qty, added: st.added, soldOut: soldOut,
+      colourName: c.name, colourNote: colourOut ? ' (sold out)' : '', sizeName: sizeNames[st.size], mainImg: c.img,
+      atcLabel: soldOut ? 'Sold out' : 'Add to cart — £' + (45 * st.qty).toFixed(2),
+      atcBg: soldOut ? '#9C958B' : '#1C1A17',
+      stockText: soldOut ? 'Sold out in this size' : (low ? 'Only ' + left + ' left in stock' : 'In stock — ships in 1–2 days'),
+      stockColor: soldOut ? '#6B645B' : (low ? '#9A3412' : '#3F5A2E'),
+      colours: colours.map(function (col, i) {
+        var out = col.stock.every(function (n) { return n === 0; });
+        return { hex: col.hex, aria: col.name + (out ? ', sold out' : ''), pressed: i === st.colour ? 'true' : 'false',
+          ring: i === st.colour ? '0 0 0 2px #F3EFE8, 0 0 0 3px #1C1A17' : 'inset 0 0 0 1px rgba(0,0,0,0.15)',
+          pick: function () { self.setState({ colour: i, qty: 1, added: false }); } };
+      }),
       sizes: sizeNames.map(function (n, i) {
         var out = c.stock[i] === 0; var sel = i === st.size;
-        return { name: n, aria: n + (out ? ', sold out' : ''), pressed: sel ? 'true' : 'false', border: sel ? '#16181B' : '#C9C6BF', bg: sel ? '#16181B' : '#FFFFFF', fg: sel ? '#FFFFFF' : (out ? '#8A8F96' : '#16181B'), strike: out ? 'line-through' : 'none', pick: function () { self.setState({ size: i, added: false, qty: 1 }); } };
+        return { name: n, aria: n + (out ? ', sold out' : ''), pressed: sel ? 'true' : 'false', border: sel ? '#1C1A17' : '#CFC6B8', bg: sel ? '#1C1A17' : 'transparent', fg: sel ? '#F3EFE8' : (out ? '#9C958B' : '#1C1A17'), strike: out ? 'line-through' : 'none', pick: function () { self.setState({ size: i, qty: 1, added: false }); } };
       }),
       dec: function () { self.setState({ qty: Math.max(1, st.qty - 1) }); },
-      inc: function () { self.setState({ qty: Math.min(Math.max(qtyLeft, 1), st.qty + 1) }); },
-      add: function () { if (!soldOut) { self.setState({ cart: st.cart + st.qty, added: true }); } },
+      inc: function () { self.setState({ qty: Math.min(Math.max(left, 1), st.qty + 1) }); },
+      add: function () { if (!soldOut) self.setState({ cart: st.cart + st.qty, added: true }); },
       recs: [
-        { name: 'Sample Organic Cotton Tee', price: '£24.00', tone: '#E7E2D9' },
-        { name: 'Sample Wool Beanie', price: '£16.00', tone: '#D9DDE3' },
-        { name: 'Sample Canvas Tote Bag', price: '£18.00', tone: '#D8E0D8' },
-        { name: 'Sample Linen Scarf', price: '£22.00', tone: '#E4DCD6' }
+        { name: 'Sample Organic Cotton Tee', price: '£24', img: '/_blob/5db1c5d7250309b21db4b1b53aa136c2' },
+        { name: 'Sample Wool Beanie', price: '£16', img: '/_blob/e284b379b9fa64603554fb27d26c032e' },
+        { name: 'Sample Leather Card Holder', price: '£30', img: '/_blob/821956a0b81a0ba7407f9858a6fdf3ee' },
+        { name: 'Sample Everyday Hoodie', price: '£55', img: '/_blob/51da95640970504ff157e0eee66bde59' }
       ]
     };
   }

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Takween Starter — Collection page</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F5F2;color:#16181B;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#16181B}a:hover{color:#3B3F45}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid #1F4FD8;outline-offset:3px}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 100%; background: #F6F5F2">
+
+<header style="background: #FFFFFF; border-bottom: 1px solid #E3E1DC">
+<div style="max-width: 1280px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+<a href="#" style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; text-decoration: none">[STORE LOGO]</a>
+<nav aria-label="Main" style="display: flex; flex-wrap: wrap; gap: 28px; font-size: 15px; font-weight: 600"><a href="#" style="text-decoration: none">Shop</a><a href="#" style="text-decoration: none">New in</a><a href="#" style="text-decoration: none">Sale</a><a href="#" style="text-decoration: none">About</a></nav>
+<span style="font-weight: 700">Cart (2)</span>
+</div>
+</header>
+
+<!-- Collection header -->
+<section style="background: #FFFFFF; border-bottom: 1px solid #E3E1DC">
+<div style="max-width: 1280px; margin: 0 auto; padding: 32px 24px 36px; display: flex; flex-direction: column; gap: 10px">
+<nav aria-label="Breadcrumb" style="font-size: 13px; color: #5A5F66"><a href="#" style="color: #5A5F66">Home</a> / <span aria-current="page">Apparel</span></nav>
+<h1 style="margin: 0; font-size: 44px; font-weight: 800; letter-spacing: -0.03em">Apparel</h1>
+<p style="margin: 0; max-width: 640px; font-size: 16px; line-height: 1.6; color: #4A4F56">Collection description from Shopify admin. On mobile it clamps to two lines with a “Read more” toggle.</p>
+</div>
+</section>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 32px 24px 72px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start">
+<!-- Filters -->
+<aside aria-label="Filters" style="flex: 1 1 240px; max-width: 280px; display: flex; flex-direction: column">
+<h2 style="margin: 0 0 8px; font-size: 16px; font-weight: 800">Filter</h2>
+<details open="" style="border-top: 1px solid #D6D3CD; padding: 16px 0"><summary style="cursor: pointer; font-weight: 700; font-size: 15px">Availability</summary>
+<div style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px; font-size: 14px">
+<label style="display: flex; gap: 10px; align-items: center"><input type="checkbox" checked="" style="width: 18px; height: 18px; accent-color: #16181B">In stock (18)</label>
+<label style="display: flex; gap: 10px; align-items: center; color: #5A5F66"><input type="checkbox" style="width: 18px; height: 18px; accent-color: #16181B">Out of stock (3)</label>
+</div></details>
+<details open="" style="border-top: 1px solid #D6D3CD; padding: 16px 0"><summary style="cursor: pointer; font-weight: 700; font-size: 15px">Price</summary>
+<div style="display: flex; gap: 8px; margin-top: 12px; align-items: center; font-size: 14px">
+<label style="display: flex; flex-direction: column; gap: 4px; flex: 1">From<input value="£0" style="min-height: 44px; padding: 0 10px; border: 1.5px solid #C9C6BF; border-radius: 8px; font: inherit; width: 100%"></label>
+<label style="display: flex; flex-direction: column; gap: 4px; flex: 1">To<input value="£80" style="min-height: 44px; padding: 0 10px; border: 1.5px solid #C9C6BF; border-radius: 8px; font: inherit; width: 100%"></label>
+</div></details>
+<details open="" style="border-top: 1px solid #D6D3CD; padding: 16px 0"><summary style="cursor: pointer; font-weight: 700; font-size: 15px">Size</summary>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px">
+<span style="min-width: 44px; height: 40px; padding: 0 12px; border: 1.5px solid #C9C6BF; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; background: #FFFFFF">XS</span>
+<span style="min-width: 44px; height: 40px; padding: 0 12px; border: 1.5px solid #C9C6BF; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; background: #FFFFFF">S</span>
+<span style="min-width: 44px; height: 40px; padding: 0 12px; border: 1.5px solid #16181B; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; background: #16181B; color: #FFFFFF">M</span>
+<span style="min-width: 44px; height: 40px; padding: 0 12px; border: 1.5px solid #C9C6BF; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; background: #FFFFFF">L</span>
+<span style="min-width: 44px; height: 40px; padding: 0 12px; border: 1.5px solid #C9C6BF; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; background: #FFFFFF">XL</span>
+</div></details>
+<details style="border-top: 1px solid #D6D3CD; padding: 16px 0"><summary style="cursor: pointer; font-weight: 700; font-size: 15px">Colour</summary></details>
+<details style="border-top: 1px solid #D6D3CD; border-bottom: 1px solid #D6D3CD; padding: 16px 0"><summary style="cursor: pointer; font-weight: 700; font-size: 15px">Product type</summary></details>
+</aside>
+
+<!-- Results -->
+<div style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center">
+<div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+<button style="min-height: 36px; padding: 0 12px; border: 1px solid #C9C6BF; border-radius: 999px; background: #FFFFFF; font: inherit; font-size: 13px; font-weight: 600; display: flex; gap: 6px; align-items: center; cursor: pointer" aria-label="Remove filter: In stock">In stock <span aria-hidden="true">×</span></button>
+<button style="min-height: 36px; padding: 0 12px; border: 1px solid #C9C6BF; border-radius: 999px; background: #FFFFFF; font: inherit; font-size: 13px; font-weight: 600; display: flex; gap: 6px; align-items: center; cursor: pointer" aria-label="Remove filter: Size M">Size: M <span aria-hidden="true">×</span></button>
+<a href="#" style="font-size: 13px; font-weight: 700; margin-left: 4px">Clear all</a>
+</div>
+<div style="display: flex; gap: 14px; align-items: center; font-size: 14px">
+<span role="status" style="color: #5A5F66">12 products</span>
+<label for="sort" style="font-weight: 700">Sort by</label>
+<select id="sort" style="min-height: 44px; padding: 0 12px; border: 1.5px solid #C9C6BF; border-radius: 8px; font: inherit; background: #FFFFFF"><option>Featured</option><option>Price, low to high</option><option>Price, high to low</option><option>Newest</option></select>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 28px 20px">
+<sc-for list="{{products}}" as="p" hint-placeholder-count="9">
+<article style="display: flex; flex-direction: column; gap: 10px">
+<div style="position: relative; aspect-ratio: 4 / 5; border-radius: 12px; background: {{p.tone}}; display: flex; align-items: center; justify-content: center">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6B7078">Product image</span>
+<sc-if value="{{p.badge}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; top: 12px; left: 12px; padding: 4px 10px; border-radius: 999px; background: {{p.badgeBg}}; color: #FFFFFF; font-size: 12px; font-weight: 700">{{p.badge}}</span></sc-if>
+</div>
+<h3 style="margin: 0; font-size: 15px; font-weight: 700; line-height: 1.35"><a href="#" style="text-decoration: none">{{p.name}}</a></h3>
+<div style="display: flex; gap: 8px; align-items: baseline; font-size: 15px"><span style="font-weight: 700; color: {{p.priceColor}}">{{p.price}}</span><sc-if value="{{p.compare}}" hint-placeholder-val="{{ false }}"><s style="color: #5A5F66; font-size: 14px">{{p.compare}}</s></sc-if></div>
+</article>
+</sc-for>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 16px">
+<p style="margin: 0; font-size: 14px; color: #5A5F66">Showing 9 of 12 products</p>
+<div style="width: 220px; height: 4px; border-radius: 2px; background: #E3E1DC"><div style="width: 75%; height: 4px; border-radius: 2px; background: #16181B"></div></div>
+<a href="#" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 32px; border: 1.5px solid #16181B; border-radius: 8px; font-weight: 700; text-decoration: none; margin-top: 6px">Load more</a>
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var tones = ['#E7E2D9', '#D9DDE3', '#E4DCD6', '#D8E0D8'];
+    var items = [
+      ['Sample Organic Cotton Tee', '£24.00', '', ''],
+      ['Sample Relaxed Overshirt', '£45.00', '£60.00', '-25%'],
+      ['Sample Merino Crew Jumper', '£68.00', '', 'New'],
+      ['Sample Utility Trousers', '£52.00', '', ''],
+      ['Sample Linen Shirt', '£38.00', '£48.00', 'Sale'],
+      ['Sample Rib Knit Vest', '£29.00', '', 'Sold out'],
+      ['Sample Everyday Hoodie', '£55.00', '', ''],
+      ['Sample Pleated Chinos', '£49.00', '', ''],
+      ['Sample Quilted Jacket', '£89.00', '£110.00', 'Sale']
+    ];
+    return {
+      products: items.map(function (it, i) {
+        var sale = it[2] !== '';
+        var bg = it[3] === 'Sold out' ? '#3D4148' : (it[3] === 'New' ? '#1F4FD8' : '#B42318');
+        return { name: it[0], price: it[1], compare: it[2], badge: it[3], badgeBg: bg, priceColor: sale ? '#B42318' : '#16181B', tone: tones[i % 4] };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

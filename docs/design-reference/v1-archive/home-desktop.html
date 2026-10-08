@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Takween Starter — Homepage</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F6F5F2;color:#16181B;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#16181B}a:hover{color:#3B3F45}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid #1F4FD8;outline-offset:3px}
+.tk-nav{display:flex}
+@media (max-width:900px){.tk-nav{display:none}}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 100%; background: #F6F5F2">
+
+<!-- Announcement bar -->
+<div style="background: #16181B; color: #F6F5F2; font-size: 13px; font-weight: 500; letter-spacing: 0.01em">
+<div style="max-width: 1280px; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; justify-content: center; gap: 16px">
+<button aria-label="Previous announcement" style="background: none; border: 0; color: #F6F5F2; width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<a href="#" style="color: #F6F5F2; text-decoration: underline; text-underline-offset: 3px">Free UK delivery on orders over £50 — shop new arrivals</a>
+<button aria-label="Next announcement" style="background: none; border: 0; color: #F6F5F2; width: 32px; height: 32px; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg></button>
+</div>
+</div>
+
+<!-- Header -->
+<header style="background: #FFFFFF; border-bottom: 1px solid #E3E1DC">
+<div style="max-width: 1280px; margin: 0 auto; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+<a href="#" style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em; text-decoration: none">[STORE LOGO]</a>
+<nav class="tk-nav" aria-label="Main" style="gap: 28px; font-size: 15px; font-weight: 600">
+<a href="#" style="text-decoration: none; display: flex; align-items: center; gap: 4px">Shop <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a>
+<a href="#" style="text-decoration: none">New in</a>
+<a href="#" style="text-decoration: none">Sale</a>
+<a href="#" style="text-decoration: none">About</a>
+<a href="#" style="text-decoration: none">FAQ</a>
+<a href="#" style="text-decoration: none">Contact</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 4px">
+<a href="#" aria-label="Search" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></a>
+<a href="#" aria-label="Account" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg></a>
+<a href="#" aria-label="Cart, 2 items" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; position: relative"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 8z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg><span style="position: absolute; top: 6px; right: 4px; min-width: 18px; height: 18px; border-radius: 9px; background: {{accent}}; color: #FFFFFF; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span></a>
+</div>
+</div>
+</header>
+
+<main>
+<!-- Hero -->
+<section style="max-width: 1280px; margin: 0 auto; padding: 24px 24px 0">
+<div style="position: relative; min-height: 560px; border-radius: {{radius}}px; overflow: hidden; background: #D7D3CB; display: flex; align-items: flex-end">
+<div style="position: absolute; inset: 0; background: repeating-linear-gradient(135deg, #D7D3CB 0 22px, #D1CCC3 22px 44px)"></div>
+<span style="position: absolute; top: 20px; right: 24px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #5A5F66">Hero image · desktop + mobile crop</span>
+<div style="position: relative; margin: 48px; max-width: 560px; background: #FFFFFF; padding: 40px; border-radius: {{radius}}px; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: {{accent}}">New season</span>
+<h1 style="margin: 0; font-size: 52px; line-height: 1.04; font-weight: 800; letter-spacing: -0.03em">Everyday essentials, made to last.</h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.6; color: #4A4F56">A hero section with configurable image, overlay, content position, alignment and up to two buttons.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px">
+<a href="#" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 28px; background: {{accent}}; color: #FFFFFF; border-radius: {{btnRadius}}px; font-weight: 700; font-size: 15px; text-decoration: none">Shop new arrivals</a>
+<a href="#" style="display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 28px; border: 1.5px solid #16181B; color: #16181B; border-radius: {{btnRadius}}px; font-weight: 700; font-size: 15px; text-decoration: none">Explore collections</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Trust / multicolumn -->
+<section aria-label="Why shop with us" style="max-width: 1280px; margin: 0 auto; padding: 40px 24px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
+<sc-for list="{{trust}}" as="t" hint-placeholder-count="4">
+<div style="display: flex; gap: 14px; align-items: flex-start; padding: 20px; background: #FFFFFF; border: 1px solid #E3E1DC; border-radius: {{radius}}px">
+<span style="flex: none; width: 40px; height: 40px; border-radius: 20px; background: #ECEFFA; color: {{accent}}; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 15px; font-weight: 700">{{t.title}}</h2>
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #5A5F66">{{t.text}}</p>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<!-- Featured collection -->
+<section style="max-width: 1280px; margin: 0 auto; padding: 40px 24px 56px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 28px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: {{accent}}">Featured collection</span>
+<h2 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">Best sellers</h2>
+</div>
+<a href="#" style="font-weight: 700; font-size: 15px; text-underline-offset: 4px">View all</a>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 24px">
+<sc-for list="{{products}}" as="p" hint-placeholder-count="4">
+<article style="display: flex; flex-direction: column; gap: 12px; position: relative">
+<div style="position: relative; aspect-ratio: 4 / 5; border-radius: {{radius}}px; overflow: hidden; background: {{p.tone}}; display: flex; align-items: center; justify-content: center">
+<span style="font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6B7078">Product image</span>
+<div style="position: absolute; top: 12px; left: 12px; display: flex; gap: 6px">
+<sc-if value="{{p.sale}}" hint-placeholder-val="{{ true }}"><span style="padding: 4px 10px; border-radius: 999px; background: #B42318; color: #FFFFFF; font-size: 12px; font-weight: 700">{{p.saleLabel}}</span></sc-if>
+<sc-if value="{{p.soldOut}}" hint-placeholder-val="{{ false }}"><span style="padding: 4px 10px; border-radius: 999px; background: #3D4148; color: #FFFFFF; font-size: 12px; font-weight: 700">Sold out</span></sc-if>
+<sc-if value="{{p.custom}}" hint-placeholder-val="{{ false }}"><span style="padding: 4px 10px; border-radius: 999px; background: #FFFFFF; color: #16181B; font-size: 12px; font-weight: 700; border: 1px solid #E3E1DC">{{p.custom}}</span></sc-if>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #5A5F66">Takween Sample Co.</span>
+<h3 style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.35"><a href="#" style="text-decoration: none">{{p.name}}</a></h3>
+<div style="display: flex; gap: 8px; align-items: baseline; font-size: 15px">
+<span style="font-weight: 700; color: {{p.priceColor}}">{{p.price}}</span>
+<sc-if value="{{p.compare}}" hint-placeholder-val="{{ true }}"><s style="color: #5A5F66; font-size: 14px">{{p.compare}}</s></sc-if>
+</div>
+<div style="display: flex; gap: 6px; align-items: center">
+<sc-for list="{{p.swatches}}" as="s" hint-placeholder-count="3"><span style="width: 16px; height: 16px; border-radius: 8px; background: {{s}}; border: 1px solid rgba(0,0,0,0.15)"></span></sc-for>
+<span style="font-size: 12px; color: #5A5F66">{{p.more}}</span>
+</div>
+</div>
+</article>
+</sc-for>
+</div>
+</section>
+
+<!-- Image with text -->
+<section style="background: #FFFFFF; border-top: 1px solid #E3E1DC; border-bottom: 1px solid #E3E1DC">
+<div style="max-width: 1280px; margin: 0 auto; padding: 72px 24px; display: flex; flex-wrap: wrap; gap: 56px; align-items: center">
+<div style="flex: 1 1 420px; aspect-ratio: 5 / 4; border-radius: {{radius}}px; background: repeating-linear-gradient(45deg, #E4DCD6 0 18px, #DED5CE 18px 36px); display: flex; align-items: center; justify-content: center"><span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6B7078">Image · reversible layout</span></div>
+<div style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 18px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: {{accent}}">Our approach</span>
+<h2 style="margin: 0; font-size: 38px; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em">Thoughtful products, fewer compromises.</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.65; color: #4A4F56">Image-with-text section: swap image side, set image width and mobile order, and add a short list of points.</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 15px; font-weight: 600">
+<li style="display: flex; gap: 10px; align-items: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>Responsibly sourced materials</li>
+<li style="display: flex; gap: 10px; align-items: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>Designed for daily use</li>
+<li style="display: flex; gap: 10px; align-items: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1F7A4D" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>30-day easy returns</li>
+</ul>
+<div><a href="#" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 28px; background: #16181B; color: #FFFFFF; border-radius: {{btnRadius}}px; font-weight: 700; font-size: 15px; text-decoration: none">Read our story</a></div>
+</div>
+</div>
+</section>
+
+<!-- Promo split -->
+<section style="max-width: 1280px; margin: 0 auto; padding: 64px 24px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px">
+<div style="min-height: 360px; border-radius: {{radius}}px; background: #16181B; color: #F6F5F2; padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #AFC2F7">Limited time</span>
+<h2 style="margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.02em">Up to 30% off selected styles</h2>
+<div><a href="#" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; background: #F6F5F2; color: #16181B; border-radius: {{btnRadius}}px; font-weight: 700; font-size: 15px; text-decoration: none">Shop the sale</a></div>
+</div>
+<div style="min-height: 360px; border-radius: {{radius}}px; background: repeating-linear-gradient(135deg, #D9DDE3 0 20px, #D2D7DE 20px 40px); padding: 40px; display: flex; flex-direction: column; justify-content: flex-end; gap: 14px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #3B3F45">Home &amp; Living</span>
+<h2 style="margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.02em">Refresh your space</h2>
+<div><a href="#" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; background: #16181B; color: #FFFFFF; border-radius: {{btnRadius}}px; font-weight: 700; font-size: 15px; text-decoration: none">Discover more</a></div>
+</div>
+</div>
+</section>
+
+<!-- Testimonials -->
+<section style="background: #ECEAE5">
+<div style="max-width: 1280px; margin: 0 auto; padding: 72px 24px">
+<div style="display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; margin-bottom: 36px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: {{accent}}">Testimonials</span>
+<h2 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">What customers say</h2>
+<p style="margin: 0; font-size: 13px; color: #4A4F56">Sample content for theme demonstration</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px">
+<sc-for list="{{reviews}}" as="r" hint-placeholder-count="3">
+<figure style="margin: 0; background: #FFFFFF; border-radius: {{radius}}px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<div aria-label="Rated 5 out of 5" style="display: flex; gap: 3px; color: #B7791F"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg></div>
+<blockquote style="margin: 0; font-size: 17px; line-height: 1.6; font-weight: 500">{{r.quote}}</blockquote>
+<figcaption style="font-size: 14px; color: #5A5F66"><strong style="color: #16181B">{{r.name}}</strong> · {{r.place}}</figcaption>
+</figure>
+</sc-for>
+</div>
+</div>
+</section>
+
+<!-- Logo strip -->
+<section aria-label="As featured in" style="max-width: 1280px; margin: 0 auto; padding: 48px 24px">
+<p style="margin: 0 0 20px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #5A5F66">As featured in</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px">
+<sc-for list="{{logos}}" as="l" hint-placeholder-count="6"><div style="height: 64px; border: 1px dashed #C9C6BF; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #8A8F96; letter-spacing: 0.04em">{{l}}</div></sc-for>
+</div>
+</section>
+
+<!-- FAQ -->
+<section style="max-width: 1280px; margin: 0 auto; padding: 24px 24px 72px; display: flex; flex-wrap: wrap; gap: 48px">
+<div style="flex: 1 1 320px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: {{accent}}">Help</span>
+<h2 style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.02em">Frequently asked questions</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #4A4F56">Questions come from section blocks or from FAQ metaobjects.</p>
+</div>
+<div style="flex: 2 1 520px; display: flex; flex-direction: column">
+<details open="" style="border-top: 1px solid #D6D3CD; padding: 20px 0"><summary style="cursor: pointer; font-size: 17px; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px">How long does delivery take?<span aria-hidden="true">−</span></summary><p style="margin: 12px 0 0; font-size: 15px; line-height: 1.65; color: #4A4F56">[YOUR DELIVERY TIMES] — answer text set per block or metaobject.</p></details>
+<details style="border-top: 1px solid #D6D3CD; padding: 20px 0"><summary style="cursor: pointer; font-size: 17px; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px">What is your returns policy?<span aria-hidden="true">+</span></summary></details>
+<details style="border-top: 1px solid #D6D3CD; padding: 20px 0"><summary style="cursor: pointer; font-size: 17px; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px">Do you ship internationally?<span aria-hidden="true">+</span></summary></details>
+<details style="border-top: 1px solid #D6D3CD; border-bottom: 1px solid #D6D3CD; padding: 20px 0"><summary style="cursor: pointer; font-size: 17px; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px">How do I track my order?<span aria-hidden="true">+</span></summary></details>
+</div>
+</section>
+
+<!-- Newsletter -->
+<section style="max-width: 1280px; margin: 0 auto; padding: 0 24px 72px">
+<div style="background: {{accent}}; color: #FFFFFF; border-radius: {{radius}}px; padding: 56px 40px; display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: space-between">
+<div style="flex: 1 1 360px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.02em">Join the newsletter</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #E3E9FB">New arrivals, offers and stories. Unsubscribe any time.</p>
+</div>
+<form style="flex: 1 1 420px; display: flex; flex-direction: column; gap: 8px">
+<label for="nl-email" style="font-size: 13px; font-weight: 700">Email address</label>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<input id="nl-email" type="email" autocomplete="email" placeholder="you@example.com" style="flex: 1 1 220px; min-height: 52px; padding: 0 16px; border: 0; border-radius: {{btnRadius}}px; font: inherit; font-size: 15px">
+<button type="button" style="min-height: 52px; padding: 0 28px; border: 0; border-radius: {{btnRadius}}px; background: #16181B; color: #FFFFFF; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer">Subscribe</button>
+</div>
+<p style="margin: 0; font-size: 12px; color: #E3E9FB">By subscribing you agree to our <a href="#" style="color: #FFFFFF">privacy policy</a>.</p>
+</form>
+</div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer style="background: #16181B; color: #C9CCD1">
+<div style="max-width: 1280px; margin: 0 auto; padding: 64px 24px 32px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 20px; font-weight: 800; color: #FFFFFF">[STORE LOGO]</span>
+<p style="margin: 0; font-size: 14px; line-height: 1.7">[BUSINESS ADDRESS]<br>[PHONE]<br>[EMAIL]</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.7">Mon–Fri, 9am–5pm</p>
+</div>
+<sc-for list="{{footerMenus}}" as="m" hint-placeholder-count="3">
+<nav aria-label="{{m.title}}" style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 14px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.04em">{{m.title}}</h2>
+<sc-for list="{{m.links}}" as="lnk" hint-placeholder-count="4"><a href="#" style="color: #C9CCD1; font-size: 14px; text-decoration: none">{{lnk}}</a></sc-for>
+</nav>
+</sc-for>
+</div>
+<div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid #33363B; display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; font-size: 13px">
+<span>© 2026 [STORE NAME]. All rights reserved.</span>
+<div style="display: flex; gap: 8px"><span style="padding: 4px 10px; border: 1px solid #44474D; border-radius: 4px">VISA</span><span style="padding: 4px 10px; border: 1px solid #44474D; border-radius: 4px">MC</span><span style="padding: 4px 10px; border: 1px solid #44474D; border-radius: 4px">AMEX</span><span style="padding: 4px 10px; border: 1px solid #44474D; border-radius: 4px">PayPal</span></div>
+</div>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#1F4FD8","options":["#1F4FD8","#16181B","#1F7A4D","#9A3412"]},"radius":{"editor":"range","default":12,"min":0,"max":24,"step":2,"unit":"px"},"btnRadius":{"editor":"range","default":8,"min":0,"max":28,"step":2,"unit":"px"},"$preview":{"width":1440,"height":5000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var products = [
+      { name: 'Sample Organic Cotton Tee', price: '£24.00', compare: '', sale: false, soldOut: false, custom: 'New', tone: '#E7E2D9', swatches: ['#F4F1EA', '#22252A', '#7A8B6F'], more: '+2' },
+      { name: 'Sample Relaxed Overshirt', price: '£45.00', compare: '£60.00', sale: true, saleLabel: '-25%', soldOut: false, custom: '', tone: '#D9DDE3', swatches: ['#3F4A5A', '#C9B79C'], more: '' },
+      { name: 'Sample Ceramic Mug Set', price: '£28.00', compare: '', sale: false, soldOut: true, custom: '', tone: '#E4DCD6', swatches: ['#EDE7DD'], more: '' },
+      { name: 'Sample Canvas Tote Bag', price: '£18.00', compare: '£22.00', sale: true, saleLabel: 'Sale', soldOut: false, custom: '', tone: '#D8E0D8', swatches: ['#E9E1CF', '#22252A', '#5B6B4E'], more: '' }
+    ];
+    products.forEach(function (p) { p.priceColor = p.sale ? '#B42318' : '#16181B'; });
+    return {
+      accent: this.props.accent ?? '#1F4FD8',
+      radius: this.props.radius ?? 12,
+      btnRadius: this.props.btnRadius ?? 8,
+      products: products,
+      trust: [
+        { title: 'Free delivery', text: 'On UK orders over £50' },
+        { title: '30-day returns', text: 'Simple, no-fuss returns' },
+        { title: 'Secure checkout', text: 'Powered by Shopify' },
+        { title: 'Real support', text: 'Reply within one working day' }
+      ],
+      reviews: [
+        { quote: '“Great quality and quick delivery. Exactly as described.”', name: 'Sample Customer', place: 'London' },
+        { quote: '“The fit is perfect and the fabric feels premium.”', name: 'Sample Customer', place: 'Manchester' },
+        { quote: '“Easy returns process and very helpful support team.”', name: 'Sample Customer', place: 'Leeds' }
+      ],
+      logos: ['LOGO', 'LOGO', 'LOGO', 'LOGO', 'LOGO', 'LOGO'],
+      footerMenus: [
+        { title: 'Shop', links: ['Apparel', 'Home & Living', 'Accessories', 'Sale'] },
+        { title: 'Help', links: ['Shipping', 'Returns', 'FAQ', 'Contact'] },
+        { title: 'Company', links: ['About', 'Contact', 'Privacy policy', 'Terms'] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
