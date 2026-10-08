@@ -114,6 +114,10 @@
     "collection_title": "Your collection's name"
   },
   "products": {
+    "cart": {
+      "free_shipping_progress_html": "You're <strong>{{ amount }}</strong> away from free delivery",
+      "free_shipping_reached": "You've unlocked free delivery"
+    },
     "product": {
       "add_to_cart": "Add to cart",
       "choose_options": "Choose options",

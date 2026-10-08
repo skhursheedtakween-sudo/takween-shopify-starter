@@ -17,6 +17,7 @@
   }
 </style>
 
+{{ 'tk-cart.css' | asset_url | stylesheet_tag }}
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
   <div id="CartDrawer" class="cart-drawer">
     <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
@@ -74,6 +75,7 @@
           </span>
         </button>
       </div>
+      {%- render 'tk-free-shipping-bar' -%}
       <cart-drawer-items
         view-event-payload="{{ cart | standard_event_data: 'view', context: 'dialog' | escape }}"
         view-event-trigger="manual"

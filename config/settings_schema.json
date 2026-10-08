@@ -1729,5 +1729,17 @@
         "default": false
       }
     ]
+  },
+  {
+    "name": "Takween — Cart",
+    "settings": [
+      {
+        "type": "number",
+        "id": "tk_free_shipping_threshold",
+        "label": "Free delivery threshold (0 = off)",
+        "default": 50,
+        "info": "Amount in your store's default currency. Shown as a progress bar in the cart."
+      }
+    ]
   }
 ]

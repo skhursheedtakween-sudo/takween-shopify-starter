@@ -1,5 +1,6 @@
 {{ 'component-cart.css' | asset_url | stylesheet_tag }}
 {{ 'component-totals.css' | asset_url | stylesheet_tag }}
+{{ 'tk-cart.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
 {{ 'component-discounts.css' | asset_url | stylesheet_tag }}
 
@@ -58,6 +59,7 @@
                   {%- endif -%}
                 </div>
 
+                {%- render 'tk-free-shipping-bar' -%}
                 <div class="totals">
                   <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
                   <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>

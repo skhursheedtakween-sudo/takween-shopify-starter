@@ -1,0 +1,34 @@
+/* tk-cart.css — free-shipping progress bar for cart drawer + cart page. 1rem = 10px in Dawn. */
+.tk-ship-bar {
+  padding: 1.4rem 2rem;
+  background: var(--tk-color-paper, #FBF9F5);
+  border-bottom: 1px solid var(--tk-color-border, #DDD5C9);
+}
+.cart__footer .tk-ship-bar,
+.totals + .tk-ship-bar,
+.tk-ship-bar--cart-page {
+  border: 1px solid var(--tk-color-border, #DDD5C9);
+  border-radius: var(--tk-radius-card, 4px);
+  margin-bottom: 1.6rem;
+  background: transparent;
+}
+.tk-ship-bar--hidden { display: none; }
+.tk-ship-bar__text {
+  margin: 0 0 0.8rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--tk-color-ink, #1C1A17);
+}
+.tk-ship-bar__text strong { font-weight: 700; }
+.tk-ship-bar__track {
+  height: 0.6rem;
+  border-radius: 999px;
+  background: var(--tk-color-border, #DDD5C9);
+  overflow: hidden;
+}
+.tk-ship-bar__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--tk-color-success, #3F5A2E);
+  transition: width var(--tk-transition, 180ms ease);
+}
