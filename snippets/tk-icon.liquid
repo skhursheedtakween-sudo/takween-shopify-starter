@@ -17,6 +17,7 @@
 {%- liquid
   assign icon_name = icon | strip
   assign icon_size = size | default: 20
+  assign icon_stroke = stroke_width | default: 1.8
   assign is_hidden = aria_hidden | default: true
 -%}
 
@@ -27,7 +28,7 @@
   viewBox="0 0 24 24"
   fill="none"
   stroke="currentColor"
-  stroke-width="1.8"
+  stroke-width="{{ icon_stroke }}"
   stroke-linecap="round"
   stroke-linejoin="round"
   {% if is_hidden %}

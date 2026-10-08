@@ -17,10 +17,10 @@
     >
       <span>
         <span class="svg-wrapper">
-          {{- 'icon-search.svg' | inline_asset_content -}}
+          {% render 'tk-icon', icon: 'search', size: 22, stroke_width: 1.6 %}
         </span>
         <span class="svg-wrapper header__icon-close">
-          {{- 'icon-close.svg' | inline_asset_content -}}
+          {% render 'tk-icon', icon: 'close', size: 22, stroke_width: 1.6 %}
         </span>
       </span>
     </summary>

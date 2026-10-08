@@ -16,8 +16,12 @@
       aria-label="{{ 'sections.header.menu' | t }}"
     >
       <span>
-        {{- 'icon-hamburger.svg' | inline_asset_content -}}
-        {{- 'icon-close.svg' | inline_asset_content -}}
+        <span class="svg-wrapper">
+          {% render 'tk-icon', icon: 'menu', size: 22, stroke_width: 1.6 %}
+        </span>
+        <span class="svg-wrapper header__icon-close">
+          {% render 'tk-icon', icon: 'close', size: 22, stroke_width: 1.6 %}
+        </span>
       </span>
     </summary>
     <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }}">

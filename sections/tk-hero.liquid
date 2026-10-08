@@ -35,12 +35,19 @@
   endcase
 
   assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0
+  assign box_opacity_alpha = section.settings.content_box_opacity | default: 78 | divided_by: 100.0
+  assign box_blur_px = section.settings.content_box_blur | default: 12
 -%}
 
 <div class="tk-hero-wrapper{% if section.settings.layout == 'contained' %} tk-container tk-hero-wrapper--contained{% endif %}">
   <div
     class="tk-hero tk-hero--h-{{ section.settings.height }} tk-hero--align-{{ section.settings.text_alignment }} tk-hero--pos-{{ section.settings.content_position }}{% if section.settings.mobile_layout == 'below' %} tk-hero--mobile-below{% else %} tk-hero--mobile-overlay{% endif %} color-{{ section.settings.color_scheme }} gradient"
-    style="--tk-hero-min-height: {{ min_h_desktop }}; --tk-hero-overlay: rgba(0, 0, 0, {{ overlay_alpha }});"
+    style="
+      --tk-hero-min-height: {{ min_h_desktop }};
+      --tk-hero-overlay: rgba(0, 0, 0, {{ overlay_alpha }});
+      --tk-hero-box-opacity: {{ box_opacity_alpha }};
+      --tk-hero-box-blur: {{ box_blur_px }}px;
+    "
   >
     <!-- Background Imagery -->
     <div class="tk-hero__media">
@@ -85,7 +92,7 @@
 
     <!-- Content Area -->
     <div class="tk-hero__content-container">
-      <div class="tk-hero__content-box{% if section.settings.show_content_box %} tk-hero__content-box--card{% endif %}">
+      <div class="tk-hero__content-box{% if section.settings.show_content_box %} tk-hero__content-box--card{% if section.settings.content_box_border %} tk-hero__content-box--border{% endif %}{% if section.settings.content_box_opacity < 60 %} tk-hero__content-box--subtle-shadow{% endif %}{% endif %}">
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'eyebrow' -%}
@@ -216,11 +223,27 @@
   }
 
   .tk-hero__content-box--card {
-    background-color: var(--tk-color-surface);
+    background-color: rgb(var(--color-background) / 0.92);
     color: var(--tk-color-ink);
     border-radius: var(--tk-radius-card);
     padding: 40px;
     box-shadow: var(--tk-shadow-md);
+  }
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .tk-hero__content-box--card {
+      background: rgb(var(--color-background) / var(--tk-hero-box-opacity, 0.78));
+      backdrop-filter: blur(var(--tk-hero-box-blur, 12px)) saturate(140%);
+      -webkit-backdrop-filter: blur(var(--tk-hero-box-blur, 12px)) saturate(140%);
+    }
+  }
+
+  .tk-hero__content-box--border {
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .tk-hero__content-box--subtle-shadow {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
   }
 
   .tk-hero__heading {
@@ -238,29 +261,58 @@
     gap: 12px;
   }
 
-  /* Mobile Layout */
+  /* Mobile Layout (< 750px) */
   @media screen and (max-width: 749px) {
-    .tk-hero--mobile-below {
+    .tk-hero {
+      min-height: 520px !important;
+      position: relative;
+    }
+
+    .tk-hero__media {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .tk-hero__content-container {
+      position: relative;
+      min-height: 520px;
+      padding: 16px !important;
+      display: flex;
       flex-direction: column;
-      min-height: auto;
-    }
-
-    .tk-hero--mobile-below .tk-hero__media {
-      position: relative;
-      height: 260px;
-    }
-
-    .tk-hero--mobile-below .tk-hero__content-container {
-      position: relative;
-      padding: var(--tk-space-5) var(--tk-gutter);
+      justify-content: flex-end !important;
       align-items: stretch !important;
-      justify-content: stretch !important;
+      box-sizing: border-box;
     }
 
-    .tk-hero--mobile-below .tk-hero__content-box--card {
-      padding: var(--tk-space-4);
-      box-shadow: none;
-      border: 1px solid var(--tk-color-border);
+    .tk-hero__content-box {
+      max-width: 100%;
+      margin: 0 !important;
+    }
+
+    .tk-hero__content-box--card {
+      padding: 24px;
+      box-shadow: var(--tk-shadow-sm);
+    }
+
+    .tk-hero__heading.tk-h1,
+    .tk-hero__heading.tk-h2 {
+      font-size: 34px !important;
+      line-height: 1.15;
+    }
+
+    .tk-hero__buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .tk-hero__buttons .tk-btn {
+      width: 100%;
+      justify-content: center;
     }
   }
 </style>
@@ -346,6 +398,33 @@
       "type": "checkbox",
       "id": "show_content_box",
       "label": "Show content in card box",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "content_box_opacity",
+      "min": 40,
+      "max": 100,
+      "step": 2,
+      "unit": "%",
+      "label": "Content box opacity",
+      "info": "Values below 60% automatically apply a subtle text shadow to preserve WCAG 4.5:1 legibility against busy imagery.",
+      "default": 78
+    },
+    {
+      "type": "range",
+      "id": "content_box_blur",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Background blur",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "content_box_border",
+      "label": "Box border",
       "default": true
     },
     {

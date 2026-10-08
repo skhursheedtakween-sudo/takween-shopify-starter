@@ -59,6 +59,9 @@
         "content_position": "bottom-left",
         "text_alignment": "left",
         "show_content_box": true,
+        "content_box_opacity": 78,
+        "content_box_blur": 12,
+        "content_box_border": true,
         "color_scheme": "scheme-1",
         "mobile_layout": "overlay"
       }
