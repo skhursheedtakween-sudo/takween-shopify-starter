@@ -1,0 +1,60 @@
+{%- comment -%}
+  sections/tk-page-header.liquid — reusable page header (brief §4 content pages).
+  Title (h1, defaults to page title), intro, breadcrumb, alignment, optional background image.
+{%- endcomment -%}
+{{ 'tk-pages.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign title = section.settings.title | default: page.title
+  assign has_image = false
+  if section.settings.image != blank
+    assign has_image = true
+  endif
+-%}
+<section
+  class="tk-page-header tk-page-header--{{ section.settings.alignment }}{% if has_image %} tk-page-header--image{% endif %} color-{{ section.settings.color_scheme }} gradient"
+  style="--tk-pt: {{ section.settings.padding_top }}px; --tk-pb: {{ section.settings.padding_bottom }}px;"
+>
+  {%- if has_image -%}
+    <div class="tk-page-header__media">
+      {{ section.settings.image | image_url: width: 2400 | image_tag: widths: '750,1100,1500,2000,2400', sizes: '100vw', loading: 'eager', fetchpriority: 'high', alt: '' }}
+      <span class="tk-page-header__scrim" aria-hidden="true"></span>
+    </div>
+  {%- endif -%}
+  <div class="tk-container tk-page-header__inner">
+    {%- if section.settings.show_breadcrumb -%}
+      <nav class="tk-breadcrumb" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}">{{ 'general.breadcrumbs.home' | t | default: 'Home' }}</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{{ title | escape }}</span>
+      </nav>
+    {%- endif -%}
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="tk-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+    {%- endif -%}
+    <h1 class="tk-page-header__title">{{ title | escape }}</h1>
+    {%- if section.settings.intro != blank -%}
+      <div class="tk-page-header__intro tk-rte">{{ section.settings.intro }}</div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page header",
+  "tag": "section",
+  "class": "tk-section-page-header",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "title", "label": "Title", "info": "Leave blank to use the page title." },
+    { "type": "richtext", "id": "intro", "label": "Intro text" },
+    { "type": "checkbox", "id": "show_breadcrumb", "label": "Show breadcrumb", "default": true },
+    { "type": "select", "id": "alignment", "label": "Alignment", "options": [ {"value":"left","label":"Left"}, {"value":"center","label":"Centre"} ], "default": "center" },
+    { "type": "image_picker", "id": "image", "label": "Background image (optional)" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-2" },
+    { "type": "header", "content": "t:sections.all.padding.section_padding_heading" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "t:sections.all.padding.padding_top", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "t:sections.all.padding.padding_bottom", "default": 48 }
+  ],
+  "presets": [ { "name": "Page header" } ]
+}
+{% endschema %}

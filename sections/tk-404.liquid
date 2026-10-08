@@ -1,0 +1,54 @@
+{%- comment -%}
+  sections/tk-404.liquid — branded not-found page (brief §4).
+  Heading, helpful text, search form, routes back to shopping + popular collections.
+{%- endcomment -%}
+{{ 'tk-pages.css' | asset_url | stylesheet_tag }}
+<section
+  class="tk-404 tk-section color-{{ section.settings.color_scheme }} gradient"
+  style="--tk-pt: {{ section.settings.padding_top }}px; --tk-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="tk-container tk-404__inner">
+    <span class="tk-eyebrow">{{ 'tk.not_found.eyebrow' | t }}</span>
+    <h1 class="tk-404__title">{{ section.settings.heading }}</h1>
+    <p class="tk-404__text">{{ section.settings.text | escape }}</p>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="tk-404__search">
+      <label for="tk-404-search" class="visually-hidden">{{ 'general.search.search' | t }}</label>
+      <input type="search" id="tk-404-search" name="q" placeholder="{{ 'general.search.search' | t }}" class="tk-404__input">
+      <button type="submit" class="tk-btn tk-btn--primary">{{ 'general.search.search' | t }}</button>
+    </form>
+
+    <div class="tk-404__actions">
+      {%- render 'tk-button', label: section.settings.button_label, url: routes.root_url, style: 'secondary' -%}
+      <a href="{{ routes.all_products_collection_url }}" class="tk-404__link">{{ 'tk.not_found.shop_all' | t }}</a>
+    </div>
+
+    {%- if section.settings.collection_list != blank and section.settings.collection_list.count > 0 -%}
+      <div class="tk-404__collections">
+        <p class="tk-404__collections-label">{{ 'tk.not_found.popular' | t }}</p>
+        <div class="tk-404__chips">
+          {%- for col in section.settings.collection_list -%}
+            <a href="{{ col.url }}" class="tk-pill tk-404__chip">{{ col.title | escape }}</a>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 page",
+  "tag": "section",
+  "class": "tk-section-404",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Page not found" },
+    { "type": "text", "id": "text", "label": "Text", "default": "The page you’re looking for doesn’t exist or has moved. Try a search or head back to the shop." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Back to home" },
+    { "type": "collection_list", "id": "collection_list", "label": "Popular collections", "limit": 4 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "t:sections.all.padding.padding_top", "default": 120 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "label": "t:sections.all.padding.padding_bottom", "default": 120 }
+  ]
+}
+{% endschema %}

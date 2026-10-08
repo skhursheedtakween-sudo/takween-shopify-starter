@@ -48,6 +48,11 @@
       "search": "Search",
       "reset": "Clear search term"
     },
+    "not_found": {
+      "eyebrow": "Error 404",
+      "shop_all": "Shop all products",
+      "popular": "Popular collections"
+    },
     "cart": {
       "view": "View cart ({{ count }})",
       "view_empty_cart": "View cart",

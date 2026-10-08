@@ -1,0 +1,55 @@
+/* tk-pages.css — page header, 404, contact. 1rem = 10px in Dawn. */
+.tk-breadcrumb { font-size: 1.3rem; color: var(--tk-color-meta,#6B645B); margin-bottom: 1.2rem; display:flex; gap:.8rem; justify-content:inherit; }
+.tk-breadcrumb a { color: var(--tk-color-meta,#6B645B); text-decoration:none; }
+.tk-breadcrumb a:hover { color: var(--tk-color-ink,#1C1A17); }
+.tk-page-header { position: relative; padding-top: var(--tk-pt,80px); padding-bottom: var(--tk-pb,48px); }
+.tk-page-header__inner { display:flex; flex-direction:column; gap:1.4rem; max-width: 72rem; }
+.tk-page-header--center .tk-page-header__inner { margin:0 auto; align-items:center; text-align:center; }
+.tk-page-header--center .tk-breadcrumb { justify-content:center; }
+.tk-page-header__title { margin:0; font-family:var(--font-heading-family); font-weight:350; font-size:clamp(4rem,5vw,6.4rem); line-height:1; letter-spacing:-.03em; }
+.tk-page-header__intro { font-size:1.7rem; line-height:1.6; color:var(--tk-color-muted,#4D473F); }
+.tk-page-header--image { color:#fff; min-height:36rem; display:flex; align-items:flex-end; }
+.tk-page-header--image .tk-page-header__title { color:#fff; }
+.tk-page-header__media { position:absolute; inset:0; overflow:hidden; }
+.tk-page-header__media img { width:100%; height:100%; object-fit:cover; }
+.tk-page-header__scrim { position:absolute; inset:0; background:linear-gradient(0deg,rgba(28,26,23,.6),rgba(28,26,23,0) 60%); }
+.tk-page-header--image .tk-page-header__inner { position:relative; }
+
+/* page body rich text (main-page) */
+.tk-page-content { padding: 4.8rem 0 8rem; }
+.tk-page-content .tk-container { max-width: 76rem; }
+.tk-page-content .rte, .tk-page-content .tk-rte { font-size:1.7rem; line-height:1.8; }
+
+/* 404 */
+.tk-404__inner { max-width:60rem; margin:0 auto; text-align:center; display:flex; flex-direction:column; align-items:center; gap:1.6rem; }
+.tk-404__title { margin:0; font-family:var(--font-heading-family); font-weight:300; font-size:clamp(4.8rem,8vw,9rem); line-height:.95; letter-spacing:-.04em; }
+.tk-404__text { margin:0; font-size:1.7rem; line-height:1.6; color:var(--tk-color-muted,#4D473F); max-width:44rem; }
+.tk-404__search { display:flex; gap:1rem; width:100%; max-width:44rem; margin-top:.8rem; }
+.tk-404__input { flex:1; min-height:5.2rem; padding:0 1.6rem; border:1.5px solid var(--tk-color-input-border,#CFC6B8); border-radius:var(--tk-radius-input,.8rem); font:inherit; font-size:1.6rem; background:var(--tk-color-surface,#FBF9F5); }
+.tk-404__actions { display:flex; align-items:center; gap:2rem; flex-wrap:wrap; justify-content:center; }
+.tk-404__link, .tk-404__collections-label { font-size:1.5rem; }
+.tk-404__link { font-weight:500; text-underline-offset:6px; }
+.tk-404__collections { margin-top:2.4rem; }
+.tk-404__collections-label { color:var(--tk-color-meta,#6B645B); margin:0 0 1.2rem; }
+.tk-404__chips { display:flex; flex-wrap:wrap; gap:.8rem; justify-content:center; }
+
+/* contact */
+.tk-contact__grid { display:grid; gap:4.8rem; grid-template-columns:1.4fr 1fr; align-items:start; }
+.tk-contact__grid--left { grid-template-columns:1fr 1.4fr; }
+.tk-contact__grid--left .tk-contact__form-col { order:2; }
+.tk-contact__heading { margin:0 0 2.4rem; }
+.tk-contact__form { display:flex; flex-direction:column; gap:1.6rem; }
+.tk-contact__row { display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; }
+.tk-textarea { min-height:14rem; padding:1.2rem 1.6rem; resize:vertical; line-height:1.5; }
+.tk-contact__form .tk-btn { align-self:flex-start; margin-top:.8rem; }
+.tk-contact__info { display:flex; flex-direction:column; gap:2rem; }
+.tk-contact__info-heading { margin:0 0 .4rem; font-size:1.2rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; }
+.tk-contact__detail { display:flex; align-items:center; gap:1rem; font-size:1.5rem; color:var(--tk-color-muted,#4D473F); }
+.tk-contact__detail a { color:inherit; text-decoration:none; }
+.tk-contact__detail a:hover { color:var(--tk-color-ink,#1C1A17); }
+@media screen and (max-width:749px){
+  .tk-contact__grid, .tk-contact__grid--left { grid-template-columns:1fr; gap:3.2rem; }
+  .tk-contact__grid--left .tk-contact__form-col { order:1; }
+  .tk-contact__row { grid-template-columns:1fr; }
+  .tk-404__search { flex-direction:column; }
+}

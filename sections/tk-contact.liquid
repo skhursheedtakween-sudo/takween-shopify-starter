@@ -1,0 +1,99 @@
+{%- comment -%}
+  sections/tk-contact.liquid — contact form + business info (brief §4).
+  Uses Shopify's {% form 'contact' %}; accessible labels, inline errors, success message.
+{%- endcomment -%}
+{{ 'tk-pages.css' | asset_url | stylesheet_tag }}
+{%- assign fid = 'TkContact-' | append: section.id -%}
+<section
+  class="tk-contact tk-section color-{{ section.settings.color_scheme }} gradient"
+  style="--tk-pt: {{ section.settings.padding_top }}px; --tk-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="tk-container tk-contact__grid tk-contact__grid--{{ section.settings.info_position }}">
+    <div class="tk-contact__form-col">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="tk-h2 tk-contact__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- form 'contact', id: fid, class: 'tk-contact__form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="tk-alert--success" role="status" tabindex="-1">{{ 'templates.contact.form.post_success' | t }}</p>
+        {%- elsif form.errors -%}
+          <p class="tk-field__error-msg" role="alert">{{ 'templates.contact.form.error_heading' | t }}</p>
+        {%- endif -%}
+        <div class="tk-contact__row">
+          <div class="tk-field">
+            <label class="tk-label" for="{{ fid }}-name">{{ 'templates.contact.form.name' | t }}</label>
+            <input class="tk-input" type="text" id="{{ fid }}-name" name="contact[{{ 'templates.contact.form.name' | t }}]" autocomplete="name" value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}">
+          </div>
+          <div class="tk-field">
+            <label class="tk-label" for="{{ fid }}-email">{{ 'templates.contact.form.email' | t }} *</label>
+            <input class="tk-input" type="email" id="{{ fid }}-email" name="contact[email]" autocomplete="email" required spellcheck="false" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" {% if form.errors contains 'email' %}aria-invalid="true" aria-describedby="{{ fid }}-email-error"{% endif %}>
+            {%- if form.errors contains 'email' -%}
+              <span id="{{ fid }}-email-error" class="tk-field__error-msg">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+        <div class="tk-field">
+          <label class="tk-label" for="{{ fid }}-phone">{{ 'templates.contact.form.phone' | t }}</label>
+          <input class="tk-input" type="tel" id="{{ fid }}-phone" name="contact[{{ 'templates.contact.form.phone' | t }}]" autocomplete="tel" value="{% if form.phone %}{{ form.phone }}{% endif %}">
+        </div>
+        <div class="tk-field">
+          <label class="tk-label" for="{{ fid }}-body">{{ 'templates.contact.form.comment' | t }} *</label>
+          <textarea class="tk-input tk-textarea" id="{{ fid }}-body" name="contact[body]" rows="6" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+        </div>
+        <button type="submit" class="tk-btn tk-btn--primary">{{ 'templates.contact.form.send' | t }}</button>
+      {%- endform -%}
+    </div>
+
+    <aside class="tk-contact__info">
+      {%- for block in section.blocks -%}
+        <div class="tk-contact__info-item" {{ block.shopify_attributes }}>
+          {%- case block.type -%}
+            {%- when 'heading' -%}
+              <h3 class="tk-contact__info-heading">{{ block.settings.text | escape }}</h3>
+            {%- when 'text' -%}
+              <div class="tk-rte">{{ block.settings.text }}</div>
+            {%- when 'detail' -%}
+              <div class="tk-contact__detail">
+                {%- if block.settings.icon != blank -%}{% render 'tk-icon', icon: block.settings.icon, size: 18 %}{%- endif -%}
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}">{{ block.settings.text | escape }}</a>
+                {%- else -%}
+                  <span>{{ block.settings.text | escape | newline_to_br }}</span>
+                {%- endif -%}
+              </div>
+          {%- endcase -%}
+        </div>
+      {%- endfor -%}
+    </aside>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "section",
+  "class": "tk-section-contact",
+  "settings": [
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Get in touch" },
+    { "type": "select", "id": "info_position", "label": "Info position (desktop)", "options": [ {"value":"right","label":"Right"}, {"value":"left","label":"Left"} ], "default": "right" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "t:sections.all.padding.padding_top", "default": 72 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "label": "t:sections.all.padding.padding_bottom", "default": 96 }
+  ],
+  "blocks": [
+    { "type": "heading", "name": "Heading", "settings": [ {"type":"text","id":"text","label":"Text","default":"Visit us"} ] },
+    { "type": "text", "name": "Text", "settings": [ {"type":"richtext","id":"text","label":"Text","default":"<p>We reply within one working day.</p>"} ] },
+    { "type": "detail", "name": "Detail (phone/email/address)", "settings": [
+      {"type":"text","id":"icon","label":"Icon","default":"mail","info":"e.g. mail, phone, map-pin, clock"},
+      {"type":"text","id":"text","label":"Text","default":"hello@takweensample.co.uk"},
+      {"type":"url","id":"link","label":"Link (optional)"}
+    ] }
+  ],
+  "presets": [ { "name": "Contact", "blocks": [
+    { "type": "heading" },
+    { "type": "detail", "settings": { "icon": "map-pin", "text": "[Business address]" } },
+    { "type": "detail", "settings": { "icon": "mail", "text": "hello@takweensample.co.uk", "link": "mailto:hello@takweensample.co.uk" } },
+    { "type": "detail", "settings": { "icon": "phone", "text": "+44 20 7946 0991", "link": "tel:+442079460991" } }
+  ] } ]
+}
+{% endschema %}

@@ -1,7 +1,10 @@
 {
   "sections": {
     "main": {
-      "type": "main-404"
+      "type": "tk-404",
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
     }
   },
   "order": [

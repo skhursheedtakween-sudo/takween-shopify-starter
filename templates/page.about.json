@@ -1,0 +1,58 @@
+{
+  "sections": {
+    "header": {
+      "type": "tk-page-header",
+      "settings": {
+        "alignment": "center",
+        "title": "About",
+        "eyebrow": "Our story",
+        "color_scheme": "scheme-2"
+      }
+    },
+    "iwt": {
+      "type": "tk-image-with-text",
+      "settings": {
+        "layout": "editorial",
+        "color_scheme": "scheme-1",
+        "show_borders": true
+      },
+      "blocks": {
+        "e": {
+          "type": "eyebrow",
+          "settings": {
+            "eyebrow": "Our approach"
+          }
+        },
+        "h": {
+          "type": "heading",
+          "settings": {
+            "heading": "Fewer, <em>better</em> things.",
+            "heading_tag": "h2"
+          }
+        },
+        "t": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Share the brand story here. [Sample content]</p>"
+          }
+        }
+      },
+      "block_order": [
+        "e",
+        "h",
+        "t"
+      ]
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "hide_title": true
+      }
+    }
+  },
+  "order": [
+    "header",
+    "iwt",
+    "main"
+  ]
+}

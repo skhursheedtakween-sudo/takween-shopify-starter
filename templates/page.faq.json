@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "header": {
+      "type": "tk-page-header",
+      "settings": {
+        "alignment": "center",
+        "title": "FAQ",
+        "eyebrow": "Help",
+        "color_scheme": "scheme-2"
+      }
+    },
+    "faq": {
+      "type": "tk-faq",
+      "settings": {
+        "layout": "split",
+        "heading": "Questions, <em>answered.</em>",
+        "source": "metaobjects",
+        "open_first": true,
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "header",
+    "faq"
+  ]
+}
