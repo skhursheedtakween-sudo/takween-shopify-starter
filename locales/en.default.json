@@ -539,6 +539,13 @@
     }
   },
   "tk": {
+    "header": {
+      "cart_count": "Cart ({{ count }})"
+    },
+    "footer": {
+      "select_menu": "Select a menu for this column in the Theme Editor.",
+      "rights": "All rights reserved."
+    },
     "general": {
       "sale": "Sale",
       "sold_out": "Sold out",

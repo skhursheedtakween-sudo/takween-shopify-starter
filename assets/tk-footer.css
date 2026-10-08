@@ -1,0 +1,394 @@
+/*
+ * tk-footer.css — Takween v2 footer (espresso, editorial wordmark)
+ * Loaded by sections/tk-footer.liquid. Values come from tk tokens (snippets/tk-css-variables.liquid).
+ * Breakpoints: mobile < 750px, tablet 750–989px, desktop ≥ 990px. 1rem = 10px in Dawn.
+ */
+
+.tk-footer {
+  background-color: rgb(var(--color-background));
+  color: var(--tk-color-espresso-muted, #C9C0B3);
+  padding-top: var(--tk-footer-pt, 96px);
+  padding-bottom: var(--tk-footer-pb, 32px);
+  overflow: hidden;
+}
+
+.tk-footer__inner {
+  max-width: var(--tk-container, 1360px);
+  margin: 0 auto;
+  padding-left: var(--tk-gutter, 40px);
+  padding-right: var(--tk-gutter, 40px);
+}
+
+/* ---------- Top grid ---------- */
+.tk-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 32px;
+  row-gap: 48px;
+}
+
+.tk-footer__block {
+  grid-column: span 2;
+  min-width: 0;
+}
+
+.tk-footer__block--brand,
+.tk-footer__block--newsletter {
+  grid-column: span 4;
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  .tk-footer__block,
+  .tk-footer__block--newsletter {
+    grid-column: span 6;
+  }
+
+  .tk-footer__block--menu,
+  .tk-footer__block--business_info,
+  .tk-footer__block--text,
+  .tk-footer__block--social {
+    grid-column: span 3;
+  }
+
+  .tk-footer__block--brand {
+    grid-column: 1 / -1;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .tk-footer__grid {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+
+  .tk-footer__block,
+  .tk-footer__block--brand,
+  .tk-footer__block--newsletter {
+    grid-column: 1 / -1;
+  }
+
+  .tk-footer__block--brand {
+    padding-bottom: 32px;
+  }
+
+  .tk-footer__block--business_info,
+  .tk-footer__block--text,
+  .tk-footer__block--newsletter,
+  .tk-footer__block--social {
+    padding-top: 32px;
+  }
+}
+
+/* ---------- Brand ---------- */
+.tk-footer__logo {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.tk-footer__logo img {
+  display: block;
+  height: auto;
+}
+
+.tk-footer__intro {
+  margin: 0;
+  max-width: 380px;
+  font-family: var(--font-heading-family);
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--tk-color-espresso-text, #EDE6DA);
+}
+
+.tk-footer__intro em {
+  font-style: italic;
+}
+
+.tk-footer__brand-text {
+  margin-top: 14px;
+  max-width: 380px;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.tk-footer__brand-text p {
+  margin: 0;
+}
+
+/* ---------- Column headings + links ---------- */
+.tk-footer__heading {
+  margin: 0 0 16px;
+  font-family: var(--font-body-family);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tk-color-espresso-text, #EDE6DA);
+}
+
+.tk-footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tk-footer__link,
+.tk-footer__contact a,
+.tk-footer__legal a {
+  color: var(--tk-color-espresso-muted, #C9C0B3);
+  text-decoration: none;
+  transition: color var(--tk-transition, 180ms ease);
+}
+
+.tk-footer__link {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.tk-footer__link:hover,
+.tk-footer__contact a:hover,
+.tk-footer__legal a:hover {
+  color: var(--tk-color-espresso-text, #EDE6DA);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.tk-footer__hint {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--tk-color-espresso-faint, #A89F92);
+  border: 1px dashed var(--tk-color-espresso-line, #36322D);
+  padding: 10px 12px;
+}
+
+/* Desktop/tablet: menus as plain columns. Mobile: <details> accordions. */
+.tk-footer__menu-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .tk-footer__menu-desktop {
+    display: none;
+  }
+
+  .tk-footer__menu-mobile {
+    display: block;
+    border-top: 1px solid var(--tk-color-espresso-line, #36322D);
+  }
+
+  .tk-footer__block--menu:last-of-type .tk-footer__menu-mobile {
+    border-bottom: 1px solid var(--tk-color-espresso-line, #36322D);
+  }
+
+  .tk-footer__menu-mobile summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 52px;
+    cursor: pointer;
+  }
+
+  .tk-footer__menu-mobile summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .tk-footer__menu-mobile summary .tk-footer__heading {
+    margin: 0;
+  }
+
+  .tk-footer__menu-mobile .tk-icon {
+    transition: transform var(--tk-transition, 180ms ease);
+    color: var(--tk-color-espresso-text, #EDE6DA);
+  }
+
+  .tk-footer__menu-mobile[open] .tk-icon {
+    transform: rotate(180deg);
+  }
+
+  .tk-footer__menu-mobile .tk-footer__links {
+    padding-bottom: 20px;
+  }
+}
+
+/* ---------- Business info ---------- */
+.tk-footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.tk-footer__contact p {
+  margin: 0;
+}
+
+.tk-footer__hours p {
+  margin: 0;
+}
+
+/* ---------- Text / social ---------- */
+.tk-footer__text {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.tk-footer__text p {
+  margin: 0 0 8px;
+}
+
+/* ---------- Newsletter (underline input, round submit) ---------- */
+.tk-footer__newsletter-text {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.tk-footer__newsletter-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 1.5px solid var(--tk-color-espresso-text, #EDE6DA);
+}
+
+.tk-footer__newsletter-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 52px;
+  border: 0;
+  background: transparent;
+  color: var(--tk-color-espresso-text, #EDE6DA);
+  font: inherit;
+  font-size: 16px;
+}
+
+.tk-footer__newsletter-input::placeholder {
+  color: var(--tk-color-espresso-faint, #A89F92);
+}
+
+.tk-footer__newsletter-input:focus-visible {
+  outline: none;
+}
+
+.tk-footer__newsletter-row:focus-within {
+  border-bottom-color: #FFFFFF;
+}
+
+.tk-footer__newsletter-submit {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--tk-color-espresso-text, #EDE6DA);
+  color: var(--tk-color-espresso, #1C1A17);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--tk-transition, 180ms ease);
+}
+
+.tk-footer__newsletter-submit:hover {
+  transform: translateX(2px);
+}
+
+.tk-footer__newsletter-submit:focus-visible {
+  outline: 2px solid var(--tk-color-espresso-text, #EDE6DA);
+  outline-offset: 3px;
+}
+
+.tk-footer__form-message {
+  margin: 10px 0 0;
+  font-size: 13px;
+}
+
+/* ---------- Oversized wordmark ---------- */
+.tk-footer__wordmark-wrap {
+  margin-top: 80px;
+  overflow: hidden;
+}
+
+.tk-footer__wordmark {
+  display: inline-block;
+  font-family: var(--font-heading-family);
+  font-weight: 300;
+  font-size: clamp(96px, 19vw, 300px); /* fallback; tk-fit-text scales it to the container width */
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--tk-color-espresso-text, #EDE6DA);
+  white-space: nowrap;
+  user-select: none;
+}
+
+@media screen and (max-width: 749px) {
+  .tk-footer__wordmark-wrap {
+    margin-top: 48px;
+  }
+}
+
+/* ---------- Bottom bar ---------- */
+.tk-footer__bottom {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--tk-color-espresso-line, #36322D);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  font-size: 13px;
+  color: var(--tk-color-espresso-faint, #A89F92);
+}
+
+.tk-footer__copyright {
+  margin: 0;
+}
+
+.tk-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tk-footer__bottom-right {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+}
+
+.tk-footer__localization {
+  display: flex;
+  gap: 12px;
+}
+
+.tk-footer .localization-form__select {
+  font-size: 13px;
+  color: var(--tk-color-espresso-muted, #C9C0B3);
+  background: transparent;
+  border: 1px solid var(--tk-color-espresso-line, #36322D);
+  border-radius: 999px;
+  min-height: 36px;
+}
+
+.tk-footer .list-payment {
+  margin: 0;
+  justify-content: flex-start;
+}
+
+@media screen and (max-width: 749px) {
+  .tk-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

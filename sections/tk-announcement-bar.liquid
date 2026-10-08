@@ -117,14 +117,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 16px;
     position: relative;
     min-height: 24px;
   }
 
   .tk-announcement__slides {
     position: relative;
-    width: 100%;
-    max-width: 800px;
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: min(800px, 100%);
   }
 
   .tk-announcement__slide {
@@ -163,10 +165,21 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    position: absolute;
-    right: var(--tk-gutter);
-    top: 50%;
-    transform: translateY(-50%);
+    flex: 0 0 auto;
+  }
+
+  .tk-announcement__btn--next {
+    order: 1;
+  }
+
+  .tk-announcement__pause-btn {
+    order: 2;
+    margin-left: 4px;
+    opacity: 0.7;
+  }
+
+  .tk-announcement__dismiss {
+    order: 3;
   }
 
   .tk-announcement__btn {
@@ -189,21 +202,15 @@
   }
 
   .tk-announcement__btn--prev {
-    position: absolute;
-    left: var(--tk-gutter);
-    top: 50%;
-    transform: translateY(-50%);
+    flex: 0 0 auto;
   }
 
   @media screen and (max-width: 749px) {
     .tk-announcement {
-      padding: 8px 0;
+      padding: 6px 8px;
     }
-    .tk-announcement__btn--prev {
-      left: 8px;
-    }
-    .tk-announcement__controls {
-      right: 8px;
+    .tk-announcement__container {
+      gap: 8px;
     }
   }
 </style>

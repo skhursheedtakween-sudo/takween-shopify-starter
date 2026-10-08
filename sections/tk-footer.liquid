@@ -1,374 +1,231 @@
 {%- comment -%}
-  sections/tk-footer.liquid
-  Takween Footer section.
-  Designed for footer group. Replaces Dawn footer.
+  sections/tk-footer.liquid — Takween v2 footer (footer group). Replaces Dawn's footer.
+  Design: docs/design-reference/home-desktop.html (footer).
+  - 12-column grid: brand (4) · menus (2 each) · business info (2); tablet 2×2; mobile accordions.
+  - Oversized wordmark scaled to the container width by <tk-fit-text> (CSS clamp fallback).
+  - Bottom bar: copyright · legal links (menu or store policies) · localization · payment icons.
+  Styles: assets/tk-footer.css · JS: assets/tk-fit-text.js
 {%- endcomment -%}
 
-{{ 'section-footer.css' | asset_url | stylesheet_tag }}
 {{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
 {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
+{{ 'tk-footer.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.show_large_wordmark -%}
+  <script src="{{ 'tk-fit-text.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
-{%- style -%}
-  .tk-footer {
-    background-color: var(--tk-color-espresso, #1C1A17);
-    color: var(--tk-color-espresso-body, #C9C0B3);
-    padding-top: {{ section.settings.padding_top | default: 96 }}px;
-    padding-bottom: {{ section.settings.padding_bottom | default: 32 }}px;
-    overflow: hidden;
-  }
-
-  .tk-footer .tk-container {
-    max-width: var(--tk-container);
-  }
-
-  .tk-footer__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 48px;
-    margin-bottom: var(--tk-space-7);
-  }
-
-  .tk-footer__block--brand,
-  .tk-footer__block--intro {
-    grid-column: span 2;
-    min-width: 0;
-  }
-
-  .tk-footer__intro-text {
-    margin: 0;
-    max-width: 380px;
-    font-family: var(--font-heading-family);
-    font-size: 24px;
-    line-height: 1.35;
-    font-weight: 300;
-    color: var(--tk-color-espresso-text, #EDE6DA);
-  }
-
-  .tk-footer__col-heading {
-    font-family: var(--font-body-family);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    color: var(--tk-color-espresso-text, #EDE6DA);
-    margin-top: 0;
-    margin-bottom: var(--tk-space-3);
-    text-transform: uppercase;
-  }
-
-  .tk-footer__links {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .tk-footer__link {
-    color: var(--tk-color-espresso-body, #C9C0B3);
-    font-size: 15px;
-    text-decoration: none;
-    transition: color var(--tk-transition), text-decoration-color var(--tk-transition);
-  }
-
-  .tk-footer__link:hover,
-  .tk-footer__link:focus-visible {
-    color: var(--tk-color-espresso-text, #EDE6DA);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-  }
-
-  .tk-footer__business-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 10px;
-    color: var(--tk-color-espresso-body, #C9C0B3);
-  }
-
-  .tk-footer__business-item a {
-    color: var(--tk-color-espresso-body, #C9C0B3);
-    text-decoration: none;
-  }
-
-  .tk-footer__business-item a:hover {
-    color: var(--tk-color-espresso-text, #EDE6DA);
-    text-decoration: underline;
-  }
-
-  /* Oversized editorial wordmark */
-  .tk-footer__wordmark {
-    margin-top: 80px;
-    font-family: var(--font-heading-family);
-    font-weight: 300;
-    font-size: clamp(96px, 19vw, 300px);
-    line-height: 0.8;
-    letter-spacing: -0.05em;
-    color: var(--tk-color-espresso-text, #EDE6DA);
-    white-space: nowrap;
-    user-select: none;
-    pointer-events: none;
-  }
-
-  /* Bottom Bar */
-  .tk-footer__bottom {
-    border-top: 1px solid var(--tk-color-espresso-line, #36322D);
-    padding-top: 28px;
-    padding-bottom: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: var(--tk-space-3);
-    font-size: 13px;
-    color: var(--tk-color-espresso-muted, #A89F92);
-  }
-
-  @media screen and (min-width: 750px) {
-    .tk-footer__bottom {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-  }
-
-  .tk-footer__copyright {
-    color: var(--tk-color-espresso-body, #C9C0B3);
-  }
-
-  .tk-footer__bottom-right {
-    display: flex;
-    align-items: center;
-    gap: var(--tk-space-4);
-    flex-wrap: wrap;
-  }
-
-  .tk-footer__bottom-right a {
-    color: var(--tk-color-espresso-body, #C9C0B3);
-    text-decoration: none;
-  }
-
-  .tk-footer__bottom-right a:hover {
-    color: var(--tk-color-espresso-text, #EDE6DA);
-    text-decoration: underline;
-  }
-
-  /* Mobile Accordion for Menu Blocks */
-  @media screen and (max-width: 749px) {
-    .tk-footer__grid {
-      display: flex;
-      flex-direction: column;
-      gap: var(--tk-space-4);
-    }
-
-    .tk-footer__block--brand,
-    .tk-footer__block--intro {
-      grid-column: span 1;
-    }
-
-    .tk-footer__accordion summary {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      min-height: 48px;
-      cursor: pointer;
-      list-style: none;
-      border-bottom: 1px solid var(--tk-color-espresso-line, #36322D);
-    }
-
-    .tk-footer__accordion summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .tk-footer__accordion[open] summary {
-      border-bottom: none;
-    }
-
-    .tk-footer__accordion-content {
-      padding: var(--tk-space-2) 0 var(--tk-space-4);
-    }
-  }
-{%- endstyle -%}
-
-<footer class="tk-footer color-{{ section.settings.color_scheme }} gradient">
-  <div class="tk-container">
-    <div class="tk-footer__grid">
-      {%- for block in section.blocks -%}
-        <div class="tk-footer__block tk-footer__block--{{ block.type }}" {{ block.shopify_attributes }}>
-          {%- case block.type -%}
-            {%- when 'brand' -%}
-              {%- if block.settings.logo != blank -%}
-                <div style="margin-bottom: var(--tk-space-3);">
-                  {{
-                    block.settings.logo
-                    | image_url: width: 300
-                    | image_tag:
-                      widths: '150, 200, 300',
-                      style: 'max-width: 150px; height: auto;',
-                      alt: shop.name
-                  }}
-                </div>
-              {%- endif -%}
-              {%- if block.settings.heading != blank -%}
-                <p class="tk-footer__intro-text">{{ block.settings.heading }}</p>
-              {%- elsif block.settings.logo == blank -%}
-                <h3 class="tk-footer__col-heading">{{ shop.name }}</h3>
-              {%- endif -%}
-              {%- if block.settings.text != blank -%}
-                <div class="tk-rte" style="color: var(--tk-color-espresso-body, #C9C0B3); font-size: 14px; margin-top: 10px; line-height: 1.6;">
-                  {{ block.settings.text }}
-                </div>
-              {%- endif -%}
-
-            {%- when 'menu' -%}
-              <div class="small-hide">
+<footer
+  class="tk-footer color-{{ section.settings.color_scheme }} gradient"
+  style="--tk-footer-pt: {{ section.settings.padding_top }}px; --tk-footer-pb: {{ section.settings.padding_bottom }}px;"
+>
+  <div class="tk-footer__inner">
+    {%- if section.blocks.size > 0 -%}
+      <div class="tk-footer__grid">
+        {%- for block in section.blocks -%}
+          <div class="tk-footer__block tk-footer__block--{{ block.type }}" {{ block.shopify_attributes }}>
+            {%- case block.type -%}
+              {%- when 'brand' -%}
+                {%- if block.settings.logo != blank -%}
+                  <a href="{{ routes.root_url }}" class="tk-footer__logo">
+                    {%- liquid
+                      assign logo_w = block.settings.logo_width
+                      assign logo_h = logo_w | divided_by: block.settings.logo.aspect_ratio | round
+                    -%}
+                    {{
+                      block.settings.logo
+                      | image_url: width: 480
+                      | image_tag:
+                        widths: '160, 240, 320, 480',
+                        sizes: '(min-width: 750px) 240px, 50vw',
+                        loading: 'lazy',
+                        width: logo_w,
+                        height: logo_h,
+                        style: 'max-width: 100%;',
+                        alt: shop.name
+                    }}
+                  </a>
+                {%- endif -%}
                 {%- if block.settings.heading != blank -%}
-                  <h3 class="tk-footer__col-heading">{{ block.settings.heading }}</h3>
+                  <p class="tk-footer__intro">{{ block.settings.heading }}</p>
                 {%- endif -%}
-                <ul class="tk-footer__links" role="list">
-                  {%- for link in block.settings.menu.links -%}
-                    <li>
-                      <a href="{{ link.url }}" class="tk-footer__link">{{ link.title }}</a>
-                    </li>
-                  {%- endfor -%}
-                </ul>
-              </div>
+                {%- if block.settings.text != blank -%}
+                  <div class="tk-footer__brand-text">{{ block.settings.text }}</div>
+                {%- endif -%}
 
-              <!-- Mobile Accordion -->
-              <details class="tk-footer__accordion medium-hide large-up-hide">
-                <summary>
-                  <span class="tk-footer__col-heading" style="margin: 0;">{{ block.settings.heading }}</span>
-                  {% render 'tk-icon', icon: 'chevron-down', size: 16 %}
-                </summary>
-                <div class="tk-footer__accordion-content">
-                  <ul class="tk-footer__links" role="list">
-                    {%- for link in block.settings.menu.links -%}
-                      <li>
-                        <a href="{{ link.url }}" class="tk-footer__link" style="display: block; padding: 6px 0;">{{ link.title }}</a>
-                      </li>
-                    {%- endfor -%}
-                  </ul>
+              {%- when 'menu' -%}
+                {%- assign menu_links = block.settings.menu.links -%}
+                <div class="tk-footer__menu-desktop">
+                  {%- if block.settings.heading != blank -%}
+                    <h2 class="tk-footer__heading">{{ block.settings.heading }}</h2>
+                  {%- endif -%}
+                  {%- if menu_links.size > 0 -%}
+                    <ul class="tk-footer__links" role="list">
+                      {%- for link in menu_links -%}
+                        <li>
+                          <a
+                            href="{{ link.url }}"
+                            class="tk-footer__link"
+                            {% if link.current %}
+                              aria-current="page"
+                            {% endif %}
+                          >
+                            {{- link.title | escape -}}
+                          </a>
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- elsif request.design_mode -%}
+                    <p class="tk-footer__hint">{{ 'tk.footer.select_menu' | t }}</p>
+                  {%- endif -%}
                 </div>
-              </details>
 
-            {%- when 'business_info' -%}
-              {%- if block.settings.heading != blank -%}
-                <h3 class="tk-footer__col-heading">{{ block.settings.heading }}</h3>
-              {%- endif -%}
-              <div class="tk-footer__business-list">
-                {%- if block.settings.address != blank -%}
-                  <div class="tk-footer__business-item">
-                    {% render 'tk-icon', icon: 'map-pin', size: 16 %}
-                    <span>{{ block.settings.address | newline_to_br }}</span>
-                  </div>
+                {%- if menu_links.size > 0 -%}
+                  <details class="tk-footer__menu-mobile">
+                    <summary>
+                      <span class="tk-footer__heading">{{ block.settings.heading | default: block.settings.menu.title }}</span>
+                      {% render 'tk-icon', icon: 'chevron-down', size: 18, stroke_width: 1.5 %}
+                    </summary>
+                    <ul class="tk-footer__links" role="list">
+                      {%- for link in menu_links -%}
+                        <li><a href="{{ link.url }}" class="tk-footer__link">{{ link.title | escape }}</a></li>
+                      {%- endfor -%}
+                    </ul>
+                  </details>
                 {%- endif -%}
-                {%- if block.settings.phone != blank -%}
-                  <div class="tk-footer__business-item">
-                    {% render 'tk-icon', icon: 'phone', size: 16 %}
-                    <a href="tel:{{ block.settings.phone | replace: ' ', '' }}">{{ block.settings.phone }}</a>
-                  </div>
-                {%- endif -%}
-                {%- if block.settings.email != blank -%}
-                  <div class="tk-footer__business-item">
-                    {% render 'tk-icon', icon: 'mail', size: 16 %}
-                    <a href="mailto:{{ block.settings.email }}">{{ block.settings.email }}</a>
-                  </div>
-                {%- endif -%}
-                {%- if block.settings.opening_hours != blank -%}
-                  <div class="tk-footer__business-item">
-                    {% render 'tk-icon', icon: 'clock', size: 16 %}
-                    <div>{{ block.settings.opening_hours }}</div>
-                  </div>
-                {%- endif -%}
-              </div>
 
-            {%- when 'text' -%}
-              {%- if block.settings.heading != blank -%}
-                <h3 class="tk-footer__col-heading">{{ block.settings.heading }}</h3>
-              {%- endif -%}
-              <div class="tk-rte" style="color: #C9CCD1; font-size: 14px;">
-                {{ block.settings.text }}
-              </div>
+              {%- when 'business_info' -%}
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="tk-footer__heading">{{ block.settings.heading }}</h2>
+                {%- endif -%}
+                <address class="tk-footer__contact" style="font-style: normal;">
+                  {%- if block.settings.address != blank -%}
+                    <p>{{ block.settings.address | escape | newline_to_br }}</p>
+                  {%- endif -%}
+                  {%- if block.settings.phone != blank -%}
+                    <p><a href="tel:{{ block.settings.phone | remove: ' ' | escape }}">{{ block.settings.phone | escape }}</a></p>
+                  {%- endif -%}
+                  {%- if block.settings.email != blank -%}
+                    <p><a href="mailto:{{ block.settings.email | escape }}">{{ block.settings.email | escape }}</a></p>
+                  {%- endif -%}
+                  {%- if block.settings.opening_hours != blank -%}
+                    <div class="tk-footer__hours">{{ block.settings.opening_hours }}</div>
+                  {%- endif -%}
+                </address>
 
-            {%- when 'newsletter' -%}
-              {%- if block.settings.heading != blank -%}
-                <h3 class="tk-footer__col-heading">{{ block.settings.heading }}</h3>
-              {%- endif -%}
-              {%- if block.settings.text != blank -%}
-                <div style="font-size: 14px; margin-bottom: var(--tk-space-3); color: #C9CCD1;">
-                  {{ block.settings.text }}
-                </div>
-              {%- endif -%}
+              {%- when 'text' -%}
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="tk-footer__heading">{{ block.settings.heading }}</h2>
+                {%- endif -%}
+                <div class="tk-footer__text">{{ block.settings.text }}</div>
 
-              {%- form 'customer', id: 'TkFooterNewsletter', class: 'tk-footer__newsletter' -%}
-                <input type="hidden" name="contact[tags]" value="newsletter">
-                <div class="tk-field">
+              {%- when 'newsletter' -%}
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="tk-footer__heading">{{ block.settings.heading }}</h2>
+                {%- endif -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="tk-footer__newsletter-text">{{ block.settings.text | escape }}</p>
+                {%- endif -%}
+                {%- form 'customer', id: 'TkFooterNewsletter', class: 'tk-footer__newsletter' -%}
+                  <input type="hidden" name="contact[tags]" value="newsletter">
                   <label for="TkFooterNewsletter-email" class="visually-hidden">{{ 'newsletter.label' | t }}</label>
-                  <div style="display: flex; gap: 8px;">
+                  <div class="tk-footer__newsletter-row">
                     <input
                       id="TkFooterNewsletter-email"
                       type="email"
                       name="contact[email]"
-                      class="tk-input"
+                      class="tk-footer__newsletter-input"
                       value="{{ form.email }}"
                       placeholder="{{ 'newsletter.label' | t }}"
-                      aria-required="true"
+                      autocomplete="email"
                       autocorrect="off"
                       autocapitalize="off"
-                      autocomplete="email"
                       required
-                      style="min-height: 44px; font-size: 14px; background: #26292E; border-color: #3D4148; color: #FFFFFF;"
+                      {% if form.errors %}
+                        aria-invalid="true" aria-describedby="TkFooterNewsletter-error"
+                      {% elsif form.posted_successfully? %}
+                        aria-describedby="TkFooterNewsletter-success"
+                      {% endif %}
                     >
-                    <button
-                      type="submit"
-                      class="tk-btn tk-btn--primary"
-                      style="min-height: 44px; padding: 0 20px; font-size: 14px; flex-shrink: 0;"
-                    >
-                      {{ 'newsletter.button_label' | t }}
+                    <button type="submit" class="tk-footer__newsletter-submit" aria-label="{{ 'newsletter.button_label' | t }}">
+                      {% render 'tk-icon', icon: 'arrow-right', size: 18, stroke_width: 1.6 %}
                     </button>
                   </div>
-                </div>
+                  {%- if form.errors -%}
+                    <p id="TkFooterNewsletter-error" class="tk-footer__form-message" role="alert">
+                      {{ form.errors.translated_fields.email | capitalize }}
+                      {{ form.errors.messages.email }}
+                    </p>
+                  {%- elsif form.posted_successfully? -%}
+                    <p id="TkFooterNewsletter-success" class="tk-footer__form-message" role="status">
+                      {{ 'newsletter.success' | t }}
+                    </p>
+                  {%- endif -%}
+                {%- endform -%}
 
-                {%- if form.errors -%}
-                  <div class="tk-field__error-msg" style="margin-top: 8px; font-size: 13px;">
-                    {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
-                  </div>
+              {%- when 'social' -%}
+                {%- if block.settings.heading != blank -%}
+                  <h2 class="tk-footer__heading">{{ block.settings.heading }}</h2>
                 {%- endif -%}
-
-                {%- if form.posted_successfully? -%}
-                  <div class="tk-alert--success" style="margin-top: 8px;">
-                    {{ 'newsletter.success' | t }}
-                  </div>
-                {%- endif -%}
-              {%- endform -%}
-
-            {%- when 'social' -%}
-              {%- if block.settings.heading != blank -%}
-                <h3 class="tk-footer__col-heading">{{ block.settings.heading }}</h3>
-              {%- endif -%}
-              {% render 'social-icons', class: 'footer__list-social' %}
-
-          {%- endcase -%}
-        </div>
-      {%- endfor -%}
-    </div>
-
-    {%- if section.settings.show_large_wordmark -%}
-      <div class="tk-footer__wordmark" aria-hidden="true">
-        {{ section.settings.wordmark_text | default: shop.name | escape }}
+                {%- render 'social-icons', class: 'footer__list-social' -%}
+            {%- endcase -%}
+          </div>
+        {%- endfor -%}
       </div>
     {%- endif -%}
 
-    <!-- Bottom Bar -->
-    <div class="tk-footer__bottom">
-      <div class="tk-footer__copyright">
-        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.custom_copyright }}
+    {%- if section.settings.show_large_wordmark -%}
+      <div class="tk-footer__wordmark-wrap" aria-hidden="true">
+        <tk-fit-text class="tk-footer__wordmark">
+          {{- section.settings.wordmark_text | default: shop.name | escape -}}
+        </tk-fit-text>
       </div>
+    {%- endif -%}
+
+    <div class="tk-footer__bottom">
+      <p class="tk-footer__copyright">
+        &copy; {{ 'now' | date: '%Y' }}
+        {{ shop.name | escape }}.
+        {%- if section.settings.custom_copyright != blank -%}
+          {{ section.settings.custom_copyright | escape }}
+        {%- else -%}
+          {{ 'tk.footer.rights' | t }}
+        {%- endif -%}
+      </p>
+
+      {%- liquid
+        assign legal_links = section.settings.legal_menu.links
+      -%}
+      {%- if legal_links.size > 0 or shop.privacy_policy or shop.terms_of_service -%}
+        <ul class="tk-footer__legal" role="list">
+          {%- if legal_links.size > 0 -%}
+            {%- for link in legal_links -%}
+              <li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>
+            {%- endfor -%}
+          {%- else -%}
+            {%- if shop.privacy_policy -%}
+              <li><a href="{{ shop.privacy_policy.url }}">{{ shop.privacy_policy.title | escape }}</a></li>
+            {%- endif -%}
+            {%- if shop.terms_of_service -%}
+              <li><a href="{{ shop.terms_of_service.url }}">{{ shop.terms_of_service.title | escape }}</a></li>
+            {%- endif -%}
+          {%- endif -%}
+        </ul>
+      {%- endif -%}
 
       <div class="tk-footer__bottom-right">
-        {%- if section.settings.enable_country_selector or section.settings.enable_language_selector -%}
+        {%- liquid
+          assign show_country = false
+          if section.settings.enable_country_selector and localization.available_countries.size > 1
+            assign show_country = true
+          endif
+          assign show_language = false
+          if section.settings.enable_language_selector and localization.available_languages.size > 1
+            assign show_language = true
+          endif
+        -%}
+        {%- if show_country or show_language -%}
           <div class="tk-footer__localization">
-            {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
+            {%- if show_country -%}
               <localization-form>
                 {%- form 'localization', id: 'TkFooterCountryForm', class: 'localization-form' -%}
                   <div>
@@ -378,8 +235,7 @@
                 {%- endform -%}
               </localization-form>
             {%- endif -%}
-
-            {%- if section.settings.enable_language_selector and localization.available_languages.size > 1 -%}
+            {%- if show_language -%}
               <localization-form>
                 {%- form 'localization', id: 'TkFooterLanguageForm', class: 'localization-form' -%}
                   <div>
@@ -412,7 +268,9 @@
 {% schema %}
 {
   "name": "Footer",
-  "max_blocks": 6,
+  "tag": "div",
+  "class": "tk-footer-section",
+  "max_blocks": 7,
   "enabled_on": {
     "groups": ["footer"]
   },
@@ -425,45 +283,7 @@
     },
     {
       "type": "header",
-      "content": "Country/region selector",
-      "info": "To add a country/region, go to your [market settings.](/admin/settings/markets)"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_country_selector",
-      "default": true,
-      "label": "t:sections.footer.settings.enable_country_selector.label"
-    },
-    {
-      "type": "header",
-      "content": "Language selector",
-      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_language_selector",
-      "default": true,
-      "label": "t:sections.footer.settings.enable_language_selector.label"
-    },
-    {
-      "type": "header",
-      "content": "Payment methods"
-    },
-    {
-      "type": "checkbox",
-      "id": "payment_enable",
-      "default": true,
-      "label": "t:sections.footer.settings.payment_enable.label"
-    },
-    {
-      "type": "text",
-      "id": "custom_copyright",
-      "label": "Custom copyright note",
-      "default": "All rights reserved."
-    },
-    {
-      "type": "header",
-      "content": "Large Wordmark"
+      "content": "Large wordmark"
     },
     {
       "type": "checkbox",
@@ -474,8 +294,44 @@
     {
       "type": "text",
       "id": "wordmark_text",
-      "label": "Wordmark text (defaults to store name)",
-      "default": "Takween"
+      "label": "Wordmark text",
+      "info": "Leave blank to use the store name. Scales to the full footer width."
+    },
+    {
+      "type": "header",
+      "content": "Bottom bar"
+    },
+    {
+      "type": "text",
+      "id": "custom_copyright",
+      "label": "Copyright note",
+      "default": "All rights reserved."
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal links menu",
+      "info": "Optional. If empty, the store's Privacy policy and Terms of service are linked automatically (Settings → Policies)."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "default": true,
+      "label": "t:sections.footer.settings.enable_country_selector.label",
+      "info": "To add a country/region, go to your [market settings.](/admin/settings/markets)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "default": true,
+      "label": "t:sections.footer.settings.enable_language_selector.label",
+      "info": "To add a language, go to your [language settings.](/admin/settings/languages)"
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_enable",
+      "default": true,
+      "label": "t:sections.footer.settings.payment_enable.label"
     },
     {
       "type": "header",
@@ -506,23 +362,34 @@
     {
       "type": "brand",
       "name": "Brand",
+      "limit": 1,
       "settings": [
         {
           "type": "image_picker",
           "id": "logo",
-          "label": "Logo image"
+          "label": "Logo image",
+          "info": "Optional. v2 design uses the intro line only."
+        },
+        {
+          "type": "range",
+          "id": "logo_width",
+          "min": 80,
+          "max": 300,
+          "step": 10,
+          "unit": "px",
+          "label": "Logo width",
+          "default": 140
         },
         {
           "type": "inline_richtext",
           "id": "heading",
-          "label": "Intro heading (Fraunces)",
+          "label": "Intro line",
           "default": "Considered essentials for wardrobe and home."
         },
         {
           "type": "richtext",
           "id": "text",
-          "default": "<p>Thoughtfully crafted organic apparel and home essentials.</p>",
-          "label": "Text"
+          "label": "Supporting text (optional)"
         }
       ]
     },
@@ -546,36 +413,34 @@
     },
     {
       "type": "business_info",
-      "name": "Business Info",
+      "name": "Business info",
+      "limit": 1,
       "settings": [
         {
           "type": "inline_richtext",
           "id": "heading",
-          "default": "Visit Us",
+          "default": "Visit us",
           "label": "Heading"
         },
         {
           "type": "textarea",
           "id": "address",
-          "default": "123 Sample High Street\nLondon, UK",
+          "default": "[Business address]",
           "label": "Address"
         },
         {
           "type": "text",
           "id": "phone",
-          "default": "+44 20 7946 0991",
           "label": "Phone"
         },
         {
           "type": "text",
           "id": "email",
-          "default": "hello@takweensample.co.uk",
           "label": "Email"
         },
         {
           "type": "richtext",
           "id": "opening_hours",
-          "default": "<p>Mon–Fri: 9am – 6pm<br>Sat: 10am – 4pm</p>",
           "label": "Opening hours"
         }
       ]
@@ -593,7 +458,7 @@
         {
           "type": "richtext",
           "id": "text",
-          "default": "<p>Share your brand story, values, or commitments here.</p>",
+          "default": "<p>Share your brand story, values or commitments here.</p>",
           "label": "Text"
         }
       ]
@@ -601,30 +466,36 @@
     {
       "type": "newsletter",
       "name": "Newsletter",
+      "limit": 1,
       "settings": [
         {
           "type": "inline_richtext",
           "id": "heading",
-          "default": "Stay in touch",
+          "default": "Join the list",
           "label": "Heading"
         },
         {
           "type": "text",
           "id": "text",
-          "default": "Join our mailing list for product updates and early access.",
+          "default": "New arrivals and considered stories. No noise.",
           "label": "Subtext"
         }
       ]
     },
     {
       "type": "social",
-      "name": "Social Icons",
+      "name": "Social icons",
+      "limit": 1,
       "settings": [
         {
           "type": "inline_richtext",
           "id": "heading",
           "default": "Follow us",
           "label": "Heading"
+        },
+        {
+          "type": "paragraph",
+          "content": "Add social links in Theme settings → Social media."
         }
       ]
     }
@@ -633,33 +504,11 @@
     {
       "name": "Footer",
       "blocks": [
-        {
-          "type": "brand"
-        },
-        {
-          "type": "menu",
-          "settings": {
-            "heading": "Shop",
-            "menu": "footer-shop"
-          }
-        },
-        {
-          "type": "menu",
-          "settings": {
-            "heading": "Help",
-            "menu": "footer-help"
-          }
-        },
-        {
-          "type": "menu",
-          "settings": {
-            "heading": "Company",
-            "menu": "footer-company"
-          }
-        },
-        {
-          "type": "business_info"
-        }
+        { "type": "brand" },
+        { "type": "menu", "settings": { "heading": "Shop", "menu": "footer-shop" } },
+        { "type": "menu", "settings": { "heading": "Help", "menu": "footer-help" } },
+        { "type": "menu", "settings": { "heading": "Company", "menu": "footer-company" } },
+        { "type": "business_info" }
       ]
     }
   ]

@@ -273,36 +273,63 @@
     line-height: 1;
   }
 
-  /* Transparent Header on Homepage over first section */
-  {%- if section.settings.transparent_header_homepage and request.page_type == 'index' -%}
-    .section-header {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 10;
-    }
+  /* Search: the summary's close icon must never show in the header row.
+     The open search modal renders its own close button. */
+  .header__icon--search .header__icon-close {
+    display: none !important;
+  }
 
-    .section-header .header-wrapper:not(.scrolled-past-header) {
-      background-color: transparent !important;
-      border-bottom-color: transparent !important;
-    }
+  /* Cart display modes */
+  .header__cart-text-link--text .header__cart-icon-mobile {
+    display: inline-flex;
+  }
 
-    /* When scrolled / sticky: becomes sticky Linen 90% + backdrop blur + 1px line */
-    .section-header .header-wrapper.scrolled-past-header,
-    .section-header .header-wrapper.shopify-section-header-sticky {
-      background-color: rgba(243, 239, 232, 0.92) !important;
-      backdrop-filter: blur(12px) saturate(140%);
-      -webkit-backdrop-filter: blur(12px) saturate(140%);
-      border-bottom: 1px solid var(--tk-color-border) !important;
+  @media screen and (min-width: 750px) {
+    .header__cart-text-link--text .header__cart-icon-mobile {
+      display: none !important;
     }
-  {%- endif -%}
+  }
 
-  /* Standard sticky header background with subtle blur */
-  .scrolled-past-header.header-wrapper {
-    background-color: rgba(243, 239, 232, 0.95);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+  .header__cart-text-link--icon {
+    width: 44px !important;
+    padding: 0 !important;
+  }
+
+  .header__cart-text-link--icon .header__cart-text {
+    display: none !important;
+  }
+
+  .header__cart-text-link--icon .header__cart-icon-mobile {
+    display: inline-flex !important;
+  }
+
+  /* Text wordmark (v2): Fraunces, centred */
+  .tk-header__wordmark {
+    font-family: var(--font-heading-family);
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: rgb(var(--color-foreground));
+    white-space: nowrap;
+  }
+
+  @media screen and (max-width: 749px) {
+    .tk-header__wordmark {
+      font-size: 24px;
+    }
+  }
+
+  .header__heading {
+    margin: 0;
+  }
+
+  /* Sticky state on all templates: linen + blur + hairline */
+  .section-header.scrolled-past-header .header-wrapper {
+    background: rgba(243, 239, 232, 0.92);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border-bottom: 1px solid var(--tk-color-border);
   }
 
   /* Country/currency selector in header: 13px muted text */
@@ -380,6 +407,30 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  {%- if section.settings.transparent_header_homepage and request.page_type == 'index' -%}
+    /* Transparent header over the first homepage section.
+       The header stays in flow (Dawn sticky JS keeps working); a negative
+       bottom margin pulls the first section up underneath it. */
+    .section-header {
+      margin-bottom: calc(var(--header-height, 77px) * -1) !important;
+      z-index: 4;
+    }
+
+    .section-header:not(.scrolled-past-header) .header-wrapper {
+      background: transparent !important;
+      border-bottom-color: transparent !important;
+      box-shadow: none;
+    }
+
+    .section-header:not(.scrolled-past-header) .header-wrapper--border-bottom {
+      border-bottom: 0;
+    }
+
+    .section-header:not(.scrolled-past-header) .header__icon:hover {
+      background-color: rgba(28, 26, 23, 0.06);
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
@@ -440,10 +491,10 @@
 
     {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
-        <h1 class="header__heading">
+        <div class="header__heading">
       {%- endif -%}
       <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-        {%- if settings.logo != blank -%}
+        {%- if settings.logo != blank and section.settings.logo_style != 'text' -%}
           <div class="header__heading-logo-wrapper">
             {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
             {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
@@ -463,11 +514,11 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          <span class="h2 tk-header__wordmark">{{ shop.name }}</span>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
-        </h1>
+        </div>
       {%- endif -%}
     {%- endif -%}
 
@@ -483,10 +534,10 @@
 
     {%- if section.settings.logo_position == 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
-        <h1 class="header__heading">
+        <div class="header__heading">
       {%- endif -%}
       <a href="{{ routes.root_url }}" class="header__heading-link link link--text focus-inset">
-        {%- if settings.logo != blank -%}
+        {%- if settings.logo != blank and section.settings.logo_style != 'text' -%}
           <div class="header__heading-logo-wrapper">
             {%- assign logo_alt = settings.logo.alt | default: shop.name | escape -%}
             {%- assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio -%}
@@ -506,11 +557,11 @@
             }}
           </div>
         {%- else -%}
-          <span class="h2">{{ shop.name }}</span>
+          <span class="h2 tk-header__wordmark">{{ shop.name }}</span>
         {%- endif -%}
       </a>
       {%- if request.page_type == 'index' -%}
-        </h1>
+        </div>
       {%- endif -%}
     {%- endif -%}
 
@@ -565,8 +616,8 @@
         {%- endcase -%}
       {%- endfor -%}
 
-      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart header__cart-text-link link focus-inset" id="cart-icon-bubble">
-        <span class="header__cart-text">Cart ({{ cart.item_count }})</span>
+      <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart header__cart-text-link header__cart-text-link--{{ section.settings.cart_display | default: 'text' }} link focus-inset" id="cart-icon-bubble">
+        <span class="header__cart-text">{{ 'tk.header.cart_count' | t: count: cart.item_count }}</span>
         <span class="header__cart-icon-mobile">
           <span class="svg-wrapper">{% render 'tk-icon', icon: 'cart', size: 20, stroke_width: 1.5 %}</span>
           {%- if cart != empty -%}
@@ -870,7 +921,28 @@
       "id": "transparent_header_homepage",
       "default": true,
       "label": "Transparent header on homepage",
-      "info": "Overlays the first homepage section with transparent background, becoming frosted sticky on scroll."
+      "info": "Overlays the first homepage section (use a full-bleed hero). The header turns linen with a blur once the page scrolls."
+    },
+    {
+      "type": "select",
+      "id": "logo_style",
+      "label": "Logo style",
+      "options": [
+        { "value": "image", "label": "Logo image (Theme settings → Logo)" },
+        { "value": "text", "label": "Text wordmark (store name)" }
+      ],
+      "default": "text",
+      "info": "Text wordmark uses the heading font. Falls back to text when no logo image is set."
+    },
+    {
+      "type": "select",
+      "id": "cart_display",
+      "label": "Cart display",
+      "options": [
+        { "value": "text", "label": "Text – Cart (n) (icon on mobile)" },
+        { "value": "icon", "label": "Icon with count" }
+      ],
+      "default": "text"
     },
     {
       "type": "header",

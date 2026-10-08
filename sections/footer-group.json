@@ -17,35 +17,35 @@
         "brand": {
           "type": "brand",
           "settings": {
-            "logo": "shopify://shop_images/logo-light.png",
-            "text": "<p>Thoughtfully crafted organic apparel and home essentials.</p>"
+            "heading": "Considered essentials for <em>wardrobe and home</em>.",
+            "logo_width": 140
           }
         },
         "menu-shop": {
           "type": "menu",
           "settings": {
             "heading": "Shop",
-            "menu": ""
+            "menu": "footer-shop"
           }
         },
         "menu-help": {
           "type": "menu",
           "settings": {
             "heading": "Help",
-            "menu": ""
+            "menu": "footer-help"
           }
         },
         "menu-company": {
           "type": "menu",
           "settings": {
             "heading": "Company",
-            "menu": ""
+            "menu": "footer-company"
           }
         },
         "business-info": {
           "type": "business_info",
           "settings": {
-            "heading": "Visit Us",
+            "heading": "Visit us",
             "address": "123 Sample High Street\nLondon, UK",
             "phone": "+44 20 7946 0991",
             "email": "hello@takweensample.co.uk",
@@ -66,8 +66,10 @@
         "enable_language_selector": true,
         "payment_enable": true,
         "custom_copyright": "All rights reserved.",
-        "padding_top": 64,
-        "padding_bottom": 32
+        "padding_top": 96,
+        "padding_bottom": 32,
+        "show_large_wordmark": true,
+        "wordmark_text": "Takween"
       }
     }
   },

@@ -1,15 +1,18 @@
-{% if cart == empty %}
-  <span class="svg-wrapper">{{ 'icon-cart-empty.svg' | inline_asset_content }}</span>
-{% else %}
-  <span class="svg-wrapper">{{ 'icon-cart.svg' | inline_asset_content }}</span>
-{% endif %}
-
-<span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
-{%- if cart != empty -%}
-  <div class="cart-count-bubble">
-    {%- if cart.item_count < 100 -%}
-      <span aria-hidden="true">{{ cart.item_count }}</span>
-    {%- endif -%}
-    <span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
-  </div>
-{%- endif -%}
+{%- comment -%}
+  Rendered by Dawn's cart JS (Section Rendering API, id "cart-icon-bubble") after
+  add-to-cart / quantity changes; its output replaces the inner HTML of
+  #cart-icon-bubble in sections/header.liquid. Markup must stay in sync with the
+  header cart link (Takween: "Cart (n)" text + mobile icon with count).
+{%- endcomment -%}
+<span class="header__cart-text">{{ 'tk.header.cart_count' | t: count: cart.item_count }}</span>
+<span class="header__cart-icon-mobile">
+  <span class="svg-wrapper">{% render 'tk-icon', icon: 'cart', size: 20, stroke_width: 1.5 %}</span>
+  {%- if cart != empty -%}
+    <div class="cart-count-bubble">
+      {%- if cart.item_count < 100 -%}
+        <span aria-hidden="true">{{ cart.item_count }}</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</span>
+<span class="visually-hidden">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>

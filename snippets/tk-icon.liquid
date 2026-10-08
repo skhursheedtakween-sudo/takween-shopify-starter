@@ -121,6 +121,14 @@
       <circle cx="12" cy="12" r="10"></circle>
       <polyline points="12 6 12 12 16 14"></polyline>
 
+    {%- when 'arrow-right' -%}
+      <path d="M5 12h14"></path>
+      <path d="M13 6l6 6-6 6"></path>
+
+    {%- when 'arrow-up-right' -%}
+      <path d="M7 17L17 7"></path>
+      <path d="M9 7h8v8"></path>
+
     {%- else -%}
       <circle cx="12" cy="12" r="9"></circle>
   {%- endcase -%}
