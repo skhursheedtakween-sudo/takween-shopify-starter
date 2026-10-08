@@ -24,7 +24,7 @@ if (!customElements.get('tk-fit-text')) {
       const available = container.clientWidth;
       if (!available) return;
 
-      const max = parseFloat(this.dataset.max || '420');
+      const max = parseFloat(this.dataset.max || '220');
       const min = parseFloat(this.dataset.min || '64');
 
       // Measure at a known size, then scale linearly (text width ∝ font-size).

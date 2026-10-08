@@ -67,8 +67,8 @@
         "custom_copyright": "All rights reserved.",
         "show_large_wordmark": true,
         "wordmark_text": "Takween",
-        "padding_top": 96,
-        "padding_bottom": 32
+        "padding_top": 64,
+        "padding_bottom": 28
       }
     }
   },

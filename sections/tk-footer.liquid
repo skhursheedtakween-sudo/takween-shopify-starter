@@ -175,7 +175,7 @@
 
     {%- if section.settings.show_large_wordmark -%}
       <div class="tk-footer__wordmark-wrap" aria-hidden="true">
-        <tk-fit-text class="tk-footer__wordmark">
+        <tk-fit-text class="tk-footer__wordmark" data-max="220" data-min="56">
           {{- section.settings.wordmark_text | default: shop.name | escape -}}
         </tk-fit-text>
       </div>

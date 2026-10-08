@@ -311,7 +311,7 @@
 
 /* ---------- Oversized wordmark ---------- */
 .tk-footer__wordmark-wrap {
-  margin-top: 80px;
+  margin-top: 40px;
   overflow: hidden;
 }
 
@@ -319,8 +319,8 @@
   display: inline-block;
   font-family: var(--font-heading-family);
   font-weight: 300;
-  font-size: clamp(96px, 19vw, 300px); /* fallback; tk-fit-text scales it to the container width */
-  line-height: 0.8;
+  font-size: clamp(72px, 15vw, 220px); /* fallback; tk-fit-text scales it, capped via data-max */
+  line-height: 0.82;
   letter-spacing: -0.05em;
   color: var(--tk-color-espresso-text, #EDE6DA);
   white-space: nowrap;
@@ -329,7 +329,7 @@
 
 @media screen and (max-width: 749px) {
   .tk-footer__wordmark-wrap {
-    margin-top: 48px;
+    margin-top: 28px;
   }
 }
 
