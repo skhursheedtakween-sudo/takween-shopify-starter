@@ -1,0 +1,71 @@
+/* tk-dawn.css — v2 restyle of Dawn-driven surfaces (product, collection facets, cart, pagination).
+   Loaded globally after tk-base.css. Targets Dawn classes only; adds no JS. 1rem = 10px. */
+
+/* Buttons → pill, v2 */
+.button,
+.shopify-payment-button__button--unbranded,
+.product-form__submit {
+  border-radius: var(--tk-radius-button, 999px);
+  min-height: 4.8rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.button:not([disabled]):hover { transform: translateY(-1px); }
+
+/* Product: variant pills & swatches */
+.product-form__input--pill input[type='radio'] + label,
+fieldset.product-form__input .select__select {
+  border-radius: 0.6rem;
+}
+.product-form__input--pill input[type='radio'] + label {
+  min-height: 4.8rem;
+  padding: 0 1.8rem;
+  font-weight: 500;
+  border: 1px solid var(--tk-color-input-border, #CFC6B8);
+}
+.product-form__input--pill input[type='radio']:checked + label {
+  background: var(--tk-color-ink, #1C1A17);
+  color: var(--tk-color-linen, #F3EFE8);
+  border-color: var(--tk-color-ink, #1C1A17);
+}
+.product__title,
+.product__title > * { font-family: var(--font-heading-family); font-weight: 350; letter-spacing: -0.02em; }
+.price { font-family: var(--font-heading-family); font-weight: 350; }
+.product .price--on-sale .price-item--regular { color: var(--tk-color-faint, #8C8478); }
+
+/* Collection facets → cleaner */
+.facets__summary,
+.facets__heading,
+.facet-filters__label { font-weight: 500; }
+.facets__disclosure .facets__header { border: 0; }
+.active-facets__button {
+  border-radius: 999px;
+  border: 1px solid var(--tk-color-input-border, #CFC6B8);
+  min-height: 3.6rem;
+}
+.facets__price input,
+.select__select,
+.facets__sort .select__select {
+  border-radius: 0.8rem;
+  border: 1.5px solid var(--tk-color-input-border, #CFC6B8);
+  min-height: 4.4rem;
+}
+
+/* Pagination */
+.pagination__item {
+  border-radius: 999px;
+}
+.pagination__item--current { background: var(--tk-color-ink, #1C1A17); color: var(--tk-color-linen, #F3EFE8); }
+
+/* Cart drawer / page polish */
+.drawer__inner, .cart__footer { background: var(--tk-color-surface, #FBF9F5); }
+.cart-item__name { font-weight: 500; }
+.totals__total { font-family: var(--font-heading-family); font-weight: 350; }
+.cart__checkout-button, .cart__dynamic-checkout-buttons .shopify-payment-button__button { border-radius: var(--tk-radius-button, 999px); }
+
+/* Collection banner title → v2 */
+.collection-hero__title { font-family: var(--font-heading-family); font-weight: 350; letter-spacing: -0.03em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .button:not([disabled]):hover { transform: none; }
+}

@@ -351,3 +351,21 @@ No other apps are used. All core functionality is built natively.
 | 2 | `config/settings_data.json` and `templates/*.json` merge conflict protocol — always stop and ask; never auto-resolve | Standing rule |
 | 3 | `snippets/quick-order-product-row.liquid` — Dawn 16 orphan (Theme Check warning) — do not reference or remove; leave in place | Accepted / no fix |
 | 4 | Pending Admin data: images + metafields for 11 products, collections, pages, menus, Search & Discovery filters | In progress (Admin tasks) |
+
+
+---
+
+## 13. Completion Status (all brief templates built)
+
+Homepage, collection, product, search, cart (drawer + page), standard page, contact, 404 are all implemented; About and FAQ alternate page templates added.
+
+Added since the section tables above:
+- `snippets/tk-product-meta.liquid` — product metafields (highlights / specifications / care / FAQs) (brief §6)
+- `snippets/tk-sticky-atc.liquid` + `assets/tk-sticky-atc.js` — mobile sticky Add to cart (brief §8)
+- `snippets/tk-free-shipping-bar.liquid` + `assets/tk-cart.css` — free-delivery progress bar (brief §8)
+- `sections/tk-page-header.liquid`, `sections/tk-404.liquid`, `sections/tk-contact.liquid` + `assets/tk-pages.css` (brief §4)
+- `assets/tk-dawn.css` — global v2 restyle of Dawn surfaces (product variant pills, facets, pagination, cart, buttons)
+- Dawn files modified: `main-collection-product-grid`, `main-search`, `related-products` (render `tk-product-card`); `main-product` (tk blocks + sticky ATC); `cart-drawer` snippet + `main-cart-footer` (free-shipping bar); `main-page` (tk-rte + hide-title); `cart-icon-bubble` (tk cart text). Dawn JS custom elements left intact throughout.
+- Settings added: `tk_free_shipping_threshold`; header `logo_style`, `cart_display`, `wordmark_text`, `transparent_header_homepage`.
+
+See `docs/COMPLETION_NOTE.md` and `docs/APPS_USED.md`.
