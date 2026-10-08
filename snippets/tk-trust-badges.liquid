@@ -1,0 +1,26 @@
+{%- comment -%}
+  snippets/tk-trust-badges.liquid — up to 4 icon + text reassurance items. Params: block
+{%- endcomment -%}
+{%- liquid
+  assign items = ''
+  for i in (1..4)
+    assign label_key = 'text_' | append: i
+    if block.settings[label_key] != blank
+      assign items = items | append: '1'
+    endif
+  endfor
+-%}
+{%- if items != blank -%}
+  <ul class="tk-trust-badges" {{ block.shopify_attributes }} role="list">
+    {%- for i in (1..4) -%}
+      {%- assign label_key = 'text_' | append: i -%}
+      {%- assign icon_key = 'icon_' | append: i -%}
+      {%- if block.settings[label_key] != blank -%}
+        <li class="tk-trust-badges__item">
+          {% render 'tk-icon', icon: block.settings[icon_key], size: 20 %}
+          <span>{{ block.settings[label_key] | escape }}</span>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

@@ -1,0 +1,38 @@
+{%- comment -%}
+  snippets/tk-sticky-atc.liquid — mobile sticky Add to cart (brief §8).
+  Shown on mobile; appears when the main ATC button scrolls out of view.
+  Submits the MAIN product form (no duplicate cart logic); syncs variant/price/availability
+  via Dawn's PUB_SUB_EVENTS.variantChange. JS: assets/tk-sticky-atc.js.
+  Params: product, product_form_id, section_id
+{%- endcomment -%}
+{%- assign v = product.selected_or_first_available_variant -%}
+<tk-sticky-atc
+  class="tk-sticky-atc"
+  data-section-id="{{ section_id }}"
+  data-form-id="{{ product_form_id }}"
+  hidden
+>
+  <div class="tk-sticky-atc__inner tk-container">
+    <div class="tk-sticky-atc__media">
+      {%- if product.featured_media -%}
+        {{ product.featured_media | image_url: width: 120 | image_tag: width: 44, height: 55, loading: 'lazy', alt: '' }}
+      {%- endif -%}
+    </div>
+    <div class="tk-sticky-atc__info">
+      <span class="tk-sticky-atc__title">{{ product.title | escape }}</span>
+      <span class="tk-sticky-atc__price" data-tk-sticky-price>{%- render 'tk-price', product: product -%}</span>
+    </div>
+    <button
+      type="submit"
+      form="{{ product_form_id }}"
+      name="add"
+      class="tk-btn tk-btn--primary tk-sticky-atc__btn"
+      data-tk-sticky-btn
+      {% unless v.available %}disabled{% endunless %}
+    >
+      <span data-tk-sticky-label>
+        {%- if v.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+      </span>
+    </button>
+  </div>
+</tk-sticky-atc>

@@ -41,6 +41,18 @@
           "settings": {
             "share_label": "Share"
           }
+        },
+        "tk_highlights": {
+          "type": "tk_highlights",
+          "settings": {}
+        },
+        "tk_trust": {
+          "type": "tk_trust_badges",
+          "settings": {}
+        },
+        "tk_details": {
+          "type": "tk_details",
+          "settings": {}
         }
       },
       "block_order": [
@@ -50,6 +62,9 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "tk_highlights",
+        "tk_trust",
+        "tk_details",
         "description",
         "share"
       ],
@@ -66,7 +81,8 @@
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
-        "padding_bottom": 12
+        "padding_bottom": 12,
+        "enable_sticky_atc": true
       }
     },
     "disclosures": {

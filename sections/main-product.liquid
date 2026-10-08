@@ -41,6 +41,8 @@
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  {{ 'tk-product.css' | asset_url | stylesheet_tag }}
+  {%- if section.settings.enable_sticky_atc -%}<script src="{{ 'tk-sticky-atc.js' | asset_url }}" defer="defer"></script>{%- endif -%}
   {%- if product.quantity_price_breaks_configured? -%}
     <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
@@ -455,6 +457,29 @@
                       </volume-pricing>
                     {%- endif -%}
                   </div>
+                {%- when 'tk_highlights' -%}
+                  <div {{ block.shopify_attributes }}>
+                    {%- render 'tk-product-meta', product: product, part: 'highlights' -%}
+                  </div>
+                {%- when 'tk_trust_badges' -%}
+                  <div class="tk-product-trust" {{ block.shopify_attributes }}>
+                    {%- for i in (1..4) -%}
+                      {%- liquid
+                        assign lbl = block.settings['label_' | append: i]
+                        assign ico = block.settings['icon_' | append: i]
+                      -%}
+                      {%- if lbl != blank -%}
+                        <div class="tk-product-trust__item">
+                          {%- render 'tk-icon', icon: ico, size: 20 -%}
+                          <span>{{ lbl | escape }}</span>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- when 'tk_details' -%}
+                  <div {{ block.shopify_attributes }}>
+                    {%- render 'tk-product-meta', product: product, part: 'accordion' -%}
+                  </div>
                 {%- when 'popup' -%}
                   <modal-opener
                     class="product-popup-modal__opener quick-add-hidden"
@@ -753,6 +778,10 @@
   </product-component>
 </product-info>
 
+{%- if section.settings.enable_sticky_atc -%}
+  {%- render 'tk-sticky-atc', product: product, product_form_id: product_form_id, section_id: section.id -%}
+{%- endif -%}
+
 {% schema %}
 {
   "name": "t:sections.main-product.name",
@@ -761,6 +790,36 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "tk_highlights",
+      "name": "Highlights (metafield)",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Shows the product's custom.highlights metafield as a checklist." }
+      ]
+    },
+    {
+      "type": "tk_details",
+      "name": "Details accordion (metafields)",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Description + custom.specifications, custom.care_instructions and custom.faqs metafields as an accordion." }
+      ]
+    },
+    {
+      "type": "tk_trust_badges",
+      "name": "Trust badges",
+      "settings": [
+        { "type": "text", "id": "label_1", "label": "Label 1", "default": "Free UK delivery over £50" },
+        { "type": "text", "id": "icon_1", "label": "Icon 1", "default": "truck" },
+        { "type": "text", "id": "label_2", "label": "Label 2", "default": "Free 30-day returns" },
+        { "type": "text", "id": "icon_2", "label": "Icon 2", "default": "return" },
+        { "type": "text", "id": "label_3", "label": "Label 3" },
+        { "type": "text", "id": "icon_3", "label": "Icon 3", "default": "shield" },
+        { "type": "text", "id": "label_4", "label": "Label 4" },
+        { "type": "text", "id": "icon_4", "label": "Icon 4", "default": "check" }
+      ]
     },
     {
       "type": "text",
@@ -2147,6 +2206,12 @@
     }
   ],
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_sticky_atc",
+      "label": "Enable mobile sticky Add to cart",
+      "default": true
+    },
     {
       "type": "checkbox",
       "id": "enable_sticky_info",

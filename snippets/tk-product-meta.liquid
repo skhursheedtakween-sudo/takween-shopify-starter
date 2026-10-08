@@ -1,0 +1,84 @@
+{%- comment -%}
+  snippets/tk-product-meta.liquid — renders structured product metafields (brief §6).
+  Reads (namespace custom): highlights (list), care_instructions (rich text),
+  specifications (list of `specification` metaobjects), faqs (list of `faq_item` metaobjects).
+  Params:
+  - product: {Object}
+  - part: 'highlights' | 'accordion'
+{%- endcomment -%}
+{%- liquid
+  assign mf = product.metafields.custom
+-%}
+
+{%- if part == 'highlights' -%}
+  {%- if mf.highlights != blank and mf.highlights.value.size > 0 -%}
+    <ul class="tk-product-highlights" role="list">
+      {%- for item in mf.highlights.value -%}
+        <li class="tk-product-highlights__item">
+          {%- render 'tk-icon', icon: 'check', size: 18, class: 'tk-product-highlights__icon' -%}
+          <span>{{ item | escape }}</span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+{%- elsif part == 'accordion' -%}
+  {%- liquid
+    assign has_desc = false
+    if product.description != blank
+      assign has_desc = true
+    endif
+    assign has_specs = false
+    if mf.specifications != blank and mf.specifications.value.size > 0
+      assign has_specs = true
+    endif
+    assign has_care = false
+    if mf.care_instructions != blank
+      assign has_care = true
+    endif
+    assign has_faqs = false
+    if mf.faqs != blank and mf.faqs.value.size > 0
+      assign has_faqs = true
+    endif
+  -%}
+  {%- if has_desc or has_specs or has_care or has_faqs -%}
+    <div class="tk-product-accordion">
+      {%- if has_desc -%}
+        <details class="tk-product-accordion__item" open>
+          <summary class="tk-product-accordion__summary">{{ 'tk.product.details' | t }}<span class="tk-product-accordion__icon" aria-hidden="true"></span></summary>
+          <div class="tk-product-accordion__body tk-rte">{{ product.description }}</div>
+        </details>
+      {%- endif -%}
+      {%- if has_specs -%}
+        <details class="tk-product-accordion__item">
+          <summary class="tk-product-accordion__summary">{{ 'tk.product.specifications' | t }}<span class="tk-product-accordion__icon" aria-hidden="true"></span></summary>
+          <dl class="tk-product-accordion__body tk-product-specs">
+            {%- for spec in mf.specifications.value -%}
+              <dt>{{ spec.label.value | escape }}</dt>
+              <dd>{{ spec.value.value | escape }}</dd>
+            {%- endfor -%}
+          </dl>
+        </details>
+      {%- endif -%}
+      {%- if has_care -%}
+        <details class="tk-product-accordion__item">
+          <summary class="tk-product-accordion__summary">{{ 'tk.product.care' | t }}<span class="tk-product-accordion__icon" aria-hidden="true"></span></summary>
+          <div class="tk-product-accordion__body tk-rte">{{ mf.care_instructions | metafield_tag }}</div>
+        </details>
+      {%- endif -%}
+      {%- if has_faqs -%}
+        <details class="tk-product-accordion__item">
+          <summary class="tk-product-accordion__summary">{{ 'tk.product.faqs' | t }}<span class="tk-product-accordion__icon" aria-hidden="true"></span></summary>
+          <div class="tk-product-accordion__body">
+            {%- for faq in mf.faqs.value -%}
+              <div class="tk-product-faq">
+                <p class="tk-product-faq__q">{{ faq.question.value | escape }}</p>
+                <div class="tk-product-faq__a tk-rte">{{ faq.answer | metafield_tag }}</div>
+              </div>
+            {%- endfor -%}
+          </div>
+        </details>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+{%- endif -%}

@@ -1,0 +1,16 @@
+{%- comment -%}
+  snippets/tk-product-highlights.liquid
+  Renders product.metafields.custom.highlights (List of single line text) as a check-icon list.
+  Hidden entirely when the metafield is blank. Params: product, block
+{%- endcomment -%}
+{%- assign highlights = product.metafields.custom.highlights.value -%}
+{%- if highlights != blank and highlights.size > 0 -%}
+  <ul class="tk-product-highlights" {{ block.shopify_attributes }} role="list">
+    {%- for point in highlights -%}
+      <li class="tk-product-highlights__item">
+        <span class="tk-product-highlights__icon">{% render 'tk-icon', icon: 'check', size: 18 %}</span>
+        <span>{{ point }}</span>
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

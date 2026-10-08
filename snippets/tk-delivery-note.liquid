@@ -1,0 +1,11 @@
+{%- comment -%}
+  snippets/tk-delivery-note.liquid — short delivery / reassurance line. Params: block
+{%- endcomment -%}
+{%- if block.settings.text != blank -%}
+  <p class="tk-delivery-note" {{ block.shopify_attributes }}>
+    {%- if block.settings.icon != 'none' -%}
+      {% render 'tk-icon', icon: block.settings.icon, size: 18, class: 'tk-delivery-note__icon' %}
+    {%- endif -%}
+    <span>{{ block.settings.text | escape }}</span>
+  </p>
+{%- endif -%}

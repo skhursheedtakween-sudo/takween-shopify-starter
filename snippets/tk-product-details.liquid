@@ -1,0 +1,89 @@
+{%- comment -%}
+  snippets/tk-product-details.liquid
+  Accordion of product information. Each row renders only when its data exists:
+  - Description        → product.description
+  - Specifications     → product.metafields.custom.specifications (list of `specification` metaobjects) as a <dl>
+  - Care instructions  → product.metafields.custom.care_instructions (rich text)
+  - Questions (FAQs)   → product.metafields.custom.faqs (list of `faq_item` metaobjects)
+  - Custom rows        → block settings (heading + richtext) ×2
+  Native <details>/<summary> — works without JS, keyboard accessible.
+  Params: product, block
+{%- endcomment -%}
+
+{%- liquid
+  assign specs = product.metafields.custom.specifications.value
+  assign care = product.metafields.custom.care_instructions
+  assign faqs = product.metafields.custom.faqs.value
+-%}
+
+<div class="tk-details" {{ block.shopify_attributes }}>
+  {%- if block.settings.show_description and product.description != blank -%}
+    <details class="tk-details__row"{% if block.settings.open_first %} open{% endif %}>
+      <summary class="tk-details__summary">
+        <span>{{ block.settings.description_label | default: 'Description' | escape }}</span>
+        <span class="tk-details__icon" aria-hidden="true"></span>
+      </summary>
+      <div class="tk-details__body tk-rte">{{ product.description }}</div>
+    </details>
+  {%- endif -%}
+
+  {%- if specs != blank and specs.size > 0 -%}
+    <details class="tk-details__row"{% if block.settings.open_first and product.description == blank %} open{% endif %}>
+      <summary class="tk-details__summary">
+        <span>{{ block.settings.specs_label | default: 'Specifications' | escape }}</span>
+        <span class="tk-details__icon" aria-hidden="true"></span>
+      </summary>
+      <div class="tk-details__body">
+        <dl class="tk-details__specs">
+          {%- for spec in specs -%}
+            <dt>{{ spec.label.value | escape }}</dt>
+            <dd>{{ spec.value.value | escape }}</dd>
+          {%- endfor -%}
+        </dl>
+      </div>
+    </details>
+  {%- endif -%}
+
+  {%- if care != blank -%}
+    <details class="tk-details__row">
+      <summary class="tk-details__summary">
+        <span>{{ block.settings.care_label | default: 'Care' | escape }}</span>
+        <span class="tk-details__icon" aria-hidden="true"></span>
+      </summary>
+      <div class="tk-details__body tk-rte">{{ care | metafield_tag }}</div>
+    </details>
+  {%- endif -%}
+
+  {%- if faqs != blank and faqs.size > 0 -%}
+    <details class="tk-details__row">
+      <summary class="tk-details__summary">
+        <span>{{ block.settings.faqs_label | default: 'Questions' | escape }}</span>
+        <span class="tk-details__icon" aria-hidden="true"></span>
+      </summary>
+      <div class="tk-details__body">
+        <div class="tk-details__faqs">
+          {%- for faq in faqs -%}
+            <div class="tk-details__faq">
+              <p class="tk-details__faq-q">{{ faq.question.value | escape }}</p>
+              <div class="tk-details__faq-a tk-rte">{{ faq.answer | metafield_tag }}</div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </details>
+  {%- endif -%}
+
+  {%- for i in (1..2) -%}
+    {%- assign h_key = 'custom_heading_' | append: i -%}
+    {%- assign b_key = 'custom_text_' | append: i -%}
+    {%- if block.settings[h_key] != blank and block.settings[b_key] != blank -%}
+      <details class="tk-details__row">
+        <summary class="tk-details__summary">
+          <span>{{ block.settings[h_key] | escape }}</span>
+          <span class="tk-details__icon" aria-hidden="true"></span>
+        </summary>
+        <div class="tk-details__body tk-rte">{{ block.settings[b_key] }}</div>
+      </details>
+    {%- endif -%}
+  {%- endfor -%}
+</div>

@@ -542,6 +542,12 @@
     "header": {
       "cart_count": "Cart ({{ quantity }})"
     },
+    "product": {
+      "details": "Details",
+      "specifications": "Specifications",
+      "care": "Care",
+      "faqs": "Questions"
+    },
     "promo": {
       "products_count": {
         "one": "{{ count }} product",
