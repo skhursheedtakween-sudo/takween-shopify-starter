@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "tk_hero": {
@@ -26,12 +35,12 @@
         "buttons": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Shop collection",
-            "button_link_1": "shopify://collections/all",
-            "button_style_1": "primary",
-            "button_label_2": "Our story",
-            "button_link_2": "/pages/about",
-            "button_style_2": "outline"
+            "button_1_label": "Shop collection",
+            "button_1_link": "",
+            "button_1_style": "primary",
+            "button_2_label": "Explore story",
+            "button_2_link": "",
+            "button_2_style": "outline"
           }
         }
       },
@@ -43,7 +52,9 @@
       ],
       "settings": {
         "layout": "contained",
-        "overlay_opacity": 15,
+        "image": "shopify://shop_images/hero-desktop.jpg",
+        "mobile_image": "shopify://shop_images/hero-mobile.jpg",
+        "overlay_opacity": 0,
         "height": "medium",
         "content_position": "bottom-left",
         "text_alignment": "left",
@@ -326,33 +337,32 @@
       "settings": {
         "image_overlay_opacity": 40,
         "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
         "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
         "desktop_content_alignment": "center",
+        "show_text_box": false,
         "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
         "show_text_below": false
       }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
+        "collection": "all",
+        "products_to_show": 8,
         "title": "Featured products",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
         "columns_desktop": 4,
-        "color_scheme": "scheme-1",
+        "enable_desktop_slider": false,
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
+        "color_scheme": "scheme-1",
         "image_ratio": "adapt",
         "image_shape": "default",
         "show_secondary_image": true,
@@ -360,6 +370,7 @@
         "show_rating": false,
         "quick_add": "none",
         "columns_mobile": "2",
+        "swipe_on_mobile": false,
         "padding_top": 44,
         "padding_bottom": 36
       }
