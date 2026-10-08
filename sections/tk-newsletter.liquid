@@ -1,0 +1,172 @@
+{%- comment -%}
+  sections/tk-newsletter.liquid — Newsletter / lead capture (brief §5).
+  Shopify customer form tagged "newsletter"; visible label, inline success/error with role=status/alert.
+  Layouts: centred (v2 default, sand scheme) or split with image.
+  Styles: assets/tk-newsletter.css · Design: docs/design-reference/home-desktop.html (Join the list)
+{%- endcomment -%}
+
+{{ 'tk-newsletter.css' | asset_url | stylesheet_tag }}
+{%- assign form_id = 'TkNewsletter-' | append: section.id -%}
+
+<section
+  class="tk-nl tk-nl--{{ section.settings.layout }} tk-section color-{{ section.settings.color_scheme }} gradient"
+  style="--tk-pt: {{ section.settings.padding_top }}px; --tk-pb: {{ section.settings.padding_bottom }}px;"
+  aria-labelledby="TkNlHeading-{{ section.id }}"
+>
+  <div class="tk-container tk-nl__inner">
+    {%- if section.settings.layout == 'split' -%}
+      <div class="tk-nl__media">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1400
+            | image_tag:
+              widths: '400, 700, 1000, 1400',
+              sizes: '(min-width: 990px) 50vw, 100vw',
+              loading: 'lazy',
+              alt: section.settings.image.alt | default: ''
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'tk-placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="tk-nl__content">
+      <h2 id="TkNlHeading-{{ section.id }}" class="tk-h2 tk-nl__heading">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="tk-nl__text">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+
+      {%- form 'customer', id: form_id, class: 'tk-nl__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label for="{{ form_id }}-email" class="tk-nl__label">{{ 'newsletter.label' | t }}</label>
+        <div class="tk-nl__row">
+          <input
+            id="{{ form_id }}-email"
+            type="email"
+            name="contact[email]"
+            class="tk-nl__input"
+            value="{{ form.email }}"
+            placeholder="{{ section.settings.placeholder | escape }}"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            required
+            {% if form.errors %}
+              aria-invalid="true" aria-describedby="{{ form_id }}-error"
+            {% elsif form.posted_successfully? %}
+              aria-describedby="{{ form_id }}-success"
+            {% endif %}
+          >
+          <button type="submit" class="tk-nl__submit" aria-label="{{ 'newsletter.button_label' | t }}">
+            {%- render 'tk-icon', icon: 'arrow-right', size: 18, stroke_width: 1.6 -%}
+          </button>
+        </div>
+
+        {%- if form.errors -%}
+          <p id="{{ form_id }}-error" class="tk-nl__message tk-nl__message--error" role="alert">
+            {{ form.errors.translated_fields.email | capitalize }}
+            {{ form.errors.messages.email }}
+          </p>
+        {%- elsif form.posted_successfully? -%}
+          <p id="{{ form_id }}-success" class="tk-nl__message tk-nl__message--success" role="status">
+            {{ 'newsletter.success' | t }}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.privacy_note != blank -%}
+          <div class="tk-nl__privacy">{{ section.settings.privacy_note }}</div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "div",
+  "class": "tk-section-newsletter",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "centered", "label": "Centred" },
+        { "value": "split", "label": "Split with image" }
+      ],
+      "default": "centered"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Join the <em>list</em>"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "New arrivals, considered stories and the occasional offer. No noise."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Input placeholder",
+      "default": "you@example.com"
+    },
+    {
+      "type": "richtext",
+      "id": "privacy_note",
+      "label": "Privacy note",
+      "default": "<p>By subscribing you agree to our <a href=\"/policies/privacy-policy\" title=\"Privacy policy\">privacy policy</a>.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (split layout)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Subscribers are added to Customers with the tag “newsletter”."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-4"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 112
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 112
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

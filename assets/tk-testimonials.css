@@ -1,0 +1,179 @@
+/* tk-testimonials.css — v2 single-quote slider + card grid. 1rem = 10px in Dawn. */
+
+.tk-testi__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.tk-testi__header .tk-eyebrow,
+.tk-testi__heading {
+  margin: 0;
+}
+
+/* Slider */
+tk-testimonials {
+  display: block;
+}
+
+.tk-testi__slider {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tk-testi__slide {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.tk-testi__slide[hidden] {
+  display: none;
+}
+
+.tk-testi__slide .tk-rating__star--full {
+  fill: rgb(var(--color-foreground));
+  color: rgb(var(--color-foreground));
+}
+
+.tk-testi__quote {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-weight: 300;
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: rgb(var(--color-foreground));
+}
+
+.tk-testi__quote p {
+  margin: 0;
+}
+
+.tk-testi__quote em {
+  font-style: italic;
+}
+
+.tk-testi__author {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.tk-testi__author strong {
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+}
+
+.tk-testi__sample {
+  color: var(--tk-color-meta, #6B645B);
+}
+
+.tk-testi__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 36px;
+}
+
+.tk-testi__btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--tk-color-input-border, #CFC6B8);
+  background: transparent;
+  color: rgb(var(--color-foreground));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--tk-transition, 180ms ease), background-color var(--tk-transition, 180ms ease);
+}
+
+.tk-testi__btn:hover {
+  border-color: rgb(var(--color-foreground));
+}
+
+.tk-testi__btn:focus-visible {
+  outline: 2px solid rgb(var(--color-foreground));
+  outline-offset: 3px;
+}
+
+.tk-testi__counter {
+  min-width: 44px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+/* Grid */
+.tk-testi__grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(var(--tk-testi-cols, 3), minmax(0, 1fr));
+}
+
+.tk-testi__card {
+  margin: 0;
+  padding: 32px;
+  border-radius: var(--tk-radius-card, 4px);
+  background: var(--tk-color-paper, #FBF9F5);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tk-testi__card-quote {
+  margin: 0;
+  font-family: var(--font-heading-family);
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.35;
+  flex: 1;
+}
+
+.tk-testi__card-quote p {
+  margin: 0;
+}
+
+.tk-testi__card .tk-testi__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tk-testi__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.tk-testi__sample--grid {
+  margin: 20px 0 0;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media screen and (max-width: 989px) {
+  .tk-testi__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .tk-testi__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tk-testi__slide {
+    gap: 20px;
+  }
+}

@@ -4,7 +4,7 @@
   #cart-icon-bubble in sections/header.liquid. Markup must stay in sync with the
   header cart link (Takween: "Cart (n)" text + mobile icon with count).
 {%- endcomment -%}
-<span class="header__cart-text">{{ 'tk.header.cart_count' | t: count: cart.item_count }}</span>
+<span class="header__cart-text">{{ 'tk.header.cart_count' | t: quantity: cart.item_count }}</span>
 <span class="header__cart-icon-mobile">
   <span class="svg-wrapper">{% render 'tk-icon', icon: 'cart', size: 20, stroke_width: 1.5 %}</span>
   {%- if cart != empty -%}

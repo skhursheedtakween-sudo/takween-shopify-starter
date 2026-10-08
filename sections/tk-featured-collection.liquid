@@ -1,0 +1,242 @@
+{%- comment -%}
+  sections/tk-featured-collection.liquid — Featured collection with optional collection tabs (brief §5).
+  - No tab blocks: shows the section collection.
+  - Tab blocks: accessible pill tabs (role=tablist); each tab panel renders its own product grid.
+    Without JS every panel's "View all" link still works and the first panel is shown.
+  Product cards: snippets/tk-product-grid → tk-product-card. Styles: assets/tk-featured-collection.css
+  Design: docs/design-reference/home-desktop.html ("New arrivals").
+{%- endcomment -%}
+
+{{ 'tk-featured-collection.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign tabs = section.blocks | where: 'type', 'tab'
+  assign use_tabs = false
+  if tabs.size > 0
+    assign use_tabs = true
+  endif
+  assign limit = section.settings.products_to_show
+  assign first_collection = section.settings.collection
+  if use_tabs
+    assign first_collection = tabs.first.settings.collection
+  endif
+-%}
+
+{%- if use_tabs -%}
+  <script src="{{ 'tk-tabs.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+<section
+  class="tk-fc tk-section color-{{ section.settings.color_scheme }} gradient"
+  style="--tk-pt: {{ section.settings.padding_top }}px; --tk-pb: {{ section.settings.padding_bottom }}px;"
+  aria-labelledby="TkFcHeading-{{ section.id }}"
+>
+  <div class="tk-container">
+    <tk-tabs class="tk-fc__tabs-root">
+      <div class="tk-fc__header">
+        <div class="tk-fc__titles">
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="tk-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+          {%- endif -%}
+          <h2 id="TkFcHeading-{{ section.id }}" class="tk-h2 tk-fc__heading">
+            {{- section.settings.heading | default: first_collection.title -}}
+          </h2>
+        </div>
+
+        <div class="tk-fc__controls">
+          {%- if use_tabs and tabs.size > 1 -%}
+            <div class="tk-fc__tablist" role="tablist" aria-labelledby="TkFcHeading-{{ section.id }}">
+              {%- for tab in tabs -%}
+                <button
+                  type="button"
+                  role="tab"
+                  id="TkFcTab-{{ tab.id }}"
+                  class="tk-fc__tab"
+                  aria-controls="TkFcPanel-{{ tab.id }}"
+                  aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                  {% unless forloop.first %}
+                    tabindex="-1"
+                  {% endunless %}
+                  data-view-all="{{ tab.settings.collection.url | default: routes.all_products_collection_url }}"
+                  {{ tab.shopify_attributes }}
+                >
+                  {{- tab.settings.label | default: tab.settings.collection.title | escape -}}
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.show_view_all -%}
+            <a
+              href="{{ first_collection.url | default: routes.all_products_collection_url }}"
+              class="tk-fc__view-all"
+              data-tk-view-all
+            >
+              {%- if section.settings.view_all_label != blank -%}
+                {{- section.settings.view_all_label | escape -}}
+              {%- else -%}
+                {{- 'tk.general.view_all' | t -}}
+              {%- endif -%}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- if use_tabs -%}
+        {%- for tab in tabs -%}
+          <div
+            id="TkFcPanel-{{ tab.id }}"
+            class="tk-fc__panel"
+            role="tabpanel"
+            aria-labelledby="TkFcTab-{{ tab.id }}"
+            {% unless forloop.first %}
+              hidden
+            {% endunless %}
+          >
+            {%- assign col = tab.settings.collection -%}
+            {%- render 'tk-product-grid',
+                products: col.products,
+                limit: limit,
+                columns_desktop: section.settings.columns_desktop,
+                columns_tablet: 2,
+                columns_mobile: 2,
+                enable_slider_mobile: section.settings.mobile_slider,
+                section_id: tab.id
+              -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="tk-fc__panel">
+            {%- render 'tk-product-grid',
+              products: first_collection.products,
+              limit: limit,
+              columns_desktop: section.settings.columns_desktop,
+              columns_tablet: 2,
+              columns_mobile: 2,
+              enable_slider_mobile: section.settings.mobile_slider,
+              section_id: section.id
+            -%}
+        </div>
+      {%- endif -%}
+    </tk-tabs>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "tag": "div",
+  "class": "tk-section-featured-collection",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "New arrivals",
+      "info": "Leave blank to use the collection title."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Used when no collection tabs are added."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "label": "Products to show",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_slider",
+      "label": "Swipe slider on mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show “View all” link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "“View all” label",
+      "default": "View all"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 112
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Collection tab",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Tab label",
+          "info": "Leave blank to use the collection title."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection"
+    }
+  ]
+}
+{% endschema %}

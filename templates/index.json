@@ -15,32 +15,32 @@
         "eyebrow": {
           "type": "eyebrow",
           "settings": {
-            "eyebrow": "Timeless Everyday Essentials"
+            "eyebrow": "Autumn / Winter 2026 — Sample collection"
           }
         },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Consciously crafted for quiet confidence.",
-            "heading_size": "large",
+            "heading": "Made to be <em>lived</em> in.",
+            "heading_size": "display",
             "heading_tag": "h1"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Discover our enduring wardrobe staples and homeware, crafted ethically in Portugal and England from certified natural fibers.</p>"
+            "text": "<p>Considered everyday pieces for wardrobe and home — designed to last, priced honestly.</p>"
           }
         },
         "buttons": {
           "type": "buttons",
           "settings": {
-            "button_1_label": "Shop collection",
-            "button_1_link": "",
+            "button_1_label": "Shop new arrivals",
+            "button_1_link": "shopify://collections/all",
             "button_1_style": "primary",
-            "button_2_label": "Explore story",
-            "button_2_link": "",
-            "button_2_style": "outline"
+            "button_2_label": "Our story",
+            "button_2_link": "shopify://pages/about",
+            "button_2_style": "link"
           }
         }
       },
@@ -52,7 +52,7 @@
       ],
       "settings": {
         "layout": "full_width",
-        "content_style": "frosted_box",
+        "content_style": "gradient_scrim",
         "image": "shopify://shop_images/hero-desktop.jpg",
         "mobile_image": "shopify://shop_images/hero-mobile.jpg",
         "scrim_opacity": 92,
@@ -61,7 +61,7 @@
         "content_position": "bottom-left",
         "text_alignment": "left",
         "show_slide_counter": false,
-        "show_content_box": true,
+        "show_content_box": false,
         "content_box_opacity": 78,
         "content_box_blur": 12,
         "content_box_border": true,
@@ -76,7 +76,7 @@
           "type": "column",
           "settings": {
             "icon": "truck",
-            "heading": "Free UK delivery",
+            "heading": "Free UK delivery over £50",
             "text": "<p>On all orders over £50. Carbon-neutral dispatch.</p>",
             "link_label": "",
             "link_url": ""
@@ -86,7 +86,7 @@
           "type": "column",
           "settings": {
             "icon": "return",
-            "heading": "30-day easy returns",
+            "heading": "30-day returns",
             "text": "<p>Pre-printed return labels included in every box.</p>",
             "link_label": "",
             "link_url": ""
@@ -106,7 +106,7 @@
           "type": "column",
           "settings": {
             "icon": "mail",
-            "heading": "Dedicated support",
+            "heading": "Real people, real support",
             "text": "<p>Mon–Fri, 9am–5pm UK time. We reply within hours.</p>",
             "link_label": "",
             "link_url": ""
@@ -120,7 +120,7 @@
         "support"
       ],
       "settings": {
-        "layout": "grid",
+        "layout": "marquee",
         "color_scheme": "scheme-1",
         "eyebrow": "",
         "heading": "",
@@ -134,8 +134,8 @@
         "card_style": "bordered",
         "icon_position": "left",
         "text_alignment": "left",
-        "padding_top": 40,
-        "padding_bottom": 40
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "tk_image_with_text": {
@@ -144,49 +144,52 @@
         "eyebrow": {
           "type": "eyebrow",
           "settings": {
-            "eyebrow": "Traceable Quality"
+            "eyebrow": "Our approach"
           }
         },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Built for comfort, designed to endure.",
+            "heading": "Fewer, <em>better</em> things.",
             "heading_tag": "h2"
           }
         },
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Every garment is cut from certified organic fibers, milled under fair working conditions, and constructed with reinforced stitching.</p>"
+            "text": "<p>A reversible image-with-text section. Pair a large editorial image with a short, confident story about how the products are made.</p>"
           }
         },
-        "feature_1": {
-          "type": "list_item",
+        "item_1": {
+          "type": "numbered_item",
           "settings": {
-            "icon": "check",
-            "text": "100% GOTS certified organic cotton"
+            "number": "01",
+            "title": "Honest materials",
+            "text": "Cotton, linen and wool — chosen to last."
           }
         },
-        "feature_2": {
-          "type": "list_item",
+        "item_2": {
+          "type": "numbered_item",
           "settings": {
-            "icon": "check",
-            "text": "Pre-washed for zero shrinkage"
+            "number": "02",
+            "title": "Made in small runs",
+            "text": "Less waste, more care in every piece."
           }
         },
-        "feature_3": {
-          "type": "list_item",
+        "item_3": {
+          "type": "numbered_item",
           "settings": {
-            "icon": "check",
-            "text": "Reinforced double-needle seams"
+            "number": "03",
+            "title": "Designed to be repaired",
+            "text": "Reinforced seams and spare buttons included."
           }
         },
         "button": {
           "type": "button",
           "settings": {
-            "button_label": "Learn more about our standards",
-            "button_link": "/pages/about",
-            "button_style": "secondary"
+            "button_label": "Read our story",
+            "button_link": "shopify://pages/about",
+            "button_style": "link"
           }
         }
       },
@@ -194,12 +197,13 @@
         "eyebrow",
         "heading",
         "text",
-        "feature_1",
-        "feature_2",
-        "feature_3",
+        "item_1",
+        "item_2",
+        "item_3",
         "button"
       ],
       "settings": {
+        "layout": "editorial",
         "color_scheme": "scheme-2",
         "image_ratio": "ratio_5_4",
         "image_width": "50",
@@ -211,52 +215,6 @@
         "padding_bottom": 72
       }
     },
-    "tk_rich_text": {
-      "type": "tk-rich-text",
-      "blocks": {
-        "eyebrow": {
-          "type": "eyebrow",
-          "settings": {
-            "eyebrow": "About Our Craft"
-          }
-        },
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Honest essentials crafted to last a lifetime.",
-            "heading_size": "regular",
-            "heading_tag": "h2"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>We design timeless wardrobe staples and home goods using sustainably sourced materials, ethical European mills, and rigorous craftsmanship.</p>"
-          }
-        },
-        "button": {
-          "type": "button",
-          "settings": {
-            "button_label": "Discover Our Story",
-            "button_link": "/pages/about",
-            "button_style": "outline"
-          }
-        }
-      },
-      "block_order": [
-        "eyebrow",
-        "heading",
-        "text",
-        "button"
-      ],
-      "settings": {
-        "color_scheme": "scheme-1",
-        "alignment": "center",
-        "content_width": "normal",
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
-    },
     "tk_logo_strip": {
       "type": "tk-logo-strip",
       "blocks": {
@@ -265,7 +223,7 @@
           "settings": {
             "image": "shopify://shop_images/partner-01.png",
             "link": "",
-            "alt_text": "Vogue"
+            "alt_text": "Partner 01 (placeholder logo)"
           }
         },
         "logo_2": {
@@ -273,7 +231,7 @@
           "settings": {
             "image": "shopify://shop_images/partner-02.png",
             "link": "",
-            "alt_text": "Monocle"
+            "alt_text": "Partner 02 (placeholder logo)"
           }
         },
         "logo_3": {
@@ -281,7 +239,7 @@
           "settings": {
             "image": "shopify://shop_images/partner-03.png",
             "link": "",
-            "alt_text": "GQ"
+            "alt_text": "Partner 03 (placeholder logo)"
           }
         },
         "logo_4": {
@@ -289,7 +247,7 @@
           "settings": {
             "image": "shopify://shop_images/partner-04.png",
             "link": "",
-            "alt_text": "Dwell"
+            "alt_text": "Partner 04 (placeholder logo)"
           }
         },
         "logo_5": {
@@ -297,7 +255,7 @@
           "settings": {
             "image": "shopify://shop_images/partner-05.png",
             "link": "",
-            "alt_text": "Kinfolk"
+            "alt_text": "Partner 05 (placeholder logo)"
           }
         },
         "logo_g74LK8": {
@@ -305,7 +263,7 @@
           "settings": {
             "image": "shopify://shop_images/partner-06.png",
             "link": "",
-            "alt_text": "Brand logo"
+            "alt_text": "Partner 06 (placeholder logo)"
           }
         }
       },
@@ -329,83 +287,235 @@
         "padding_bottom": 44
       }
     },
-    "image_banner": {
-      "type": "image-banner",
+    "tk_promo": {
+      "type": "tk-promo-split",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "tile_apparel": {
+          "type": "tile",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "collection": "apparel",
+            "meta": "5 essentials · from £24"
           }
         },
-        "button": {
-          "type": "buttons",
+        "tile_home": {
+          "type": "tile",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "collection": "home-living",
+            "meta": "4 pieces · from £22"
+          }
+        },
+        "tile_accessories": {
+          "type": "tile",
+          "settings": {
+            "collection": "accessories",
+            "meta": "3 pieces · from £16"
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "tile_apparel",
+        "tile_home",
+        "tile_accessories"
       ],
       "settings": {
-        "image": "shopify://shop_images/hero-desktop.jpg",
-        "image_2": "shopify://shop_images/theme_cover_image.jpg",
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
+        "layout": "bento",
+        "eyebrow": "Shop by category",
+        "heading": "Curated for <em>everyday</em>",
+        "text": "Three collections, one quiet palette. Mix, layer and live with them.",
+        "tile_height": 680,
+        "color_scheme": "scheme-1",
+        "padding_top": 112,
+        "padding_bottom": 56
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "tk_new_arrivals": {
+      "type": "tk-featured-collection",
+      "blocks": {
+        "tab_all": {
+          "type": "tab",
+          "settings": {
+            "collection": "all",
+            "label": "All"
+          }
+        },
+        "tab_apparel": {
+          "type": "tab",
+          "settings": {
+            "collection": "apparel",
+            "label": "Apparel"
+          }
+        },
+        "tab_home": {
+          "type": "tab",
+          "settings": {
+            "collection": "home-living",
+            "label": "Home"
+          }
+        },
+        "tab_accessories": {
+          "type": "tab",
+          "settings": {
+            "collection": "accessories",
+            "label": "Accessories"
+          }
+        }
+      },
+      "block_order": [
+        "tab_all",
+        "tab_apparel",
+        "tab_home",
+        "tab_accessories"
+      ],
       "settings": {
+        "eyebrow": "",
+        "heading": "New arrivals",
         "collection": "all",
-        "products_to_show": 8,
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
+        "products_to_show": 4,
         "columns_desktop": 4,
-        "enable_desktop_slider": false,
-        "full_width": false,
+        "mobile_slider": true,
         "show_view_all": true,
-        "view_all_style": "solid",
+        "view_all_label": "View all",
         "color_scheme": "scheme-1",
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 44,
-        "padding_bottom": 36
+        "padding_top": 56,
+        "padding_bottom": 112
+      }
+    },
+    "tk_spotlight": {
+      "type": "tk-featured-products",
+      "settings": {
+        "layout": "spotlight",
+        "eyebrow": "Product spotlight",
+        "heading": "The Relaxed <em>Overshirt</em>",
+        "product": "sample-relaxed-overshirt",
+        "text": "<p>Brushed cotton twill, soft from the first wear. The layer you will reach for all season.</p>",
+        "columns_desktop": 4,
+        "color_scheme": "scheme-3",
+        "padding_top": 112,
+        "padding_bottom": 112
+      }
+    },
+    "tk_testimonials": {
+      "type": "tk-testimonials",
+      "blocks": {
+        "t1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>“The kind of everyday pieces you reach for <em>without thinking</em> — and keep for years.”</p>",
+            "author": "Sample Customer",
+            "location": "London",
+            "rating": 5
+          }
+        },
+        "t2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>“Quietly beautiful, and the fabric gets <em>better</em> with every wash.”</p>",
+            "author": "Sample Customer",
+            "location": "Manchester",
+            "rating": 5
+          }
+        },
+        "t3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "<p>“Fast delivery, thoughtful packaging and a fit that is <em>just right</em>.”</p>",
+            "author": "Sample Customer",
+            "location": "Leeds",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {
+        "layout": "slider",
+        "eyebrow": "",
+        "heading": "",
+        "sample_label": "sample review",
+        "columns_desktop": 3,
+        "color_scheme": "scheme-5",
+        "padding_top": 120,
+        "padding_bottom": 120
+      }
+    },
+    "tk_faq": {
+      "type": "tk-faq",
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>UK orders usually arrive within 2–4 working days. [Sample content]</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "What is your returns policy?",
+            "answer": "<p>Unworn items can be returned within 30 days of delivery. [Sample content]</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "How does the sizing run?",
+            "answer": "<p>Our sizes are true to fit. Between sizes? Choose the larger size for a relaxed look.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>We currently ship within the UK. [Sample content]</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {
+        "layout": "split",
+        "eyebrow": "Help",
+        "heading": "Questions, <em>answered.</em>",
+        "text": "<p>Can’t find what you need? <a href=\"/pages/contact\" title=\"Contact\">Contact us</a></p>",
+        "source": "blocks",
+        "open_first": true,
+        "enable_schema": false,
+        "color_scheme": "scheme-1",
+        "padding_top": 112,
+        "padding_bottom": 112
+      }
+    },
+    "tk_newsletter": {
+      "type": "tk-newsletter",
+      "settings": {
+        "layout": "centered",
+        "heading": "Join the <em>list</em>",
+        "text": "New arrivals, considered stories and the occasional offer. No noise.",
+        "placeholder": "you@example.com",
+        "privacy_note": "<p>By subscribing you agree to our <a href=\"/policies/privacy-policy\" title=\"Privacy policy\">privacy policy</a>.</p>",
+        "color_scheme": "scheme-4",
+        "padding_top": 112,
+        "padding_bottom": 112
       }
     }
   },
   "order": [
     "tk_hero",
     "tk_multicolumn",
+    "tk_promo",
+    "tk_new_arrivals",
     "tk_image_with_text",
-    "tk_rich_text",
+    "tk_spotlight",
+    "tk_testimonials",
     "tk_logo_strip",
-    "image_banner",
-    "featured_collection"
+    "tk_faq",
+    "tk_newsletter"
   ]
 }

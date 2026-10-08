@@ -13,6 +13,7 @@
   - show_vendor: {Boolean} Show vendor on cards
   - heading_tag: {String} Heading tag for cards. Default: 'h3'
   - section_id: {String} ID of containing section
+  - limit: {Number} Maximum number of products to render. Default: 50
   - class: {String} Additional classes
 
   Usage:
@@ -25,6 +26,7 @@
   assign cols_mob = columns_mobile | default: 2
   assign is_slider = enable_slider_mobile | default: false
   assign grid_id = 'tk-grid-' | append: section_id
+  assign max_items = limit | default: 50
 -%}
 
 <div
@@ -33,7 +35,7 @@
   style="--tk-grid-cols-desktop: {{ cols_desk }}; --tk-grid-cols-tablet: {{ cols_tab }}; --tk-grid-cols-mobile: {{ cols_mob }};"
 >
   <div class="tk-product-grid__items">
-    {%- for prod in products -%}
+    {%- for prod in products limit: max_items -%}
       {%- liquid
         assign card_lazy = true
         if forloop.index <= 4
@@ -68,7 +70,7 @@
   </div>
 
   {%- if is_slider -%}
-    <div class="tk-product-grid__controls no-js-hidden" aria-hidden="true">
+    <div class="tk-product-grid__controls no-js-hidden">
       <button
         type="button"
         class="tk-btn tk-btn--outline tk-product-grid__prev"

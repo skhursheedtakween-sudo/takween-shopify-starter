@@ -1,0 +1,141 @@
+/* tk-faq.css — v2 FAQ: heading column + thin-line accordion. 1rem = 10px in Dawn. */
+
+.tk-faq__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 64px;
+}
+
+.tk-faq__intro {
+  flex: 1 1 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.tk-faq__intro .tk-eyebrow,
+.tk-faq__heading {
+  margin: 0;
+}
+
+.tk-faq__text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tk-color-meta, #6B645B);
+}
+
+.tk-faq__text p {
+  margin: 0;
+}
+
+.tk-faq__text a {
+  color: rgb(var(--color-foreground));
+  text-underline-offset: 4px;
+}
+
+.tk-faq__list {
+  flex: 2 1 540px;
+  min-width: 0;
+  border-bottom: 1px solid var(--tk-color-input-border, #CFC6B8);
+}
+
+.tk-faq--stacked .tk-faq__inner {
+  flex-direction: column;
+  align-items: center;
+  max-width: 860px;
+}
+
+.tk-faq--stacked .tk-faq__intro {
+  text-align: center;
+  align-items: center;
+}
+
+.tk-faq--stacked .tk-faq__list {
+  width: 100%;
+}
+
+.tk-faq__item {
+  border-top: 1px solid var(--tk-color-input-border, #CFC6B8);
+}
+
+.tk-faq__question {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 72px;
+  padding: 20px 0;
+  cursor: pointer;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: rgb(var(--color-foreground));
+}
+
+.tk-faq__question::-webkit-details-marker {
+  display: none;
+}
+
+.tk-faq__question:focus-visible {
+  outline: 2px solid rgb(var(--color-foreground));
+  outline-offset: 4px;
+}
+
+/* Thin plus/minus drawn with CSS */
+.tk-faq__icon {
+  position: relative;
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.tk-faq__icon::before,
+.tk-faq__icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 18px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform var(--tk-transition, 180ms ease);
+}
+
+.tk-faq__icon::after {
+  transform: rotate(90deg);
+}
+
+.tk-faq__item[open] .tk-faq__icon::after {
+  transform: rotate(0deg);
+}
+
+.tk-faq__answer {
+  max-width: 640px;
+  padding: 0 0 26px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.tk-faq__answer p {
+  margin: 0 0 10px;
+}
+
+.tk-faq__answer p:last-child {
+  margin-bottom: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-faq__icon::before,
+  .tk-faq__icon::after {
+    transition: none;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .tk-faq__question {
+    font-size: 17px;
+    min-height: 60px;
+  }
+}

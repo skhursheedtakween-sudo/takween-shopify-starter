@@ -1,0 +1,284 @@
+{%- comment -%}
+  sections/tk-featured-products.liquid — Featured products / product cards (brief §5).
+  Layouts:
+  - spotlight: one product, editorial split (v2 "Product spotlight", espresso scheme).
+      Single-variant products add to cart through Dawn's <product-form> (opens the cart drawer).
+      Multi-variant products link to the product page ("Choose options") so shoppers pick a size/colour.
+  - grid: hand-picked products in tk-product-card grid.
+  Styles: assets/tk-featured-products.css · Design: docs/design-reference/home-desktop.html
+{%- endcomment -%}
+
+{{ 'tk-featured-products.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign layout = section.settings.layout
+  assign p = section.settings.product
+-%}
+
+<section
+  class="tk-fp tk-fp--{{ layout }} tk-section color-{{ section.settings.color_scheme }} gradient"
+  style="--tk-pt: {{ section.settings.padding_top }}px; --tk-pb: {{ section.settings.padding_bottom }}px;"
+  aria-labelledby="TkFpHeading-{{ section.id }}"
+>
+  <div class="tk-container">
+    {%- if layout == 'spotlight' -%}
+      <div class="tk-fp__spotlight">
+        <div class="tk-fp__info">
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="tk-eyebrow tk-fp__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+          {%- endif -%}
+
+          <h2 id="TkFpHeading-{{ section.id }}" class="tk-fp__title">
+            {%- if section.settings.heading != blank -%}
+              {{ section.settings.heading }}
+            {%- elsif p != blank -%}
+              {{ p.title | escape }}
+            {%- else -%}
+              {{ 'tk.featured_products.placeholder_title' | t }}
+            {%- endif -%}
+          </h2>
+
+          {%- if section.settings.text != blank -%}
+            <div class="tk-fp__text">{{ section.settings.text }}</div>
+          {%- elsif p != blank and p.description != blank -%}
+            <p class="tk-fp__text">{{ p.description | strip_html | truncatewords: 26 }}</p>
+          {%- endif -%}
+
+          {%- if p != blank -%}
+            {%- assign v = p.selected_or_first_available_variant -%}
+            <div class="tk-fp__price">
+              {%- if v.compare_at_price > v.price -%}
+                <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                <span class="tk-fp__price-now">{{ v.price | money }}</span>
+                <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                <s class="tk-fp__price-was">{{ v.compare_at_price | money }}</s>
+              {%- else -%}
+                <span class="tk-fp__price-now">{{ v.price | money }}</span>
+              {%- endif -%}
+            </div>
+
+            {%- render 'tk-swatch', product: p, max_swatches: 6, class: 'tk-fp__swatches' -%}
+
+            <div class="tk-fp__actions">
+              {%- if p.has_only_default_variant -%}
+                {%- assign form_id = 'TkFpForm-' | append: section.id -%}
+                <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+                <product-form class="product-form tk-fp__form" data-section-id="{{ section.id }}">
+                  <div class="product-form__error-message-wrapper" role="alert" hidden>
+                    <span class="product-form__error-message"></span>
+                  </div>
+                  {%- form 'product', p, id: form_id, novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                    <input
+                      type="hidden"
+                      name="id"
+                      value="{{ v.id }}"
+                      class="product-variant-id"
+                      {% unless v.available %}
+                        disabled
+                      {% endunless %}
+                    >
+                    <button
+                      id="ProductSubmitButton-{{ section.id }}"
+                      type="submit"
+                      name="add"
+                      class="product-form__submit tk-btn tk-btn--light-pill"
+                      {% unless v.available %}
+                        disabled
+                      {% endunless %}
+                    >
+                      <span>
+                        {%- if v.available -%}
+                          {{ 'products.product.add_to_cart' | t }}
+                        {%- else -%}
+                          {{ 'products.product.sold_out' | t }}
+                        {%- endif -%}
+                      </span>
+                      {%- render 'loading-spinner' -%}
+                    </button>
+                  {%- endform -%}
+                </product-form>
+              {%- else -%}
+                <a href="{{ p.url }}" class="tk-btn tk-btn--light-pill">
+                  {%- if p.available -%}
+                    {{ 'products.product.choose_options' | t }}
+                  {%- else -%}
+                    {{ 'products.product.sold_out' | t }}
+                  {%- endif -%}
+                </a>
+              {%- endif -%}
+              <a href="{{ p.url }}" class="tk-fp__details-link">{{ 'tk.featured_products.view_details' | t }}</a>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <div class="tk-fp__media">
+          {%- liquid
+            assign media_1 = section.settings.image | default: p.featured_media
+            assign media_2 = section.settings.image_2
+            if media_2 == blank and p.media.size > 1
+              assign media_2 = p.media[1]
+            endif
+          -%}
+          <div class="tk-fp__media-main">
+            {%- if media_1 != blank -%}
+              {{
+                media_1
+                | image_url: width: 1400
+                | image_tag:
+                  widths: '400, 600, 800, 1000, 1400',
+                  sizes: '(min-width: 990px) 33vw, 60vw',
+                  loading: 'lazy',
+                  alt: p.title | default: media_1.alt | escape
+              }}
+            {%- else -%}
+              {{ 'product-apparel-2' | placeholder_svg_tag: 'tk-placeholder-svg' }}
+            {%- endif -%}
+          </div>
+          {%- if media_2 != blank -%}
+            <div class="tk-fp__media-detail">
+              {{
+                media_2
+                | image_url: width: 900
+                | image_tag:
+                  widths: '300, 450, 600, 900',
+                  sizes: '(min-width: 990px) 22vw, 40vw',
+                  loading: 'lazy',
+                  alt: media_2.alt | default: ''
+              }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- else -%}
+      <div class="tk-fp__grid-header">
+        {%- render 'tk-section-heading',
+          eyebrow: section.settings.eyebrow,
+          heading: section.settings.heading,
+          heading_tag: 'h2'
+        -%}
+      </div>
+      <span id="TkFpHeading-{{ section.id }}" class="visually-hidden">{{ section.settings.heading | strip_html }}</span>
+      {%- render 'tk-product-grid',
+        products: section.settings.product_list,
+        limit: 12,
+        columns_desktop: section.settings.columns_desktop,
+        columns_tablet: 2,
+        columns_mobile: 2,
+        enable_slider_mobile: true,
+        section_id: section.id
+      -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured products",
+  "tag": "div",
+  "class": "tk-section-featured-products",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "spotlight", "label": "Spotlight (single product)" },
+        { "value": "grid", "label": "Product grid" }
+      ],
+      "default": "spotlight"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Product spotlight"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Spotlight: leave blank to use the product title. Italics create the editorial emphasis."
+    },
+    {
+      "type": "header",
+      "content": "Spotlight"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "info": "Leave blank to use the start of the product description."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Main image override"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Detail image override",
+      "info": "Defaults to the product's second image."
+    },
+    {
+      "type": "header",
+      "content": "Product grid"
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "Products",
+      "limit": 12
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Colours & spacing"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-3"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 112
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 112
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured products"
+    }
+  ]
+}
+{% endschema %}

@@ -540,7 +540,21 @@
   },
   "tk": {
     "header": {
-      "cart_count": "Cart ({{ count }})"
+      "cart_count": "Cart ({{ quantity }})"
+    },
+    "promo": {
+      "products_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      }
+    },
+    "featured_products": {
+      "view_details": "View details",
+      "placeholder_title": "Select a product"
+    },
+    "testimonials": {
+      "previous": "Previous testimonial",
+      "next": "Next testimonial"
     },
     "footer": {
       "select_menu": "Select a menu for this column in the Theme Editor.",

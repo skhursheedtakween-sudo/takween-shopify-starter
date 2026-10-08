@@ -617,7 +617,7 @@
       {%- endfor -%}
 
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart header__cart-text-link header__cart-text-link--{{ section.settings.cart_display | default: 'text' }} link focus-inset" id="cart-icon-bubble">
-        <span class="header__cart-text">{{ 'tk.header.cart_count' | t: count: cart.item_count }}</span>
+        <span class="header__cart-text">{{ 'tk.header.cart_count' | t: quantity: cart.item_count }}</span>
         <span class="header__cart-icon-mobile">
           <span class="svg-wrapper">{% render 'tk-icon', icon: 'cart', size: 20, stroke_width: 1.5 %}</span>
           {%- if cart != empty -%}

@@ -1,0 +1,249 @@
+{%- comment -%}
+  sections/tk-promo-split.liquid — Promotional split / campaign banner (brief §5).
+  Layouts:
+  - bento: one large tile + stacked tiles (v2 "Curated for everyday")
+  - split: equal side-by-side panels
+  Each tile can point at a collection: its image, title and URL are used when the tile's own fields are blank,
+  so merchants can build the section without uploading new images.
+  Design: docs/design-reference/home-desktop.html (bento). Styles: assets/tk-promo-split.css
+{%- endcomment -%}
+
+{{ 'tk-promo-split.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign layout = section.settings.layout
+  assign tile_count = section.blocks.size
+-%}
+
+<section
+  class="tk-promo tk-section color-{{ section.settings.color_scheme }} gradient"
+  style="--tk-pt: {{ section.settings.padding_top }}px; --tk-pb: {{ section.settings.padding_bottom }}px; --tk-promo-h: {{ section.settings.tile_height }}px;"
+  aria-labelledby="TkPromoHeading-{{ section.id }}"
+>
+  <div class="tk-container">
+    {%- if section.settings.heading != blank or section.settings.eyebrow != blank or section.settings.text != blank -%}
+      <div class="tk-promo__header">
+        <div class="tk-promo__titles">
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="tk-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 id="TkPromoHeading-{{ section.id }}" class="tk-h2 tk-promo__heading">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+        </div>
+        {%- if section.settings.text != blank -%}
+          <p class="tk-promo__intro">{{ section.settings.text | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if tile_count > 0 -%}
+      <div class="tk-promo__grid tk-promo__grid--{{ layout }} tk-promo__grid--count-{{ tile_count }}">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign col = block.settings.collection
+            assign tile_image = block.settings.image | default: col.featured_image
+            assign tile_title = block.settings.title | default: col.title
+            assign tile_url = block.settings.link | default: col.url
+            assign tile_meta = block.settings.meta
+            if tile_meta == blank and col != blank and col.products_count > 0
+              assign tile_meta = 'tk.promo.products_count' | t: count: col.products_count
+            endif
+
+            assign is_large = false
+            if layout == 'bento' and forloop.first
+              assign is_large = true
+            endif
+
+            if is_large
+              assign img_sizes = '(min-width: 990px) 58vw, 100vw'
+            elsif layout == 'split'
+              assign img_sizes = '(min-width: 990px) 50vw, 100vw'
+            else
+              assign img_sizes = '(min-width: 990px) 42vw, 100vw'
+            endif
+          -%}
+
+          {%- if layout == 'bento' and forloop.index == 2 -%}
+            <div class="tk-promo__stack">
+          {%- endif -%}
+
+          {%- if tile_url != blank -%}
+            <a href="{{ tile_url }}" class="tk-promo__tile{% if is_large %} tk-promo__tile--large{% endif %}" {{ block.shopify_attributes }}>
+          {%- else -%}
+            <div class="tk-promo__tile{% if is_large %} tk-promo__tile--large{% endif %}" {{ block.shopify_attributes }}>
+          {%- endif -%}
+
+            <div class="tk-promo__media">
+              {%- if tile_image != blank -%}
+                {{
+                  tile_image
+                  | image_url: width: 1800
+                  | image_tag:
+                    widths: '375, 550, 750, 1000, 1300, 1800',
+                    sizes: img_sizes,
+                    loading: 'lazy',
+                    class: 'tk-promo__image',
+                    alt: ''
+                }}
+              {%- else -%}
+                {{ 'collection-apparel-1' | placeholder_svg_tag: 'tk-promo__image tk-placeholder-svg' }}
+              {%- endif -%}
+            </div>
+            <div class="tk-promo__scrim" aria-hidden="true"></div>
+
+            <div class="tk-promo__label">
+              <div class="tk-promo__label-text">
+                {%- if tile_title != blank -%}
+                  <span class="tk-promo__title">{{ tile_title | escape }}</span>
+                {%- endif -%}
+                {%- if tile_meta != blank -%}
+                  <span class="tk-promo__meta">{{ tile_meta | escape }}</span>
+                {%- endif -%}
+              </div>
+              {%- if tile_url != blank -%}
+                <span class="tk-promo__arrow" aria-hidden="true">
+                  {%- render 'tk-icon', icon: 'arrow-up-right', size: 18, stroke_width: 1.6 -%}
+                </span>
+              {%- endif -%}
+            </div>
+
+          {%- if tile_url != blank -%}
+            </a>
+          {%- else -%}
+            </div>
+          {%- endif -%}
+
+          {%- if layout == 'bento' and forloop.last and tile_count > 1 -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo split / bento",
+  "tag": "div",
+  "class": "tk-section-promo-split",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "bento", "label": "Bento (1 large + stacked)" },
+        { "value": "split", "label": "Split (equal panels)" }
+      ],
+      "default": "bento"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shop by category"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "info": "Use italics for the emphasis word.",
+      "default": "Curated for <em>everyday</em>"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Intro text",
+      "default": "Three collections, one quiet palette. Mix, layer and live with them."
+    },
+    {
+      "type": "range",
+      "id": "tile_height",
+      "min": 400,
+      "max": 840,
+      "step": 20,
+      "unit": "px",
+      "label": "Large tile height (desktop)",
+      "default": 680
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 112
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "Supplies the image, title, link and product count when the fields below are empty."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image (optional)"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title (optional)"
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Small text (optional)",
+          "info": "e.g. 5 essentials · from £24"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link (optional)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo split / bento",
+      "blocks": [
+        { "type": "tile" },
+        { "type": "tile" },
+        { "type": "tile" }
+      ]
+    }
+  ]
+}
+{% endschema %}

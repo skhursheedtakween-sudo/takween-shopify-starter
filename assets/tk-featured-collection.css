@@ -1,0 +1,113 @@
+/* tk-featured-collection.css — v2 "New arrivals" header with pill tabs. 1rem = 10px in Dawn. */
+
+tk-tabs {
+  display: block;
+}
+
+.tk-fc__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px 24px;
+  margin-bottom: 36px;
+}
+
+.tk-fc__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.tk-fc__titles .tk-eyebrow,
+.tk-fc__heading {
+  margin: 0;
+}
+
+.tk-fc__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.tk-fc__tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tk-fc__tab {
+  min-height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid var(--tk-color-input-border, #CFC6B8);
+  background: transparent;
+  color: rgb(var(--color-foreground));
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--tk-transition, 180ms ease), border-color var(--tk-transition, 180ms ease), color var(--tk-transition, 180ms ease);
+}
+
+.tk-fc__tab:hover {
+  border-color: rgb(var(--color-foreground));
+}
+
+.tk-fc__tab[aria-selected='true'] {
+  background: rgb(var(--color-foreground));
+  border-color: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+}
+
+.tk-fc__tab:focus-visible,
+.tk-fc__view-all:focus-visible {
+  outline: 2px solid rgb(var(--color-foreground));
+  outline-offset: 3px;
+}
+
+.tk-fc__view-all {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+}
+
+.tk-fc__view-all:hover {
+  color: var(--tk-color-olive, #5E6B47);
+}
+
+.tk-fc__panel[hidden] {
+  display: none;
+}
+
+/* v2 card rhythm: wider row gap */
+.tk-fc .tk-product-grid__items {
+  row-gap: 44px;
+  column-gap: 20px;
+}
+
+@media screen and (max-width: 749px) {
+  .tk-fc__header {
+    margin-bottom: 24px;
+  }
+
+  .tk-fc__tablist {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-right: calc(var(--tk-gutter) * -1);
+    padding-right: var(--tk-gutter);
+  }
+
+  .tk-fc__tablist::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tk-fc__tab {
+    flex: none;
+  }
+}

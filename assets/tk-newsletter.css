@@ -1,0 +1,160 @@
+/* tk-newsletter.css — v2 newsletter: underline input + round submit. 1rem = 10px in Dawn. */
+
+.tk-nl__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 48px 64px;
+}
+
+.tk-nl--centered .tk-nl__inner {
+  justify-content: center;
+}
+
+.tk-nl__content {
+  flex: 1 1 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tk-nl--centered .tk-nl__content {
+  max-width: 640px;
+  align-items: center;
+  text-align: center;
+}
+
+.tk-nl__heading {
+  margin: 0;
+}
+
+.tk-nl__text {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+.tk-nl__form {
+  width: 100%;
+  max-width: 520px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.tk-nl__label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+}
+
+.tk-nl__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1.5px solid rgb(var(--color-foreground));
+}
+
+.tk-nl__row:focus-within {
+  border-bottom-width: 2px;
+}
+
+.tk-nl__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 56px;
+  border: 0;
+  background: transparent;
+  color: rgb(var(--color-foreground));
+  font: inherit;
+  font-size: 18px;
+}
+
+.tk-nl__input::placeholder {
+  color: rgba(var(--color-foreground), 0.55);
+}
+
+.tk-nl__input:focus-visible {
+  outline: none;
+}
+
+.tk-nl__submit {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 0;
+  background: rgb(var(--color-button));
+  color: rgb(var(--color-button-text));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--tk-transition, 180ms ease);
+}
+
+.tk-nl__submit:hover {
+  transform: translateX(2px);
+}
+
+.tk-nl__submit:focus-visible {
+  outline: 2px solid rgb(var(--color-foreground));
+  outline-offset: 3px;
+}
+
+.tk-nl__message {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tk-nl__message--error {
+  color: var(--tk-color-sale, #A3361F);
+}
+
+.tk-nl__message--success {
+  color: var(--tk-color-success, #3F5A2E);
+}
+
+.tk-nl__privacy {
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.tk-nl__privacy p {
+  margin: 0;
+}
+
+.tk-nl__privacy a {
+  color: inherit;
+  text-underline-offset: 3px;
+}
+
+/* Split layout */
+.tk-nl__media {
+  flex: 1 1 420px;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--tk-radius-card, 4px);
+  overflow: hidden;
+  background: var(--tk-color-tile, #E9E2D6);
+}
+
+.tk-nl__media img,
+.tk-nl__media .tk-placeholder-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-nl__submit:hover {
+    transform: none;
+  }
+}

@@ -158,16 +158,16 @@ When adapting the Takween Starter Theme for a new client project:
 | `sections/header.liquid` | **EXTEND** | Brief §5: Header/navigation | Logo position, menu type, search, utility CTA | Dawn's `header-drawer`, `header-menu`, predictive-search must stay working |
 | `sections/tk-hero.liquid` | **NEW** | Brief §5: Hero/banner | Desktop+mobile image, overlay, height, content position, frosted content box (opacity 40–100%, blur 0–20px, 1px border toggle, <60% text shadow), mobile min-height 520px with bottom-anchored content card and 100% width buttons | First-section detection for `fetchpriority="high"`, 9-position grid, WCAG 4.5:1 contrast handling |
 | `sections/tk-rich-text.liquid` | **NEW** | Brief §5: Rich text/content intro | Alignment, content width (narrow 560px, normal 720px, wide 960px), colour scheme | Standalone tk version with eyebrow, heading, text, caption, button blocks |
-| `sections/tk-featured-collection.liquid` | **NEW** | Brief §5: Featured collection | Collection picker, product count, columns, mobile slider | Uses `tk-product-grid` + `tk-product-card` |
-| `sections/tk-featured-products.liquid` | **NEW** | Brief §5: Featured products | Product list picker, columns, layout | Uses same grid/card system |
-| `sections/tk-image-with-text.liquid` | **NEW** | Brief §5: Image with text, reversible | Image ratio/width, reverse toggle, mobile order, borders, checklist | Default scheme-2 white surface, 1px top/bottom border, 5:4 ratio, checklist items |
+| `sections/tk-featured-collection.liquid` | **NEW** ✅ | Brief §5: Featured collection | Collection, products to show, columns, mobile slider, “View all”; optional **collection tab** blocks (accessible tablist, `tk-tabs.js`) | v2 “New arrivals”. Uses `tk-product-grid` + `tk-product-card`; panels work without JS |
+| `sections/tk-featured-products.liquid` | **NEW** ✅ | Brief §5: Featured products | Layout `spotlight` (single product, espresso) or `grid` (product_list); image overrides; text falls back to description | Spotlight: single-variant products add to cart via Dawn `<product-form>` (cart drawer); multi-variant → “Choose options” link (no wrong-variant adds) |
+| `sections/tk-image-with-text.liquid` | **NEW** ✅ | Brief §5: Image with text, reversible | Layout `editorial` (full-bleed split, v2 default) or `contained`; reverse, mobile order, borders; blocks: eyebrow, heading (inline richtext, italics), text, list item, **numbered item**, button | Heading weight 350 + italic emphasis |
 | `sections/tk-multicolumn.liquid` | **NEW** | Brief §5: Multicolumn benefits/trust | Columns desktop/mobile, card style, icon position, mobile horizontal scroll | Trust bar preset: 4 columns, 40px icon circle (#ECEFFA / accent), 12px radius, 1px border |
 | `sections/tk-logo-strip.liquid` | **NEW** | Brief §5: Logo/trust-mark strip | Grayscale toggle, marquee or grid option, logos per row, logo max height | Accessible marquee with hover/focus pause, disabled under prefers-reduced-motion |
-| `sections/tk-testimonials.liquid` | **NEW** | Brief §5: Testimonials/reviews | Grid or slider layout, star rating block | New section — Dawn has no equivalent |
-| `sections/tk-faq.liquid` | **NEW** | Brief §5: FAQ accordion | Blocks or metaobject source, single/multi open, JSON-LD toggle | New section — Dawn has `collapsible-content` but no metaobject source |
-| `sections/tk-promo-split.liquid` | **NEW** | Brief §5: Promotional split banner | Split ratio, height, 2-panel blocks with per-panel colour scheme | New section — Dawn has no equivalent |
-| `sections/tk-newsletter.liquid` | **NEW** | Brief §5: Newsletter/lead capture | Layout centered/split, privacy note, success/error feedback | Dawn has `newsletter.liquid` — tk version for richer layout + a11y |
-| `sections/tk-footer.liquid` | **NEW** | Brief §5: Footer | Menu, business info, newsletter, social blocks; accordion on mobile | Replaces Dawn's `footer.liquid` in footer-group.json |
+| `sections/tk-testimonials.liquid` | **NEW** ✅ | Brief §5: Testimonials (sample content) | Layout `slider` (single Fraunces quote, prev/next, counter, no autoplay) or `grid`; rating 0–5; “sample review” label setting | Outputs **no** Review/AggregateRating schema (sample reviews must not be presented as real) |
+| `sections/tk-faq.liquid` | **NEW** ✅ | Brief §5: FAQ accordion | Source: blocks **or `faq_item` metaobjects** (`metaobject_list` setting); split/stacked layout; open first; optional FAQPage JSON-LD (off) | Native `<details>` — no JS needed |
+| `sections/tk-promo-split.liquid` | **NEW** ✅ | Brief §5: Promotional split / campaign | Layout `bento` (1 large + stacked, v2) or `split`; tile height; tiles pull image/title/link/product count from a **collection** when fields are blank | No uploads needed to build the section |
+| `sections/tk-newsletter.liquid` | **NEW** ✅ | Brief §5: Newsletter/lead capture | Centred/split, underline input + round submit, privacy note | `customer` form tagged `newsletter`; `role=alert/status` feedback |
+| `sections/tk-footer.liquid` | **NEW** ✅ (rebuilt) | Brief §5: Footer | Blocks: brand, menu, business info, text, newsletter, social; large wordmark (fitted to width by `tk-fit-text.js`); legal menu or store policies; localization; payment icons | 12-col grid desktop, 2×2 tablet, accordions mobile; CSS in `assets/tk-footer.css` |
 | `sections/main-collection-product-grid.liquid` | **EXTEND** | Brief §4: Collection | Use `tk-product-card`, columns settings | Must keep `facet-filters-form`, Section Rendering API calls |
 | `sections/main-collection-banner.liquid` → `sections/tk-collection-header.liquid` | **NEW** | Brief §4: Collection header | Title h1, description clamp, breadcrumb, image | New section replaces banner; keeps clean separation |
 | `sections/main-product.liquid` | **EXTEND** | Brief §4: Product | Add `tk_` blocks for stock, highlights, accordion, trust badges, sticky ATC | Dawn's `product-form`, `variant-selects`, `product-info`, media-gallery must stay |
@@ -199,6 +199,10 @@ When adapting the Takween Starter Theme for a new client project:
 | `templates/page.tk-style-guide.json` | **NEW** | tk-style-guide | Phase 03 (dev QA only) |
 
 ---
+
+### Homepage composition (templates/index.json, v2)
+
+`tk-hero` (full bleed, gradient scrim) → `tk-multicolumn` (marquee values) → `tk-promo-split` (bento: Apparel / Home & Living / Accessories) → `tk-featured-collection` (New arrivals with collection tabs) → `tk-image-with-text` (editorial, numbered principles) → `tk-featured-products` (spotlight: Relaxed Overshirt) → `tk-testimonials` (slider, labelled sample) → `tk-logo-strip` (placeholder partner logos, neutral alt text) → `tk-faq` → `tk-newsletter`. Dawn's image-banner and featured-collection were removed from the homepage; `tk-rich-text` remains available for content pages.
 
 ## 5. Custom Snippets
 
@@ -276,6 +280,9 @@ Product-specific structured data varies per product and cannot be hard-coded int
 | `assets/tk-sticky-atc.js` | Mobile sticky ATC: IntersectionObserver on main ATC button, syncs variant/price via pub/sub | `PUB_SUB_EVENTS.variantChange` (subscribe) |
 | `assets/tk-load-more.js` | Progressive load-more for collection/search: Section Rendering API fetch, focus management | None (uses `fetch` + DOM) |
 | `assets/tk-faq.js` | Single-open accordion mode; smooth open/close | None (standalone) |
+| `assets/tk-tabs.js` | `<tk-tabs>` WAI-ARIA tabs for featured-collection collection tabs (arrow keys, Home/End, editor block select) | None |
+| `assets/tk-testimonials.js` | `<tk-testimonials>` single-quote slider (no autoplay, ←/→ keys, counter, editor block select) | None |
+| `assets/tk-fit-text.js` | `<tk-fit-text>` scales the footer wordmark to the container width (ResizeObserver, after fonts load) | None |
 | `assets/tk-product-card.js` | Colour swatch hover (swap image src), secondary image preload | None (standalone) |
 
 ---
@@ -298,6 +305,8 @@ Product-specific structured data varies per product and cannot be hard-coded int
 | `sections/main-page.liquid` | Add `.tk-rte` wrapper class for rich text styling | Minimal: one class, no JS changes |
 | `snippets/facets.liquid` | **Minimal markup only:** add wrapper `<div>` for the mobile drawer's sticky "Show X results" footer and `data-` attribute for active chip container. No new Liquid logic or loops added. | Required to position the sticky footer inside the filter drawer (Phase 09); all JS stays in Dawn's `facets.js` |
 | `sections/predictive-search.liquid` | CSS token restyle: product result rows show image + title + price using `tk-price` snippet; no markup restructure | Keeps `predictive-search` custom element and all its JS intact |
+| `sections/cart-icon-bubble.liquid` | Renders the tk “Cart (n)” text + mobile icon markup | Dawn's cart JS re-renders this section after add-to-cart; without the change the header reverted to Dawn's icon |
+| `sections/header.liquid` (v2 pass) | Transparent-over-hero mode via negative bottom margin (keeps sticky JS), linen+blur when `scrolled-past-header`; hides search summary close icon; `cart_display` (text/icon) and `logo_style` (image/text wordmark) settings; logo wrapper is a `div` (hero owns the page `h1`) | Fixes from v2 design review |
 | `config/settings_schema.json` | Append Takween setting groups (Layout, Shape, Product cards, Motion) | Extension only — Dawn groups untouched |
 | `locales/en.default.json` | Add `"tk": {}` block for all custom user-facing strings | Namespace avoids collisions |
 | `locales/en.default.schema.json` | Add `"tk": {}` block for schema labels | Same namespace |

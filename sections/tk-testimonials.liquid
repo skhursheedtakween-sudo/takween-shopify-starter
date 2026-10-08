@@ -1,0 +1,238 @@
+{%- comment -%}
+  sections/tk-testimonials.liquid — Testimonial / review presentation (brief §5, sample content only).
+  Layouts:
+  - slider: one large Fraunces quote at a time, prev/next + "1 / 3" counter (v2 design). No autoplay.
+  - grid: quote cards in columns.
+  Deliberately outputs NO schema.org Review/AggregateRating markup: sample or unverified reviews
+  must not be presented to search engines as real ratings.
+  Styles: assets/tk-testimonials.css · JS (slider only): assets/tk-testimonials.js
+{%- endcomment -%}
+
+{{ 'tk-testimonials.css' | asset_url | stylesheet_tag }}
+{%- assign layout = section.settings.layout -%}
+{%- if layout == 'slider' and section.blocks.size > 1 -%}
+  <script src="{{ 'tk-testimonials.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+<section
+  class="tk-testi tk-testi--{{ layout }} tk-section color-{{ section.settings.color_scheme }} gradient"
+  style="--tk-pt: {{ section.settings.padding_top }}px; --tk-pb: {{ section.settings.padding_bottom }}px;"
+  aria-label="{{ section.settings.heading | strip_html | default: 'Testimonials' | escape }}"
+>
+  <div class="tk-container">
+    {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
+      <div class="tk-testi__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="tk-eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="tk-h2 tk-testi__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if layout == 'slider' -%}
+      <tk-testimonials class="tk-testi__slider" data-count="{{ section.blocks.size }}">
+        <div class="tk-testi__slides" aria-live="polite">
+          {%- for block in section.blocks -%}
+            <figure
+              class="tk-testi__slide"
+              id="TkTesti-{{ block.id }}"
+              data-index="{{ forloop.index0 }}"
+              {% unless forloop.first %}
+                hidden
+              {% endunless %}
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.rating > 0 -%}
+                {%- render 'tk-rating', rating: block.settings.rating, size: 16 -%}
+              {%- endif -%}
+              <blockquote class="tk-testi__quote">{{ block.settings.quote }}</blockquote>
+              <figcaption class="tk-testi__author">
+                <strong>{{ block.settings.author | escape }}</strong>
+                {%- if block.settings.location != blank -%}
+                  · {{ block.settings.location | escape }}
+                {%- endif -%}
+                {%- if section.settings.sample_label != blank -%}
+                  · <span class="tk-testi__sample">{{ section.settings.sample_label | escape }}</span>
+                {%- endif -%}
+              </figcaption>
+            </figure>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.blocks.size > 1 -%}
+          <div class="tk-testi__nav">
+            <button type="button" class="tk-testi__btn" data-tk-prev aria-label="{{ 'tk.testimonials.previous' | t }}">
+              {%- render 'tk-icon', icon: 'chevron-left', size: 16, stroke_width: 1.6 -%}
+            </button>
+            <span class="tk-testi__counter"><span data-tk-current>1</span> / {{ section.blocks.size }}</span>
+            <button type="button" class="tk-testi__btn" data-tk-next aria-label="{{ 'tk.testimonials.next' | t }}">
+              {%- render 'tk-icon', icon: 'chevron-right', size: 16, stroke_width: 1.6 -%}
+            </button>
+          </div>
+        {%- endif -%}
+      </tk-testimonials>
+    {%- else -%}
+      <div class="tk-testi__grid" style="--tk-testi-cols: {{ section.settings.columns_desktop }};">
+        {%- for block in section.blocks -%}
+          <figure class="tk-testi__card" {{ block.shopify_attributes }}>
+            {%- if block.settings.rating > 0 -%}
+              {%- render 'tk-rating', rating: block.settings.rating, size: 14 -%}
+            {%- endif -%}
+            <blockquote class="tk-testi__card-quote">{{ block.settings.quote }}</blockquote>
+            <figcaption class="tk-testi__author">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 96
+                  | image_tag: width: 40, height: 40, loading: 'lazy', class: 'tk-testi__avatar', alt: ''
+                }}
+              {%- endif -%}
+              <span>
+                <strong>{{ block.settings.author | escape }}</strong>
+                {%- if block.settings.location != blank -%}
+                  · {{ block.settings.location | escape }}
+                {%- endif -%}
+              </span>
+            </figcaption>
+          </figure>
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.sample_label != blank -%}
+        <p class="tk-testi__sample tk-testi__sample--grid">{{ section.settings.sample_label | escape }}</p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "div",
+  "class": "tk-section-testimonials",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Use real, approved customer reviews only. Sample content is for theme demonstration. This section never outputs review structured data."
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "slider", "label": "Single quote slider" },
+        { "value": "grid", "label": "Card grid" }
+      ],
+      "default": "slider"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "sample_label",
+      "label": "Sample content label",
+      "default": "sample review",
+      "info": "Shown next to each quote while the store uses sample content. Clear it when using real reviews."
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on desktop (grid)",
+      "default": 3
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-5"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 120
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "quote",
+          "label": "Quote",
+          "default": "<p>“The kind of everyday pieces you reach for <em>without thinking</em> — and keep for years.”</p>"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author",
+          "default": "Sample Customer"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location / role",
+          "default": "London"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "label": "Star rating (0 hides)",
+          "default": 5
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Author image (grid layout)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

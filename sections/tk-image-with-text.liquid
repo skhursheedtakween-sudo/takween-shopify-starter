@@ -26,9 +26,13 @@
   {%- endif -%}
 {%- endstyle -%}
 
+{%- assign is_editorial = false -%}
+{%- if section.settings.layout == 'editorial' -%}
+  {%- assign is_editorial = true -%}
+{%- endif -%}
 <div class="color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_borders %} tk-iwt--bordered-{{ section.id }}{% endif %}">
-  <div class="tk-container section-{{ section.id }}-padding">
-    <div class="tk-iwt tk-iwt--valign-{{ section.settings.vertical_alignment }}{% if section.settings.reverse_layout %} tk-iwt--reverse-desktop{% endif %}{% if section.settings.mobile_order == 'text_first' %} tk-iwt--mobile-text-first{% endif %}">
+  <div class="{% if is_editorial %}tk-iwt-editorial-wrap{% else %}tk-container section-{{ section.id }}-padding{% endif %}">
+    <div class="tk-iwt{% if is_editorial %} tk-iwt--editorial{% endif %} tk-iwt--valign-{{ section.settings.vertical_alignment }}{% if section.settings.reverse_layout %} tk-iwt--reverse-desktop{% endif %}{% if section.settings.mobile_order == 'text_first' %} tk-iwt--mobile-text-first{% endif %}">
       <!-- Media Column -->
       <div class="tk-iwt__media-col tk-iwt__media-col--{{ section.settings.image_width }}">
         <div class="tk-iwt__media tk-iwt__media--{{ section.settings.image_ratio }}">
@@ -38,7 +42,7 @@
               | image_url: width: 1500
               | image_tag:
                 widths: '375, 550, 750, 1100, 1500',
-                sizes: '(min-width: 990px) 50vw, 100vw',
+                sizes: '(min-width: 990px) 55vw, 100vw',
                 loading: 'lazy',
                 class: 'tk-iwt__image',
                 alt: section.settings.image.alt | default: section.settings.heading | escape
@@ -65,7 +69,7 @@
                 {%- if block.settings.heading != blank -%}
                   {%- assign h_tag = block.settings.heading_tag | default: 'h2' -%}
                   <{{ h_tag }} class="tk-h2 tk-iwt__heading" {{ block.shopify_attributes }}>
-                    {{ block.settings.heading | escape }}
+                    {{ block.settings.heading }}
                   </{{ h_tag }}>
                 {%- endif -%}
 
@@ -260,6 +264,68 @@
     margin-top: var(--tk-space-3);
   }
 
+  /* ---------- Editorial (v2): full-bleed split, image fills its half ---------- */
+  .tk-iwt--editorial {
+    gap: 0;
+  }
+
+  .tk-iwt--editorial .tk-iwt__media {
+    border-radius: 0;
+  }
+
+  .tk-iwt--editorial .tk-iwt__content-col {
+    padding: 56px var(--tk-gutter) 64px;
+  }
+
+  .tk-iwt--editorial .tk-iwt__content {
+    gap: 22px;
+    max-width: 520px;
+  }
+
+  .tk-iwt--editorial .tk-iwt__heading {
+    font-size: clamp(44px, 5vw, 72px);
+    line-height: 0.98;
+  }
+
+  .tk-iwt--editorial .tk-iwt__numbered-item:first-of-type {
+    margin-top: 8px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .tk-iwt.tk-iwt--editorial {
+      flex-direction: row;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .tk-iwt.tk-iwt--editorial.tk-iwt--reverse-desktop {
+      flex-direction: row-reverse;
+    }
+
+    .tk-iwt--editorial .tk-iwt__media-col {
+      flex: 1 1 55%;
+      max-width: none;
+    }
+
+    .tk-iwt--editorial .tk-iwt__media {
+      height: 100%;
+      min-height: 760px;
+      aspect-ratio: auto;
+    }
+
+    .tk-iwt--editorial .tk-iwt__image,
+    .tk-iwt--editorial .tk-placeholder-svg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .tk-iwt--editorial .tk-iwt__content-col {
+      flex: 1 1 45%;
+      justify-content: center;
+      padding: clamp(48px, 7vw, 104px);
+    }
+  }
+
   @media screen and (min-width: 990px) {
     .tk-iwt {
       flex-direction: row;
@@ -312,6 +378,17 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-2"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "contained", "label": "Contained (image card + text)" },
+        { "value": "editorial", "label": "Editorial (full-bleed split)" }
+      ],
+      "default": "editorial",
+      "info": "Editorial fills the full page width; image ratio and width settings apply to the contained layout."
     },
     {
       "type": "image_picker",
@@ -455,10 +532,11 @@
       "limit": 1,
       "settings": [
         {
-          "type": "text",
+          "type": "inline_richtext",
           "id": "heading",
           "label": "Heading",
-          "default": "Built for comfort, designed to endure."
+          "info": "Use italics for the editorial emphasis word.",
+          "default": "Fewer, <em>better</em> things."
         },
         {
           "type": "select",
