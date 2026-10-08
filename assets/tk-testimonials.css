@@ -14,6 +14,33 @@
   margin: 0;
 }
 
+/* Reset Dawn's global blockquote styling (italic, left rule, padding, muted colour) */
+.tk-testi blockquote {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-style: normal;
+}
+
+/* Stars: solid, foreground colour (v2) */
+.tk-testi .tk-rating__stars {
+  gap: 4px;
+  color: rgb(var(--color-foreground));
+}
+
+.tk-testi .tk-rating__star {
+  width: 16px;
+  height: 16px;
+}
+
+.tk-testi .tk-rating__star--full {
+  fill: currentColor;
+}
+
+.tk-testi .tk-rating__star--empty {
+  color: rgba(var(--color-foreground), 0.25);
+}
+
 /* Slider */
 tk-testimonials {
   display: block;
@@ -35,11 +62,6 @@ tk-testimonials {
 
 .tk-testi__slide[hidden] {
   display: none;
-}
-
-.tk-testi__slide .tk-rating__star--full {
-  fill: rgb(var(--color-foreground));
-  color: rgb(var(--color-foreground));
 }
 
 .tk-testi__quote {
