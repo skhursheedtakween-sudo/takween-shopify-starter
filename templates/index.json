@@ -52,13 +52,15 @@
       ],
       "settings": {
         "layout": "full_width",
-        "content_style": "gradient_scrim",
+        "content_style": "frosted_box",
         "image": "shopify://shop_images/hero-desktop.jpg",
         "mobile_image": "shopify://shop_images/hero-mobile.jpg",
+        "scrim_opacity": 92,
         "overlay_opacity": 0,
         "height": "large",
         "content_position": "bottom-left",
         "text_alignment": "left",
+        "show_slide_counter": false,
         "show_content_box": true,
         "content_box_opacity": 78,
         "content_box_blur": 12,
@@ -118,6 +120,7 @@
         "support"
       ],
       "settings": {
+        "layout": "grid",
         "color_scheme": "scheme-1",
         "eyebrow": "",
         "heading": "",
