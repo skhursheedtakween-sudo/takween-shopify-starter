@@ -256,6 +256,7 @@
         "logo_1": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/partner-01.png",
             "link": "",
             "alt_text": "Vogue"
           }
@@ -263,6 +264,7 @@
         "logo_2": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/partner-02.png",
             "link": "",
             "alt_text": "Monocle"
           }
@@ -270,6 +272,7 @@
         "logo_3": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/partner-03.png",
             "link": "",
             "alt_text": "GQ"
           }
@@ -277,6 +280,7 @@
         "logo_4": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/partner-04.png",
             "link": "",
             "alt_text": "Dwell"
           }
@@ -284,8 +288,17 @@
         "logo_5": {
           "type": "logo",
           "settings": {
+            "image": "shopify://shop_images/partner-05.png",
             "link": "",
             "alt_text": "Kinfolk"
+          }
+        },
+        "logo_zeqEQC": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/partner-06.png",
+            "link": "",
+            "alt_text": "Brand logo"
           }
         }
       },
@@ -294,7 +307,8 @@
         "logo_2",
         "logo_3",
         "logo_4",
-        "logo_5"
+        "logo_5",
+        "logo_zeqEQC"
       ],
       "settings": {
         "color_scheme": "scheme-1",
