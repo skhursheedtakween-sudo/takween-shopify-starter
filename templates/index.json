@@ -54,13 +54,13 @@
         "layout": "contained",
         "image": "shopify://shop_images/hero-desktop.jpg",
         "mobile_image": "shopify://shop_images/hero-mobile.jpg",
-        "overlay_opacity": 0,
+        "overlay_opacity": 20,
         "height": "medium",
         "content_position": "bottom-left",
         "text_alignment": "left",
         "show_content_box": true,
         "color_scheme": "scheme-1",
-        "mobile_layout": "below"
+        "mobile_layout": "overlay"
       }
     },
     "tk_multicolumn": {
