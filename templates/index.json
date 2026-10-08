@@ -52,9 +52,9 @@
       ],
       "settings": {
         "layout": "full_width",
-        "content_style": "gradient_scrim",
-        "image": "shopify://shop_images/hero-desktop.jpg",
-        "mobile_image": "shopify://shop_images/hero-mobile.jpg",
+        "content_style": "frosted_box",
+        "image": "shopify://shop_images/Gemini_Generated_Image_90yg0790yg0790yg.jpg",
+        "mobile_image": "shopify://shop_images/Gemini_Generated_Image_90yg0790yg0790yg.jpg",
         "scrim_opacity": 92,
         "overlay_opacity": 0,
         "height": "large",
@@ -147,7 +147,7 @@
             "collection": "apparel",
             "title": "",
             "meta": "5 essentials · from £24",
-            "link": ""
+            "link": "shopify://collections/apparel"
           }
         },
         "tile_home": {
@@ -156,7 +156,7 @@
             "collection": "home-living",
             "title": "",
             "meta": "4 pieces · from £22",
-            "link": ""
+            "link": "shopify://collections/home-living"
           }
         },
         "tile_accessories": {
@@ -165,7 +165,7 @@
             "collection": "accessories",
             "title": "",
             "meta": "3 pieces · from £16",
-            "link": ""
+            "link": "shopify://collections/accessories"
           }
         }
       },
@@ -304,7 +304,7 @@
       "settings": {
         "color_scheme": "scheme-2",
         "layout": "editorial",
-        "image": "shopify://shop_images/image-with-text.jpg",
+        "image": "shopify://shop_images/Gemini_Generated_Image_pqkjwppqkjwppqkj.jpg",
         "image_ratio": "ratio_5_4",
         "image_width": "50",
         "reverse_layout": false,
@@ -323,9 +323,12 @@
         "heading": "The Relaxed <em>Overshirt</em>",
         "product": "sample-relaxed-overshirt",
         "text": "<p>Brushed cotton twill, soft from the first wear. The layer you will reach for all season.</p>",
-        "product_list": [],
+        "image": "shopify://shop_images/Gemini_Generated_Image_6ry34m6ry34m6ry3.jpg",
+        "product_list": [
+          "sample-organic-cotton-tee"
+        ],
         "columns_desktop": 4,
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-1",
         "padding_top": 112,
         "padding_bottom": 112
       }
@@ -439,11 +442,11 @@
       ],
       "settings": {
         "color_scheme": "scheme-1",
-        "label_text": "As featured in",
-        "layout": "inline_row",
+        "label_text": "",
+        "layout": "marquee",
         "logos_per_row_desktop": 6,
         "logos_per_row_mobile": 3,
-        "logo_max_height": 40,
+        "logo_max_height": 56,
         "grayscale": true,
         "padding_top": 44,
         "padding_bottom": 44
